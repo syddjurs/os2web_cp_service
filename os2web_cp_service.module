@@ -1,0 +1,37 @@
+<?php
+
+/**
+ * @file
+ * Code for the OS2Web Case Publishing Service feature.
+ */
+
+include_once 'os2web_cp_service.features.inc';
+
+/**
+ * Implements hook_menu().
+ */
+function os2web_cp_service_menu() {
+  $items = array();
+
+  $items['os2web/service/cp/v1'] = array(
+    'type' => MENU_CALLBACK,
+    'page callback' => 'os2web_cp_service_handler',
+    'access callback' => TRUE,
+  );
+
+  return $items;
+}
+
+/**
+ * Callback for service. Forwards handling to provided plugin.
+ */
+function os2web_cp_service_handler() {
+  error_log('MARK - ' . basename(__FILE__) . ':' . __LINE__ . ' in ' . __FUNCTION__ . '()');
+
+  if (!os2web_esdh_provider_has_api('cp')) {
+    drupal_access_denied();
+  }
+  error_log('MARK - ' . basename(__FILE__) . ':' . __LINE__ . ' in ' . __FUNCTION__ . '()');
+
+  return os2web_esdh_provider_invoke('cp', 'handle_request');
+}
