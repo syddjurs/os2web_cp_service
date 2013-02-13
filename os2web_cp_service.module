@@ -4,7 +4,6 @@
  * @file
  * Code for the OS2Web Case Publishing Service feature.
  */
-
 include_once 'os2web_cp_service.features.inc';
 
 /**
@@ -26,12 +25,233 @@ function os2web_cp_service_menu() {
  * Callback for service. Forwards handling to provided plugin.
  */
 function os2web_cp_service_handler() {
-  error_log('MARK - ' . basename(__FILE__) . ':' . __LINE__ . ' in ' . __FUNCTION__ . '()');
-
   if (!os2web_esdh_provider_has_api('cp')) {
     drupal_access_denied();
   }
-  error_log('MARK - ' . basename(__FILE__) . ':' . __LINE__ . ' in ' . __FUNCTION__ . '()');
+  $data = os2web_esdh_provider_invoke('cp', 'handle_request');
+  error_log(basename(__FILE__) . ':' . __LINE__ . ' Var: $data = ' . print_r($data, 1));
+  return $data;
+}
 
-  return os2web_esdh_provider_invoke('cp', 'handle_request');
+/**
+ * Service function for creating a case.
+ *
+ * @param array $data
+ *   Structured array with data for the Case.
+ *
+ * @return boolean
+ *   TRUE on successful content creation.
+ */
+function os2web_cs_service_create_case(array $data) {
+  // Prepare data.
+  $data = array_replace_recursive(os2web_cs_service_default_case(), $data);
+
+  $query = new EntityFieldQuery();
+  $result = $query
+      ->entityCondition('entity_type', 'node')
+      ->propertyCondition('type', 'os2web_cp_service_cp_case')
+      ->propertyCondition('status', 1)
+      ->fieldCondition('field_os2web_cp_service_sysid', 'value', $data['fields']['SystemID'], '=')
+      ->execute();
+  $nids = array_keys($result['node']);
+
+  if (is_array($nids)) {
+    node_delete_multiple($nids);
+  }
+  $node = (object) NULL;
+  $node->type = 'os2web_cp_service_cp_case';
+  $node->uid = 0;
+  $node->status = 1;
+  $node->comment = 0;
+  $node->promote = 0;
+  $node->moderate = 0;
+  $node->sticky = 0;
+  $node->language = LANGUAGE_NONE;
+  node_object_prepare($node);
+
+  $node->title = (string) $data['fields']['Officiel titel'];
+  $node->field_os2web_cp_service_sysid[LANGUAGE_NONE][]['value'] = $data['fields']['SystemID'];
+  $node->field_os2web_cp_service_case_id[LANGUAGE_NONE][]['value'] = $data['fields']['SagsID'];
+  // TODO: Fill out the list of fields.
+
+  node_submit($node);
+  node_save($node);
+
+  return TRUE;
+}
+
+/**
+ * Default array structure for a case.
+ */
+function os2web_cs_service_default_case() {
+  return array(
+    'type' => 'case',
+    'rules' => array(),
+    'status' => NULL,
+    'fields' => array(
+      'SagsID' => NULL,
+      'SystemID' => NULL,
+      'Sagsnummer' => NULL,
+      // 'Sagsår' => NULL,
+      'Sagsløbenummer' => NULL,
+      // PERSAG, EJSAG, Akassesag, Børn- og ungesag.
+      'Sagstype - Sagstype' => NULL,
+      // Personsag, Ejendomssag, Akassesag, Børn- og ungesag.
+      'Sagstype - Sagstypebetegnelse' => NULL,
+      'Sagsundertype - Sagsundertype' => NULL,
+      'Sagstitel' => NULL,
+      'Officiel titel' => NULL,
+      'Sagsindhold' => NULL,
+      'CPR' => NULL,
+      'Matrikel' => NULL,
+      'Ejendomsnummer' => NULL,
+      'Sagsstatus - Sagstype' => NULL,
+      'Sagsstatus - Sagstypebetegnelse' => NULL,
+      'Sagsstatus - Afsluttet' => NULL,
+      'Sagsstatus - Passiv' => NULL,
+      'Sagsbehandler - BrugerID' => NULL,
+      'Sagsbehandler - Bruger logon' => NULL,
+      'Sagsbehandler - Brugernavn' => NULL,
+      'Sagsansvarlig enhed - ID' => NULL,
+      'Sagsansvarlig enhed - Administrativ enhed forkortelse' => NULL,
+      'Sagsansvarlig enhed - Administrativ enhed' => NULL,
+      'Sagsansvarlig enhed - Administrativ enhed beskrivelse' => NULL,
+      'Sagsdato' => NULL,
+      'Oprettelsesdato' => NULL,
+      'Redigeringsdato' => NULL,
+      'Sidste dokument' => NULL,
+      'Afslutningsdato' => NULL,
+      'Kassationsdato' => NULL,
+      'Kassationskode - Kassationskode' => NULL,
+      'Kassationskode - Kassationskodebetegnelse' => NULL,
+      'Slettekode' => NULL,
+      'Adgangskode - Adgangskode' => NULL,
+      'Adgangskode - Adgangskodebetegnelse' => NULL,
+      'Adgangsgruppe - AdgangsgruppeID' => NULL,
+      'Adgangsgruppe - Adgangsgruppe' => NULL,
+      'Aktindsigt - AktindsigtsID' => NULL,
+      'Aktindsigt - Aktindsigt' => NULL,
+      'Arkivdel - Arkivdel' => NULL,
+      'Arkivdel - Arkivdelbetegnelse' => NULL,
+      'Journalenhed - Journalenhed' => NULL,
+      'Journalenhed - Journalenhedsbetegnelse' => NULL,
+      'Papirsag' => NULL,
+      'KL emnenummer - KL emnenummer' => NULL,
+      'KL emnenummer - KL emnenbeskrivelse' => NULL,
+      'KL emnenummer - KL emnenummer og beskrivelse' => NULL,
+      'KL handlingsfacet - KL handlingsfacet' => NULL,
+      'KL handlingsfacet - KL handlingsfacetbeskrivelse' => NULL,
+      'KL handlingsfacet - KL handlingsfacet og beskrivelse' => NULL,
+      'OBS-dato' => NULL,
+      'OBS-note' => NULL,
+      'Sagsfrist' => NULL,
+      'Sagsfrist note' => NULL,
+      'Projekt - Projekt' => NULL,
+      'Sagsgruppe - SagsgruppeID' => NULL,
+      'Sagsgruppe - Sagsgruppe' => NULL,
+      'Afgørelse - AfgørelsesID' => NULL,
+      'Afgørelse - Afgørelse' => NULL,
+      'Prioritet - ID' => NULL,
+      'Prioritet - Prioritet' => NULL,
+      'Sagsfase - SagsfaseID' => NULL,
+      'Sagsfase - Sagsfase' => NULL,
+      'Sagsfasefrist' => NULL,
+      'Afventer - AfventerID' => NULL,
+      'Afventer - Afventer' => NULL,
+      'Klient køn - ID' => NULL,
+      'Klient køn - Klient køn' => NULL,
+      'Klient fødselsdato' => NULL,
+      'Klient alder ved registrering' => NULL,
+      'Klient faggruppe - ID' => NULL,
+      'Klient faggruppe - Klient faggruppe' => NULL,
+      'Klient henvendelse - ID' => NULL,
+      'Klient henvendelse - Klient henvendelse' => NULL,
+      'Klient faglig vurdering - ID' => NULL,
+      'Klient faglig vurdering - Klient faglig vurdering' => NULL,
+      'Klient foranstaltningsforslag - ID' => NULL,
+      'Klient foranstaltningsforslag - Klient foranstaltningsforslag' => NULL,
+      'Klient afgørelse - ID' => NULL,
+      'Klient afgørelse - Klient afgørelse' => NULL,
+      'Klient kategori - ID' => NULL,
+      'Klient kategori - Klient kategori' => NULL,
+      'Klient klassetrin - ID' => NULL,
+      'Klient klassetrin - Klient klassetrin' => NULL,
+      'Klient forældremyndighed - ID' => NULL,
+      'Klient forældremyndighed - Klient forældremyndighed' => NULL,
+      'Klient note' => NULL,
+    ),
+  );
+}
+
+/**
+ * Service function for creating a document.
+ *
+ * @param array $data
+ *   Structured array with data for the Case.
+ *
+ * @return boolean
+ *   TRUE on successful content creation.
+ */
+function os2web_cs_service_create_document(array $data) {
+  $data = array_replace_recursive(os2web_cs_service_default_document(), $data);
+  error_log(basename(__FILE__) . ':' . __LINE__ . ' Var: $data = ' . print_r($data, 1));
+
+  return TRUE;
+}
+
+/**
+ * Default array structure for a case.
+ */
+function os2web_cs_service_default_document() {
+  return array(
+    'type' => 'document',
+    'rules' => array(),
+    'status' => NULL,
+    'fields' => array(
+      'Opfølgning påkrævet' => NULL,
+      'Journaldato' => NULL,
+      'Dokumentdato' => NULL,
+      'Oprettelsesdato' => NULL,
+      'Redigeringsdato' => NULL,
+      'Dokumentfrist' => NULL,
+      'FilRedigeringsdato' => NULL,
+      'SystemID' => NULL,
+      'Sag SystemID' => NULL,
+      'Dokumentnummer' => NULL,
+      'Dokumentløbenummer' => NULL,
+      'Journalår' => NULL,
+      'Lagringsform - ID' => NULL,
+      'Sagsbehandler - BrugerID' => NULL,
+      'Aktindsigt - AktindsigtsID' => NULL,
+      'Adgangsgruppe - AdgangsgruppeID' => NULL,
+      'FilID' => NULL,
+      'Filversion' => NULL,
+      'SagsID' => NULL,
+      'Indhold_FileID' => NULL,
+      'Journalnummer' => NULL,
+      'Dokumenttitel' => NULL,
+      'Officiel titel' => NULL,
+      'Indholdsbeskrivelse' => NULL,
+      'Lagringsform - Lagringsform' => NULL,
+      'Dokumenttype - Dokumenttype' => NULL,
+      'Dokumenttype - Dokumenttypebetegnelse' => NULL,
+      'Kategori - Kategori' => NULL,
+      'Kategori - Kategoribetegnelse' => NULL,
+      'Sagsbehandler - Bruger logon' => NULL,
+      'Sagsbehandler - Brugernavn' => NULL,
+      'Aktindsigt - Aktindsigt' => NULL,
+      'Adgangskode - Adgangskode' => NULL,
+      'Adgangskode - Adgangskodebetegnelse' => NULL,
+      'Adgangsgruppe - Adgangsgruppe' => NULL,
+      'Journalstatus - Journalstatus' => NULL,
+      'Journalstatus - Journalstatusbetegnelse' => NULL,
+      'Dokumentstatus - Dokumentstatus' => NULL,
+      'Dokumentstatus - Dokumentstatusbetegnelse' => NULL,
+      'Dokumentfrist note' => NULL,
+      'Arkivdel - Arkivdel' => NULL,
+      'Arkivdel - Arkivdelbetegnelse' => NULL,
+      'Filformat' => NULL,
+      'Låst' => NULL,
+    ),
+  );
 }
