@@ -594,8 +594,7 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['header']['area_text_custom']['id'] = 'area_text_custom';
   $handler->display->display_options['header']['area_text_custom']['table'] = 'views';
   $handler->display->display_options['header']['area_text_custom']['field'] = 'area_text_custom';
-  $handler->display->display_options['header']['area_text_custom']['content'] = '<h1>[title_1]</h1>
-<h2>Sags Nr.: [field_os2web_cp_service_case_id]</h2>';
+  $handler->display->display_options['header']['area_text_custom']['content'] = '<h2>Sags Nr.: [field_os2web_cp_service_case_id]</h2>';
   $handler->display->display_options['header']['area_text_custom']['tokenize'] = TRUE;
   $handler->display->display_options['defaults']['fields'] = FALSE;
   /* Field: Content: Nid */
@@ -645,6 +644,21 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['fields']['title_1']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['title_1']['link_to_node'] = FALSE;
   $handler->display->display_options['defaults']['arguments'] = FALSE;
+  /* Contextual filter: Content: Nid */
+  $handler->display->display_options['arguments']['nid']['id'] = 'nid';
+  $handler->display->display_options['arguments']['nid']['table'] = 'node';
+  $handler->display->display_options['arguments']['nid']['field'] = 'nid';
+  $handler->display->display_options['arguments']['nid']['default_action'] = 'not found';
+  $handler->display->display_options['arguments']['nid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['nid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['nid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['nid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['nid']['specify_validation'] = TRUE;
+  $handler->display->display_options['arguments']['nid']['validate']['type'] = 'node';
+  $handler->display->display_options['arguments']['nid']['validate_options']['types'] = array(
+    'os2web_cp_service_cp_case' => 'os2web_cp_service_cp_case',
+  );
+  $handler->display->display_options['arguments']['nid']['validate_options']['access'] = TRUE;
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
   /* Filter criterion: Content: Published */
@@ -661,23 +675,7 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['filters']['type']['value'] = array(
     'os2web_cp_service_cp_case' => 'os2web_cp_service_cp_case',
   );
-  /* Filter criterion: Global: PHP */
-  $handler->display->display_options['filters']['php']['id'] = 'php';
-  $handler->display->display_options['filters']['php']['table'] = 'views';
-  $handler->display->display_options['filters']['php']['field'] = 'php';
-  $handler->display->display_options['filters']['php']['use_php_setup'] = 0;
-  $handler->display->display_options['filters']['php']['php_filter'] = '$url = pathinfo($_GET[\'q\']);
-$id = $url[\'basename\'];
-$year = substr($url[\'dirname\'], -2);
-$node = node_load($data->nid);
-$field_case_id = field_get_items(\'node\', $node, \'field_os2web_cp_service_case_id\');
-$field_case_id = $field_case_id[0][\'value\'];
-$arp_case_id = $year . "/" . $id;
-if ($arp_case_id !== $row->field_os2web_cp_service_case_id)
-{
-//return TRUE;
-}';
-  $handler->display->display_options['path'] = 'sag/%';
+  $handler->display->display_options['path'] = 'cp-case/%';
   $export['os2web_cp_service_cp_case_view'] = $view;
 
   $view = new view();
