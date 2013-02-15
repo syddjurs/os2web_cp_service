@@ -112,6 +112,7 @@ function os2web_cp_service_views_default_views() {
   $handler->display->display_options['fields']['field_os2web_cp_service_case_id']['label'] = '';
   $handler->display->display_options['fields']['field_os2web_cp_service_case_id']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_os2web_cp_service_case_id']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_os2web_cp_service_case_id']['group_column'] = 'entity_id';
   /* Field: Content: Sagsindhold */
   $handler->display->display_options['fields']['field_os2web_cp_service_content']['id'] = 'field_os2web_cp_service_content';
   $handler->display->display_options['fields']['field_os2web_cp_service_content']['table'] = 'field_data_field_os2web_cp_service_content';
@@ -208,8 +209,31 @@ function os2web_cp_service_views_default_views() {
   $handler->display->display_options['filters']['php']['php_filter'] = 'if (count($view->exposed_input)) {
 return FALSE; 
 } else { 
-return TRUE; 
+return TRUE; // If no exposed inputs, remove all results
 }';
+  /* Filter criterion: Global: Combine fields filter */
+  $handler->display->display_options['filters']['combine']['id'] = 'combine';
+  $handler->display->display_options['filters']['combine']['table'] = 'views';
+  $handler->display->display_options['filters']['combine']['field'] = 'combine';
+  $handler->display->display_options['filters']['combine']['operator'] = 'word';
+  $handler->display->display_options['filters']['combine']['group'] = 1;
+  $handler->display->display_options['filters']['combine']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['combine']['expose']['operator_id'] = 'combine_op';
+  $handler->display->display_options['filters']['combine']['expose']['label'] = 'Søgetekst';
+  $handler->display->display_options['filters']['combine']['expose']['description'] = 'fx. Birkevej affald';
+  $handler->display->display_options['filters']['combine']['expose']['operator'] = 'combine_op';
+  $handler->display->display_options['filters']['combine']['expose']['identifier'] = 'combine';
+  $handler->display->display_options['filters']['combine']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    3 => 0,
+  );
+  $handler->display->display_options['filters']['combine']['fields'] = array(
+    'field_os2web_cp_service_content' => 'field_os2web_cp_service_content',
+    'title' => 'title',
+    'field_os2web_cp_service_content_1' => 'field_os2web_cp_service_content_1',
+    'title_1' => 'title_1',
+  );
   /* Filter criterion: Content: OprettelsesDato (field_os2web_cp_service_created) */
   $handler->display->display_options['filters']['field_os2web_cp_service_created_value']['id'] = 'field_os2web_cp_service_created_value';
   $handler->display->display_options['filters']['field_os2web_cp_service_created_value']['table'] = 'field_data_field_os2web_cp_service_created';
@@ -310,28 +334,6 @@ return TRUE;
     3 => 0,
   );
   $handler->display->display_options['filters']['field_os2web_cp_service_org_unit_value']['reduce_duplicates'] = TRUE;
-  /* Filter criterion: Global: Combine fields filter */
-  $handler->display->display_options['filters']['combine']['id'] = 'combine';
-  $handler->display->display_options['filters']['combine']['table'] = 'views';
-  $handler->display->display_options['filters']['combine']['field'] = 'combine';
-  $handler->display->display_options['filters']['combine']['operator'] = 'word';
-  $handler->display->display_options['filters']['combine']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['combine']['expose']['operator_id'] = 'combine_op';
-  $handler->display->display_options['filters']['combine']['expose']['label'] = 'Søgetekst';
-  $handler->display->display_options['filters']['combine']['expose']['description'] = 'fx. Birkevej affald';
-  $handler->display->display_options['filters']['combine']['expose']['operator'] = 'combine_op';
-  $handler->display->display_options['filters']['combine']['expose']['identifier'] = 'combine';
-  $handler->display->display_options['filters']['combine']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    3 => 0,
-  );
-  $handler->display->display_options['filters']['combine']['fields'] = array(
-    'field_os2web_cp_service_content' => 'field_os2web_cp_service_content',
-    'title' => 'title',
-    'field_os2web_cp_service_content_1' => 'field_os2web_cp_service_content_1',
-    'title_1' => 'title_1',
-  );
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
