@@ -503,6 +503,11 @@ return TRUE; // If no exposed inputs, remove all results
     'os2web_cp_service_cp_case' => 'os2web_cp_service_cp_case',
   );
   $handler->display->display_options['filters']['type']['group'] = 1;
+  /* Filter criterion: Content: Sagsindhold (field_os2web_cp_service_content) */
+  $handler->display->display_options['filters']['field_os2web_cp_service_content_value']['id'] = 'field_os2web_cp_service_content_value';
+  $handler->display->display_options['filters']['field_os2web_cp_service_content_value']['table'] = 'field_data_field_os2web_cp_service_content';
+  $handler->display->display_options['filters']['field_os2web_cp_service_content_value']['field'] = 'field_os2web_cp_service_content_value';
+  $handler->display->display_options['filters']['field_os2web_cp_service_content_value']['operator'] = 'not empty';
   $handler->display->display_options['displays'] = array(
     'page' => 'page',
     'default' => 0,
@@ -518,6 +523,7 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['relationships']['field_os2web_cp_service_doc_ref_nid']['id'] = 'field_os2web_cp_service_doc_ref_nid';
   $handler->display->display_options['relationships']['field_os2web_cp_service_doc_ref_nid']['table'] = 'field_data_field_os2web_cp_service_doc_ref';
   $handler->display->display_options['relationships']['field_os2web_cp_service_doc_ref_nid']['field'] = 'field_os2web_cp_service_doc_ref_nid';
+  $handler->display->display_options['relationships']['field_os2web_cp_service_doc_ref_nid']['required'] = TRUE;
   $handler->display->display_options['relationships']['field_os2web_cp_service_doc_ref_nid']['delta'] = '-1';
   $handler->display->display_options['defaults']['fields'] = FALSE;
   /* Field: Content: Nid */
@@ -754,7 +760,7 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['arguments']['nid']['specify_validation'] = TRUE;
   $handler->display->display_options['arguments']['nid']['validate']['type'] = 'node';
   $handler->display->display_options['arguments']['nid']['validate_options']['types'] = array(
-    'os2web_cp_service_cp_case' => 'os2web_cp_service_cp_case',
+    'os2web_cp_service_cp_document' => 'os2web_cp_service_cp_document',
   );
   $handler->display->display_options['arguments']['nid']['validate_options']['access'] = TRUE;
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
@@ -774,6 +780,12 @@ return TRUE; // If no exposed inputs, remove all results
     'os2web_cp_service_cp_document' => 'os2web_cp_service_cp_document',
   );
   $handler->display->display_options['filters']['type']['group'] = 1;
+  /* Filter criterion: Content: Sagsindhold (field_os2web_cp_service_content) */
+  $handler->display->display_options['filters']['field_os2web_cp_service_content_value']['id'] = 'field_os2web_cp_service_content_value';
+  $handler->display->display_options['filters']['field_os2web_cp_service_content_value']['table'] = 'field_data_field_os2web_cp_service_content';
+  $handler->display->display_options['filters']['field_os2web_cp_service_content_value']['field'] = 'field_os2web_cp_service_content_value';
+  $handler->display->display_options['filters']['field_os2web_cp_service_content_value']['operator'] = 'longerthan';
+  $handler->display->display_options['filters']['field_os2web_cp_service_content_value']['value'] = '1';
   $handler->display->display_options['displays'] = array(
     'page' => 'page',
     'default' => 0,
@@ -788,8 +800,7 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['header']['area_text_custom']['id'] = 'area_text_custom';
   $handler->display->display_options['header']['area_text_custom']['table'] = 'views';
   $handler->display->display_options['header']['area_text_custom']['field'] = 'area_text_custom';
-  $handler->display->display_options['header']['area_text_custom']['content'] = '<h1>Dokument: [field_os2web_cp_service_doc_id]</h1>
-<h2>Sags Nr.: [field_os2web_cp_service_case_id]</h2>';
+  $handler->display->display_options['header']['area_text_custom']['content'] = '<h2>Sags Nr.: [field_os2web_cp_service_case_id]</h2>';
   $handler->display->display_options['header']['area_text_custom']['tokenize'] = TRUE;
   $handler->display->display_options['defaults']['fields'] = FALSE;
   /* Field: Content: DokumentID */
@@ -835,6 +846,21 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['fields']['field_os2web_cp_service_case_id']['alter']['path'] = 'sag/[field_os2web_cp_service_case_id]';
   $handler->display->display_options['fields']['field_os2web_cp_service_case_id']['element_label_colon'] = FALSE;
   $handler->display->display_options['defaults']['arguments'] = FALSE;
+  /* Contextual filter: Content: Nid */
+  $handler->display->display_options['arguments']['nid']['id'] = 'nid';
+  $handler->display->display_options['arguments']['nid']['table'] = 'node';
+  $handler->display->display_options['arguments']['nid']['field'] = 'nid';
+  $handler->display->display_options['arguments']['nid']['default_action'] = 'not found';
+  $handler->display->display_options['arguments']['nid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['nid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['nid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['nid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['nid']['specify_validation'] = TRUE;
+  $handler->display->display_options['arguments']['nid']['validate']['type'] = 'node';
+  $handler->display->display_options['arguments']['nid']['validate_options']['types'] = array(
+    'os2web_cp_service_cp_document' => 'os2web_cp_service_cp_document',
+  );
+  $handler->display->display_options['arguments']['nid']['validate_options']['access'] = TRUE;
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
   /* Filter criterion: Content: Published */
@@ -851,23 +877,8 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['filters']['type']['value'] = array(
     'os2web_cp_service_cp_document' => 'os2web_cp_service_cp_document',
   );
-  /* Filter criterion: Global: PHP */
-  $handler->display->display_options['filters']['php']['id'] = 'php';
-  $handler->display->display_options['filters']['php']['table'] = 'views';
-  $handler->display->display_options['filters']['php']['field'] = 'php';
-  $handler->display->display_options['filters']['php']['use_php_setup'] = 0;
-  $handler->display->display_options['filters']['php']['php_filter'] = '$url = pathinfo($_GET[\'q\']);
-$year = $url[\'basename\'];
-$id = trim(substr($url[\'dirname\'], strrpos($url[\'dirname\'], \'/\')), \'/\');
-$node = node_load($data->nid);
-$field_doc_id = field_get_items(\'node\', $node, \'field_os2web_cp_service_doc_id\');
-$field_doc_id = $field_doc_id[0][\'value\'];
-$cp_doc_id = $id . "/" . $year;
-if ($cp_doc_id !== $field_doc_id)
-{
-return TRUE;
-}';
-  $handler->display->display_options['path'] = 'dok/%';
+  $handler->display->display_options['filters']['type']['group'] = 1;
+  $handler->display->display_options['path'] = 'cp-document/%';
   $export['os2web_cp_service_cp_document_view'] = $view;
 
   return $export;
