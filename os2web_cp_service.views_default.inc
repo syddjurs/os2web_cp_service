@@ -15,28 +15,125 @@ function os2web_cp_service_views_default_views() {
   $view->description = 'These views searches and shows CP Cases';
   $view->tag = 'default';
   $view->base_table = 'node';
-  $view->human_name = 'CP Search';
+  $view->human_name = 'CP Case Search';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
 
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
-  $handler->display->display_options['title'] = 'Søg i sager';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['exposed_form']['type'] = 'basic';
   $handler->display->display_options['pager']['type'] = 'full';
-  $handler->display->display_options['pager']['options']['items_per_page'] = '25';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '15';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['pager']['options']['id'] = '0';
+  $handler->display->display_options['pager']['options']['quantity'] = '9';
+  $handler->display->display_options['pager']['options']['tags']['first'] = '« Første';
+  $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ Forrige';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'Næste ›';
+  $handler->display->display_options['pager']['options']['tags']['last'] = 'Sidste »';
   $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'field_os2web_cp_service_case_id' => 'field_os2web_cp_service_case_id',
+    'field_os2web_cp_service_content' => 'field_os2web_cp_service_content',
+    'title' => 'title',
+    'field_os2web_cp_service_created' => 'field_os2web_cp_service_created',
+    'field_os2web_cp_service_casetype' => 'field_os2web_cp_service_casetype',
+    'field_os2web_cp_service_doc_id_1' => 'field_os2web_cp_service_doc_id_1',
+  );
+  $handler->display->display_options['style_options']['default'] = 'field_os2web_cp_service_created';
+  $handler->display->display_options['style_options']['info'] = array(
+    'field_os2web_cp_service_case_id' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_os2web_cp_service_content' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'title' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_os2web_cp_service_created' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'desc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_os2web_cp_service_casetype' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_os2web_cp_service_doc_id_1' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  /* Header: Global: Unfiltered text */
+  $handler->display->display_options['header']['area_text_custom']['id'] = 'area_text_custom';
+  $handler->display->display_options['header']['area_text_custom']['table'] = 'views';
+  $handler->display->display_options['header']['area_text_custom']['field'] = 'area_text_custom';
+  $handler->display->display_options['header']['area_text_custom']['content'] = '<h2>Resultater</h2>
+<p>Hold musen over sagen for at se en beskrivelse</p>';
+  /* No results behavior: Global: Unfiltered text */
+  $handler->display->display_options['empty']['area_text_custom']['id'] = 'area_text_custom';
+  $handler->display->display_options['empty']['area_text_custom']['table'] = 'views';
+  $handler->display->display_options['empty']['area_text_custom']['field'] = 'area_text_custom';
+  /* Relationship: Content: Dokumenter (field_os2web_cp_service_doc_ref) */
+  $handler->display->display_options['relationships']['field_os2web_cp_service_doc_ref_nid']['id'] = 'field_os2web_cp_service_doc_ref_nid';
+  $handler->display->display_options['relationships']['field_os2web_cp_service_doc_ref_nid']['table'] = 'field_data_field_os2web_cp_service_doc_ref';
+  $handler->display->display_options['relationships']['field_os2web_cp_service_doc_ref_nid']['field'] = 'field_os2web_cp_service_doc_ref_nid';
+  $handler->display->display_options['relationships']['field_os2web_cp_service_doc_ref_nid']['delta'] = '-1';
+  /* Field: Content: SagsID */
+  $handler->display->display_options['fields']['field_os2web_cp_service_case_id']['id'] = 'field_os2web_cp_service_case_id';
+  $handler->display->display_options['fields']['field_os2web_cp_service_case_id']['table'] = 'field_data_field_os2web_cp_service_case_id';
+  $handler->display->display_options['fields']['field_os2web_cp_service_case_id']['field'] = 'field_os2web_cp_service_case_id';
+  $handler->display->display_options['fields']['field_os2web_cp_service_case_id']['label'] = '';
+  $handler->display->display_options['fields']['field_os2web_cp_service_case_id']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_os2web_cp_service_case_id']['element_label_colon'] = FALSE;
+  /* Field: Content: Sagsindhold */
+  $handler->display->display_options['fields']['field_os2web_cp_service_content']['id'] = 'field_os2web_cp_service_content';
+  $handler->display->display_options['fields']['field_os2web_cp_service_content']['table'] = 'field_data_field_os2web_cp_service_content';
+  $handler->display->display_options['fields']['field_os2web_cp_service_content']['field'] = 'field_os2web_cp_service_content';
+  $handler->display->display_options['fields']['field_os2web_cp_service_content']['label'] = '';
+  $handler->display->display_options['fields']['field_os2web_cp_service_content']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_os2web_cp_service_content']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_os2web_cp_service_content']['type'] = 'text_summary_or_trimmed';
+  $handler->display->display_options['fields']['field_os2web_cp_service_content']['settings'] = array(
+    'trim_length' => '150',
+  );
   /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['title']['alter']['text'] = '[title] <span class="tip js-hide" style="display:none">[field_os2web_cp_service_content]</span>';
+  $handler->display->display_options['fields']['title']['alter']['make_link'] = TRUE;
+  $handler->display->display_options['fields']['title']['alter']['path'] = 'sag/[field_os2web_cp_service_case_id]';
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
   /* Field: Content: OprettelsesDato */
   $handler->display->display_options['fields']['field_os2web_cp_service_created']['id'] = 'field_os2web_cp_service_created';
   $handler->display->display_options['fields']['field_os2web_cp_service_created']['table'] = 'field_data_field_os2web_cp_service_created';
@@ -49,45 +146,27 @@ function os2web_cp_service_views_default_views() {
     'multiple_from' => '',
     'multiple_to' => '',
   );
-  /* Field: Content: DokumentID */
-  $handler->display->display_options['fields']['field_os2web_cp_service_doc_id']['id'] = 'field_os2web_cp_service_doc_id';
-  $handler->display->display_options['fields']['field_os2web_cp_service_doc_id']['table'] = 'field_data_field_os2web_cp_service_doc_id';
-  $handler->display->display_options['fields']['field_os2web_cp_service_doc_id']['field'] = 'field_os2web_cp_service_doc_id';
-  $handler->display->display_options['fields']['field_os2web_cp_service_doc_id']['label'] = '';
-  $handler->display->display_options['fields']['field_os2web_cp_service_doc_id']['exclude'] = TRUE;
-  $handler->display->display_options['fields']['field_os2web_cp_service_doc_id']['element_label_colon'] = FALSE;
-  /* Field: Content: FilID */
-  $handler->display->display_options['fields']['field_os2web_cp_service_file_id']['id'] = 'field_os2web_cp_service_file_id';
-  $handler->display->display_options['fields']['field_os2web_cp_service_file_id']['table'] = 'field_data_field_os2web_cp_service_file_id';
-  $handler->display->display_options['fields']['field_os2web_cp_service_file_id']['field'] = 'field_os2web_cp_service_file_id';
-  $handler->display->display_options['fields']['field_os2web_cp_service_file_id']['exclude'] = TRUE;
-  /* Field: Content: FullXML */
-  $handler->display->display_options['fields']['field_os2web_cp_service_full_xml']['id'] = 'field_os2web_cp_service_full_xml';
-  $handler->display->display_options['fields']['field_os2web_cp_service_full_xml']['table'] = 'field_data_field_os2web_cp_service_full_xml';
-  $handler->display->display_options['fields']['field_os2web_cp_service_full_xml']['field'] = 'field_os2web_cp_service_full_xml';
-  $handler->display->display_options['fields']['field_os2web_cp_service_full_xml']['exclude'] = TRUE;
-  /* Field: Content: SagsID */
-  $handler->display->display_options['fields']['field_os2web_cp_service_case_id']['id'] = 'field_os2web_cp_service_case_id';
-  $handler->display->display_options['fields']['field_os2web_cp_service_case_id']['table'] = 'field_data_field_os2web_cp_service_case_id';
-  $handler->display->display_options['fields']['field_os2web_cp_service_case_id']['field'] = 'field_os2web_cp_service_case_id';
   /* Field: Content: Sagstype */
   $handler->display->display_options['fields']['field_os2web_cp_service_casetype']['id'] = 'field_os2web_cp_service_casetype';
   $handler->display->display_options['fields']['field_os2web_cp_service_casetype']['table'] = 'field_data_field_os2web_cp_service_casetype';
   $handler->display->display_options['fields']['field_os2web_cp_service_casetype']['field'] = 'field_os2web_cp_service_casetype';
-  /* Field: Content: SystemId */
-  $handler->display->display_options['fields']['field_os2web_cp_service_sysid']['id'] = 'field_os2web_cp_service_sysid';
-  $handler->display->display_options['fields']['field_os2web_cp_service_sysid']['table'] = 'field_data_field_os2web_cp_service_sysid';
-  $handler->display->display_options['fields']['field_os2web_cp_service_sysid']['field'] = 'field_os2web_cp_service_sysid';
-  $handler->display->display_options['fields']['field_os2web_cp_service_sysid']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_os2web_cp_service_casetype']['label'] = '';
+  $handler->display->display_options['fields']['field_os2web_cp_service_casetype']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_os2web_cp_service_casetype']['element_label_colon'] = FALSE;
+  /* Field: Content: DokumentID */
+  $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['id'] = 'field_os2web_cp_service_doc_id_1';
+  $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['table'] = 'field_data_field_os2web_cp_service_doc_id';
+  $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['field'] = 'field_os2web_cp_service_doc_id';
+  $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['relationship'] = 'field_os2web_cp_service_doc_ref_nid';
+  $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['label'] = '';
+  $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['element_label_colon'] = FALSE;
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
   $handler->display->display_options['sorts']['created']['field'] = 'created';
   $handler->display->display_options['sorts']['created']['order'] = 'DESC';
-  $handler->display->display_options['filter_groups']['groups'] = array(
-    1 => 'AND',
-    2 => 'OR',
-  );
+  $handler->display->display_options['filter_groups']['operator'] = 'OR';
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
@@ -103,6 +182,17 @@ function os2web_cp_service_views_default_views() {
     'os2web_cp_service_cp_case' => 'os2web_cp_service_cp_case',
   );
   $handler->display->display_options['filters']['type']['group'] = 1;
+  /* Filter criterion: Global: PHP */
+  $handler->display->display_options['filters']['php']['id'] = 'php';
+  $handler->display->display_options['filters']['php']['table'] = 'views';
+  $handler->display->display_options['filters']['php']['field'] = 'php';
+  $handler->display->display_options['filters']['php']['group'] = 1;
+  $handler->display->display_options['filters']['php']['use_php_setup'] = 0;
+  $handler->display->display_options['filters']['php']['php_filter'] = 'if (count($view->exposed_input)) {
+return FALSE; 
+} else { 
+return TRUE; 
+}';
   /* Filter criterion: Content: OprettelsesDato (field_os2web_cp_service_created) */
   $handler->display->display_options['filters']['field_os2web_cp_service_created_value']['id'] = 'field_os2web_cp_service_created_value';
   $handler->display->display_options['filters']['field_os2web_cp_service_created_value']['table'] = 'field_data_field_os2web_cp_service_created';
@@ -113,13 +203,14 @@ function os2web_cp_service_views_default_views() {
   $handler->display->display_options['filters']['field_os2web_cp_service_created_value']['expose']['operator_id'] = 'field_os2web_cp_service_created_value_op';
   $handler->display->display_options['filters']['field_os2web_cp_service_created_value']['expose']['label'] = 'Fra';
   $handler->display->display_options['filters']['field_os2web_cp_service_created_value']['expose']['operator'] = 'field_os2web_cp_service_created_value_op';
-  $handler->display->display_options['filters']['field_os2web_cp_service_created_value']['expose']['identifier'] = 'field_os2web_cp_service_created_value';
+  $handler->display->display_options['filters']['field_os2web_cp_service_created_value']['expose']['identifier'] = 'from_date';
   $handler->display->display_options['filters']['field_os2web_cp_service_created_value']['expose']['remember_roles'] = array(
     2 => '2',
     1 => 0,
     3 => 0,
   );
   $handler->display->display_options['filters']['field_os2web_cp_service_created_value']['form_type'] = 'date_popup';
+  $handler->display->display_options['filters']['field_os2web_cp_service_created_value']['year_range'] = '-10:+0';
   /* Filter criterion: Content: OprettelsesDato (field_os2web_cp_service_created) */
   $handler->display->display_options['filters']['field_os2web_cp_service_created_value_1']['id'] = 'field_os2web_cp_service_created_value_1';
   $handler->display->display_options['filters']['field_os2web_cp_service_created_value_1']['table'] = 'field_data_field_os2web_cp_service_created';
@@ -130,24 +221,43 @@ function os2web_cp_service_views_default_views() {
   $handler->display->display_options['filters']['field_os2web_cp_service_created_value_1']['expose']['operator_id'] = 'field_os2web_cp_service_created_value_1_op';
   $handler->display->display_options['filters']['field_os2web_cp_service_created_value_1']['expose']['label'] = 'Til';
   $handler->display->display_options['filters']['field_os2web_cp_service_created_value_1']['expose']['operator'] = 'field_os2web_cp_service_created_value_1_op';
-  $handler->display->display_options['filters']['field_os2web_cp_service_created_value_1']['expose']['identifier'] = 'field_os2web_cp_service_created_value_1';
+  $handler->display->display_options['filters']['field_os2web_cp_service_created_value_1']['expose']['identifier'] = 'to_date';
   $handler->display->display_options['filters']['field_os2web_cp_service_created_value_1']['expose']['remember_roles'] = array(
     2 => '2',
     1 => 0,
     3 => 0,
   );
   $handler->display->display_options['filters']['field_os2web_cp_service_created_value_1']['form_type'] = 'date_popup';
-  /* Filter criterion: Broken/missing handler */
-  $handler->display->display_options['filters']['field_os2web_cp_service_case_num_value']['id'] = 'field_os2web_cp_service_case_num_value';
-  $handler->display->display_options['filters']['field_os2web_cp_service_case_num_value']['table'] = 'field_data_field_os2web_cp_service_case_num';
-  $handler->display->display_options['filters']['field_os2web_cp_service_case_num_value']['field'] = 'field_os2web_cp_service_case_num_value';
-  $handler->display->display_options['filters']['field_os2web_cp_service_case_num_value']['group'] = 2;
-  $handler->display->display_options['filters']['field_os2web_cp_service_case_num_value']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_os2web_cp_service_case_num_value']['expose']['operator_id'] = 'field_os2web_cp_service_case_num_value_op';
-  $handler->display->display_options['filters']['field_os2web_cp_service_case_num_value']['expose']['label'] = 'Sagsnummer';
-  $handler->display->display_options['filters']['field_os2web_cp_service_case_num_value']['expose']['operator'] = 'field_os2web_cp_service_case_num_value_op';
-  $handler->display->display_options['filters']['field_os2web_cp_service_case_num_value']['expose']['identifier'] = 'field_os2web_cp_service_case_num_value';
-  $handler->display->display_options['filters']['field_os2web_cp_service_case_num_value']['expose']['remember_roles'] = array(
+  $handler->display->display_options['filters']['field_os2web_cp_service_created_value_1']['year_range'] = '-10:+0';
+  /* Filter criterion: Content: SagsID (field_os2web_cp_service_case_id) */
+  $handler->display->display_options['filters']['field_os2web_cp_service_case_id_value']['id'] = 'field_os2web_cp_service_case_id_value';
+  $handler->display->display_options['filters']['field_os2web_cp_service_case_id_value']['table'] = 'field_data_field_os2web_cp_service_case_id';
+  $handler->display->display_options['filters']['field_os2web_cp_service_case_id_value']['field'] = 'field_os2web_cp_service_case_id_value';
+  $handler->display->display_options['filters']['field_os2web_cp_service_case_id_value']['group'] = 1;
+  $handler->display->display_options['filters']['field_os2web_cp_service_case_id_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_os2web_cp_service_case_id_value']['expose']['operator_id'] = 'field_os2web_cp_service_case_id_value_op';
+  $handler->display->display_options['filters']['field_os2web_cp_service_case_id_value']['expose']['label'] = 'Sagsnummer';
+  $handler->display->display_options['filters']['field_os2web_cp_service_case_id_value']['expose']['description'] = 'fx. 12/99999999';
+  $handler->display->display_options['filters']['field_os2web_cp_service_case_id_value']['expose']['operator'] = 'field_os2web_cp_service_case_id_value_op';
+  $handler->display->display_options['filters']['field_os2web_cp_service_case_id_value']['expose']['identifier'] = 'case_id';
+  $handler->display->display_options['filters']['field_os2web_cp_service_case_id_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    3 => 0,
+  );
+  /* Filter criterion: Content: DokumentID (field_os2web_cp_service_doc_id) */
+  $handler->display->display_options['filters']['field_os2web_cp_service_doc_id_value']['id'] = 'field_os2web_cp_service_doc_id_value';
+  $handler->display->display_options['filters']['field_os2web_cp_service_doc_id_value']['table'] = 'field_data_field_os2web_cp_service_doc_id';
+  $handler->display->display_options['filters']['field_os2web_cp_service_doc_id_value']['field'] = 'field_os2web_cp_service_doc_id_value';
+  $handler->display->display_options['filters']['field_os2web_cp_service_doc_id_value']['relationship'] = 'field_os2web_cp_service_doc_ref_nid';
+  $handler->display->display_options['filters']['field_os2web_cp_service_doc_id_value']['group'] = 1;
+  $handler->display->display_options['filters']['field_os2web_cp_service_doc_id_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_os2web_cp_service_doc_id_value']['expose']['operator_id'] = 'field_os2web_cp_service_doc_id_value_op';
+  $handler->display->display_options['filters']['field_os2web_cp_service_doc_id_value']['expose']['label'] = 'Dokumentnummer';
+  $handler->display->display_options['filters']['field_os2web_cp_service_doc_id_value']['expose']['description'] = 'fx. 9999999/12';
+  $handler->display->display_options['filters']['field_os2web_cp_service_doc_id_value']['expose']['operator'] = 'field_os2web_cp_service_doc_id_value_op';
+  $handler->display->display_options['filters']['field_os2web_cp_service_doc_id_value']['expose']['identifier'] = 'doc_id';
+  $handler->display->display_options['filters']['field_os2web_cp_service_doc_id_value']['expose']['remember_roles'] = array(
     2 => '2',
     1 => 0,
     3 => 0,
@@ -156,20 +266,66 @@ function os2web_cp_service_views_default_views() {
   $handler->display->display_options['filters']['field_os2web_cp_service_casetype_value']['id'] = 'field_os2web_cp_service_casetype_value';
   $handler->display->display_options['filters']['field_os2web_cp_service_casetype_value']['table'] = 'field_data_field_os2web_cp_service_casetype';
   $handler->display->display_options['filters']['field_os2web_cp_service_casetype_value']['field'] = 'field_os2web_cp_service_casetype_value';
+  $handler->display->display_options['filters']['field_os2web_cp_service_casetype_value']['group'] = 1;
   $handler->display->display_options['filters']['field_os2web_cp_service_casetype_value']['exposed'] = TRUE;
   $handler->display->display_options['filters']['field_os2web_cp_service_casetype_value']['expose']['operator_id'] = 'field_os2web_cp_service_casetype_value_op';
   $handler->display->display_options['filters']['field_os2web_cp_service_casetype_value']['expose']['label'] = 'Type';
   $handler->display->display_options['filters']['field_os2web_cp_service_casetype_value']['expose']['operator'] = 'field_os2web_cp_service_casetype_value_op';
-  $handler->display->display_options['filters']['field_os2web_cp_service_casetype_value']['expose']['identifier'] = 'field_os2web_cp_service_casetype_value';
+  $handler->display->display_options['filters']['field_os2web_cp_service_casetype_value']['expose']['identifier'] = 'casetype';
   $handler->display->display_options['filters']['field_os2web_cp_service_casetype_value']['expose']['remember_roles'] = array(
     2 => '2',
     1 => 0,
     3 => 0,
   );
+  /* Filter criterion: Content: Sagsansvar. enhed (field_os2web_cp_service_org_unit) */
+  $handler->display->display_options['filters']['field_os2web_cp_service_org_unit_value']['id'] = 'field_os2web_cp_service_org_unit_value';
+  $handler->display->display_options['filters']['field_os2web_cp_service_org_unit_value']['table'] = 'field_data_field_os2web_cp_service_org_unit';
+  $handler->display->display_options['filters']['field_os2web_cp_service_org_unit_value']['field'] = 'field_os2web_cp_service_org_unit_value';
+  $handler->display->display_options['filters']['field_os2web_cp_service_org_unit_value']['group'] = 1;
+  $handler->display->display_options['filters']['field_os2web_cp_service_org_unit_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_os2web_cp_service_org_unit_value']['expose']['operator_id'] = 'field_os2web_cp_service_org_unit_value_op';
+  $handler->display->display_options['filters']['field_os2web_cp_service_org_unit_value']['expose']['label'] = 'Sagsansvar. enhed';
+  $handler->display->display_options['filters']['field_os2web_cp_service_org_unit_value']['expose']['operator'] = 'field_os2web_cp_service_org_unit_value_op';
+  $handler->display->display_options['filters']['field_os2web_cp_service_org_unit_value']['expose']['identifier'] = 'field_os2web_cp_service_org_unit_value';
+  $handler->display->display_options['filters']['field_os2web_cp_service_org_unit_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    3 => 0,
+  );
+  $handler->display->display_options['filters']['field_os2web_cp_service_org_unit_value']['reduce_duplicates'] = TRUE;
+  /* Filter criterion: Global: Combine fields filter */
+  $handler->display->display_options['filters']['combine']['id'] = 'combine';
+  $handler->display->display_options['filters']['combine']['table'] = 'views';
+  $handler->display->display_options['filters']['combine']['field'] = 'combine';
+  $handler->display->display_options['filters']['combine']['operator'] = 'word';
+  $handler->display->display_options['filters']['combine']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['combine']['expose']['operator_id'] = 'combine_op';
+  $handler->display->display_options['filters']['combine']['expose']['label'] = 'Søgetekst';
+  $handler->display->display_options['filters']['combine']['expose']['description'] = 'fx. Birkevej affald';
+  $handler->display->display_options['filters']['combine']['expose']['operator'] = 'combine_op';
+  $handler->display->display_options['filters']['combine']['expose']['identifier'] = 'combine';
+  $handler->display->display_options['filters']['combine']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    3 => 0,
+  );
+  $handler->display->display_options['filters']['combine']['fields'] = array(
+    'field_os2web_cp_service_content' => 'field_os2web_cp_service_content',
+    'title' => 'title',
+  );
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
   $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
+  $handler->display->display_options['exposed_block'] = TRUE;
+  $handler->display->display_options['defaults']['empty'] = FALSE;
+  /* No results behavior: Global: Unfiltered text */
+  $handler->display->display_options['empty']['area_text_custom']['id'] = 'area_text_custom';
+  $handler->display->display_options['empty']['area_text_custom']['table'] = 'views';
+  $handler->display->display_options['empty']['area_text_custom']['field'] = 'area_text_custom';
+  $handler->display->display_options['empty']['area_text_custom']['empty'] = TRUE;
+  $handler->display->display_options['empty']['area_text_custom']['content'] = 'Der kunne ikke findes nogle sager ud fra dine søgekriterier. ';
+  $handler->display->display_options['empty']['area_text_custom']['tokenize'] = TRUE;
   $handler->display->display_options['path'] = 'cp-search';
   $export['os2web_cp_service_cp_case_search'] = $view;
 
@@ -178,7 +334,7 @@ function os2web_cp_service_views_default_views() {
   $view->description = 'Views to display the content of a CP Case';
   $view->tag = 'default';
   $view->base_table = 'node';
-  $view->human_name = 'CP View';
+  $view->human_name = 'CP Case View';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
@@ -238,22 +394,21 @@ function os2web_cp_service_views_default_views() {
   $handler->display->display_options['fields']['field_os2web_cp_service_content']['field'] = 'field_os2web_cp_service_content';
   $handler->display->display_options['fields']['field_os2web_cp_service_content']['label'] = 'Beskrivelse';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
-  /* Contextual filter: Content: SagsID (field_os2web_cp_service_case_id) */
-  $handler->display->display_options['arguments']['field_os2web_cp_service_case_id_value']['id'] = 'field_os2web_cp_service_case_id_value';
-  $handler->display->display_options['arguments']['field_os2web_cp_service_case_id_value']['table'] = 'field_data_field_os2web_cp_service_case_id';
-  $handler->display->display_options['arguments']['field_os2web_cp_service_case_id_value']['field'] = 'field_os2web_cp_service_case_id_value';
-  $handler->display->display_options['arguments']['field_os2web_cp_service_case_id_value']['default_action'] = 'not found';
-  $handler->display->display_options['arguments']['field_os2web_cp_service_case_id_value']['default_argument_type'] = 'fixed';
-  $handler->display->display_options['arguments']['field_os2web_cp_service_case_id_value']['summary']['number_of_records'] = '0';
-  $handler->display->display_options['arguments']['field_os2web_cp_service_case_id_value']['summary']['format'] = 'default_summary';
-  $handler->display->display_options['arguments']['field_os2web_cp_service_case_id_value']['summary_options']['items_per_page'] = '25';
-  $handler->display->display_options['arguments']['field_os2web_cp_service_case_id_value']['specify_validation'] = TRUE;
-  $handler->display->display_options['arguments']['field_os2web_cp_service_case_id_value']['validate']['type'] = 'node';
-  $handler->display->display_options['arguments']['field_os2web_cp_service_case_id_value']['validate_options']['types'] = array(
+  /* Contextual filter: Content: Nid */
+  $handler->display->display_options['arguments']['nid']['id'] = 'nid';
+  $handler->display->display_options['arguments']['nid']['table'] = 'node';
+  $handler->display->display_options['arguments']['nid']['field'] = 'nid';
+  $handler->display->display_options['arguments']['nid']['default_action'] = 'not found';
+  $handler->display->display_options['arguments']['nid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['nid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['nid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['nid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['nid']['specify_validation'] = TRUE;
+  $handler->display->display_options['arguments']['nid']['validate']['type'] = 'node';
+  $handler->display->display_options['arguments']['nid']['validate_options']['types'] = array(
     'os2web_cp_service_cp_case' => 'os2web_cp_service_cp_case',
   );
-  $handler->display->display_options['arguments']['field_os2web_cp_service_case_id_value']['validate_options']['access'] = TRUE;
-  $handler->display->display_options['arguments']['field_os2web_cp_service_case_id_value']['limit'] = '0';
+  $handler->display->display_options['arguments']['nid']['validate_options']['access'] = TRUE;
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
   /* Filter criterion: Content: Published */
@@ -270,22 +425,16 @@ function os2web_cp_service_views_default_views() {
   $handler->display->display_options['filters']['type']['value'] = array(
     'os2web_cp_service_cp_case' => 'os2web_cp_service_cp_case',
   );
-  /* Filter criterion: Content: Sagsindhold (field_os2web_cp_service_content) */
-  $handler->display->display_options['filters']['field_os2web_cp_service_content_value']['id'] = 'field_os2web_cp_service_content_value';
-  $handler->display->display_options['filters']['field_os2web_cp_service_content_value']['table'] = 'field_data_field_os2web_cp_service_content';
-  $handler->display->display_options['filters']['field_os2web_cp_service_content_value']['field'] = 'field_os2web_cp_service_content_value';
-  $handler->display->display_options['filters']['field_os2web_cp_service_content_value']['operator'] = 'longerthan';
-  $handler->display->display_options['filters']['field_os2web_cp_service_content_value']['value'] = '1';
+  $handler->display->display_options['filters']['type']['group'] = 1;
   $handler->display->display_options['displays'] = array(
     'page' => 'page',
     'default' => 0,
-    'block_1' => 0,
   );
   $handler->display->display_options['attachment_position'] = 'after';
 
-  /* Display: Attachment */
-  $handler = $view->new_display('attachment', 'Attachment', 'attachment_1');
-  $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
+  /* Display: Documents */
+  $handler = $view->new_display('attachment', 'Documents', 'attachment_1');
+  $handler->display->display_options['display_description'] = 'Attachent to display all documents for a case';
   $handler->display->display_options['pager']['type'] = 'some';
   $handler->display->display_options['defaults']['relationships'] = FALSE;
   /* Relationship: Content: Dokumenter (field_os2web_cp_service_doc_ref) */
@@ -324,6 +473,22 @@ function os2web_cp_service_views_default_views() {
     'multiple_from' => '',
     'multiple_to' => '',
   );
+  $handler->display->display_options['defaults']['arguments'] = FALSE;
+  /* Contextual filter: Content: Nid */
+  $handler->display->display_options['arguments']['nid']['id'] = 'nid';
+  $handler->display->display_options['arguments']['nid']['table'] = 'node';
+  $handler->display->display_options['arguments']['nid']['field'] = 'nid';
+  $handler->display->display_options['arguments']['nid']['default_action'] = 'not found';
+  $handler->display->display_options['arguments']['nid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['nid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['nid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['nid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['nid']['specify_validation'] = TRUE;
+  $handler->display->display_options['arguments']['nid']['validate']['type'] = 'node';
+  $handler->display->display_options['arguments']['nid']['validate_options']['types'] = array(
+    'os2web_cp_service_cp_case' => 'os2web_cp_service_cp_case',
+  );
+  $handler->display->display_options['arguments']['nid']['validate_options']['access'] = TRUE;
   $handler->display->display_options['displays'] = array(
     'page' => 'page',
     'default' => 0,
@@ -338,7 +503,7 @@ function os2web_cp_service_views_default_views() {
   $handler->display->display_options['header']['area_text_custom']['id'] = 'area_text_custom';
   $handler->display->display_options['header']['area_text_custom']['table'] = 'views';
   $handler->display->display_options['header']['area_text_custom']['field'] = 'area_text_custom';
-  $handler->display->display_options['header']['area_text_custom']['content'] = '<h1>[title]</h1>
+  $handler->display->display_options['header']['area_text_custom']['content'] = '<h1>[title_1]</h1>
 <h2>Sags Nr.: [field_os2web_cp_service_case_id]</h2>';
   $handler->display->display_options['header']['area_text_custom']['tokenize'] = TRUE;
   $handler->display->display_options['defaults']['fields'] = FALSE;
@@ -353,6 +518,10 @@ function os2web_cp_service_views_default_views() {
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['title']['alter']['text'] = '[title] <span>Se alle sager på denne addresse</span>';
+  $handler->display->display_options['fields']['title']['alter']['make_link'] = TRUE;
+  $handler->display->display_options['fields']['title']['alter']['path'] = 'aaben-indsigt?search=[title]';
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
   $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
@@ -375,6 +544,15 @@ function os2web_cp_service_views_default_views() {
   $handler->display->display_options['fields']['field_os2web_cp_service_case_id']['label'] = '';
   $handler->display->display_options['fields']['field_os2web_cp_service_case_id']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_os2web_cp_service_case_id']['element_label_colon'] = FALSE;
+  /* Field: Title Clean */
+  $handler->display->display_options['fields']['title_1']['id'] = 'title_1';
+  $handler->display->display_options['fields']['title_1']['table'] = 'node';
+  $handler->display->display_options['fields']['title_1']['field'] = 'title';
+  $handler->display->display_options['fields']['title_1']['ui_name'] = 'Title Clean';
+  $handler->display->display_options['fields']['title_1']['label'] = '';
+  $handler->display->display_options['fields']['title_1']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['title_1']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['title_1']['link_to_node'] = FALSE;
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
@@ -404,11 +582,11 @@ $node = node_load($data->nid);
 $field_case_id = field_get_items(\'node\', $node, \'field_os2web_cp_service_case_id\');
 $field_case_id = $field_case_id[0][\'value\'];
 $arp_case_id = $year . "/" . $id;
-if ($arp_case_id !== $field_case_id)
+if ($arp_case_id !== $row->field_os2web_cp_service_case_id)
 {
-return TRUE;
+//return TRUE;
 }';
-  $handler->display->display_options['path'] = 'sag/%';
+  $handler->display->display_options['path'] = 'cp_case_search/%';
   $export['os2web_cp_service_cp_case_view'] = $view;
 
   return $export;
