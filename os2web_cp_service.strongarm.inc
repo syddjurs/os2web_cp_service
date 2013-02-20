@@ -21,6 +21,9 @@ function os2web_cp_service_strongarm() {
         'title' => array(
           'weight' => '-5',
         ),
+        'path' => array(
+          'weight' => '30',
+        ),
       ),
       'display' => array(),
     ),

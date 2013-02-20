@@ -385,35 +385,39 @@ function os2web_cp_service_field_default_fields() {
       'entity_types' => array(),
       'field_name' => 'field_os2web_cp_service_doc_ref',
       'foreign keys' => array(
-        'nid' => array(
+        'node' => array(
           'columns' => array(
-            'nid' => 'nid',
+            'target_id' => 'nid',
           ),
           'table' => 'node',
         ),
       ),
       'indexes' => array(
-        'nid' => array(
-          0 => 'nid',
+        'target_id' => array(
+          0 => 'target_id',
         ),
       ),
       'locked' => '0',
-      'module' => 'node_reference',
+      'module' => 'entityreference',
       'settings' => array(
-        'referenceable_types' => array(
-          'article' => 0,
-          'os2web_cp_service_cp_case' => 0,
-          'os2web_cp_service_cp_document' => 'os2web_cp_service_cp_document',
-          'page' => 0,
+        'handler' => 'base',
+        'handler_settings' => array(
+          'behaviors' => array(
+            'views-select-list' => array(
+              'status' => 0,
+            ),
+          ),
+          'sort' => array(
+            'type' => 'none',
+          ),
+          'target_bundles' => array(
+            'os2web_cp_service_cp_document' => 'os2web_cp_service_cp_document',
+          ),
         ),
-        'view' => array(
-          'args' => array(),
-          'display_name' => '',
-          'view_name' => '',
-        ),
+        'target_type' => 'node',
       ),
       'translatable' => '0',
-      'type' => 'node_reference',
+      'type' => 'entityreference',
     ),
     'field_instance' => array(
       'bundle' => 'os2web_cp_service_cp_case',
@@ -423,10 +427,12 @@ function os2web_cp_service_field_default_fields() {
       'display' => array(
         'default' => array(
           'label' => 'above',
-          'module' => 'node_reference',
-          'settings' => array(),
-          'type' => 'node_reference_default',
-          'weight' => 7,
+          'module' => 'entityreference',
+          'settings' => array(
+            'link' => FALSE,
+          ),
+          'type' => 'entityreference_label',
+          'weight' => 14,
         ),
         'teaser' => array(
           'label' => 'above',
@@ -444,14 +450,14 @@ function os2web_cp_service_field_default_fields() {
       ),
       'widget' => array(
         'active' => 1,
-        'module' => 'node_reference',
+        'module' => 'entityreference',
         'settings' => array(
-          'autocomplete_match' => 'contains',
-          'autocomplete_path' => 'node_reference/autocomplete',
+          'match_operator' => 'CONTAINS',
+          'path' => '',
           'size' => '60',
         ),
-        'type' => 'node_reference_autocomplete',
-        'weight' => '8',
+        'type' => 'entityreference_autocomplete',
+        'weight' => '31',
       ),
     ),
   );

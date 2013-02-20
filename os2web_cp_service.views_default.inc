@@ -112,11 +112,10 @@ function os2web_cp_service_views_default_views() {
   $handler->display->display_options['empty']['area_text_custom']['id'] = 'area_text_custom';
   $handler->display->display_options['empty']['area_text_custom']['table'] = 'views';
   $handler->display->display_options['empty']['area_text_custom']['field'] = 'area_text_custom';
-  /* Relationship: Content: Dokumenter (field_os2web_cp_service_doc_ref) */
-  $handler->display->display_options['relationships']['field_os2web_cp_service_doc_ref_nid']['id'] = 'field_os2web_cp_service_doc_ref_nid';
-  $handler->display->display_options['relationships']['field_os2web_cp_service_doc_ref_nid']['table'] = 'field_data_field_os2web_cp_service_doc_ref';
-  $handler->display->display_options['relationships']['field_os2web_cp_service_doc_ref_nid']['field'] = 'field_os2web_cp_service_doc_ref_nid';
-  $handler->display->display_options['relationships']['field_os2web_cp_service_doc_ref_nid']['delta'] = '-1';
+  /* Relationship: Entity Reference: Referenced Entity */
+  $handler->display->display_options['relationships']['field_os2web_cp_service_doc_ref_target_id']['id'] = 'field_os2web_cp_service_doc_ref_target_id';
+  $handler->display->display_options['relationships']['field_os2web_cp_service_doc_ref_target_id']['table'] = 'field_data_field_os2web_cp_service_doc_ref';
+  $handler->display->display_options['relationships']['field_os2web_cp_service_doc_ref_target_id']['field'] = 'field_os2web_cp_service_doc_ref_target_id';
   /* Field: Content: SagsID */
   $handler->display->display_options['fields']['field_os2web_cp_service_case_id']['id'] = 'field_os2web_cp_service_case_id';
   $handler->display->display_options['fields']['field_os2web_cp_service_case_id']['table'] = 'field_data_field_os2web_cp_service_case_id';
@@ -170,7 +169,7 @@ function os2web_cp_service_views_default_views() {
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['id'] = 'field_os2web_cp_service_doc_id_1';
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['table'] = 'field_data_field_os2web_cp_service_doc_id';
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['field'] = 'field_os2web_cp_service_doc_id';
-  $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['relationship'] = 'field_os2web_cp_service_doc_ref_nid';
+  $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['relationship'] = 'field_os2web_cp_service_doc_ref_target_id';
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['label'] = '';
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['element_label_colon'] = FALSE;
@@ -178,7 +177,7 @@ function os2web_cp_service_views_default_views() {
   $handler->display->display_options['fields']['field_os2web_cp_service_content_1']['id'] = 'field_os2web_cp_service_content_1';
   $handler->display->display_options['fields']['field_os2web_cp_service_content_1']['table'] = 'field_data_field_os2web_cp_service_content';
   $handler->display->display_options['fields']['field_os2web_cp_service_content_1']['field'] = 'field_os2web_cp_service_content';
-  $handler->display->display_options['fields']['field_os2web_cp_service_content_1']['relationship'] = 'field_os2web_cp_service_doc_ref_nid';
+  $handler->display->display_options['fields']['field_os2web_cp_service_content_1']['relationship'] = 'field_os2web_cp_service_doc_ref_target_id';
   $handler->display->display_options['fields']['field_os2web_cp_service_content_1']['label'] = '';
   $handler->display->display_options['fields']['field_os2web_cp_service_content_1']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_os2web_cp_service_content_1']['element_label_colon'] = FALSE;
@@ -186,7 +185,7 @@ function os2web_cp_service_views_default_views() {
   $handler->display->display_options['fields']['title_1']['id'] = 'title_1';
   $handler->display->display_options['fields']['title_1']['table'] = 'node';
   $handler->display->display_options['fields']['title_1']['field'] = 'title';
-  $handler->display->display_options['fields']['title_1']['relationship'] = 'field_os2web_cp_service_doc_ref_nid';
+  $handler->display->display_options['fields']['title_1']['relationship'] = 'field_os2web_cp_service_doc_ref_target_id';
   $handler->display->display_options['fields']['title_1']['label'] = '';
   $handler->display->display_options['fields']['title_1']['exclude'] = TRUE;
   $handler->display->display_options['fields']['title_1']['element_label_colon'] = FALSE;
@@ -302,7 +301,7 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['filters']['field_os2web_cp_service_doc_id_value']['id'] = 'field_os2web_cp_service_doc_id_value';
   $handler->display->display_options['filters']['field_os2web_cp_service_doc_id_value']['table'] = 'field_data_field_os2web_cp_service_doc_id';
   $handler->display->display_options['filters']['field_os2web_cp_service_doc_id_value']['field'] = 'field_os2web_cp_service_doc_id_value';
-  $handler->display->display_options['filters']['field_os2web_cp_service_doc_id_value']['relationship'] = 'field_os2web_cp_service_doc_ref_nid';
+  $handler->display->display_options['filters']['field_os2web_cp_service_doc_id_value']['relationship'] = 'field_os2web_cp_service_doc_ref_target_id';
   $handler->display->display_options['filters']['field_os2web_cp_service_doc_id_value']['group'] = 1;
   $handler->display->display_options['filters']['field_os2web_cp_service_doc_id_value']['exposed'] = TRUE;
   $handler->display->display_options['filters']['field_os2web_cp_service_doc_id_value']['expose']['operator_id'] = 'field_os2web_cp_service_doc_id_value_op';
@@ -519,12 +518,11 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['display_description'] = 'Attachent to display all documents for a case';
   $handler->display->display_options['pager']['type'] = 'some';
   $handler->display->display_options['defaults']['relationships'] = FALSE;
-  /* Relationship: Content: Dokumenter (field_os2web_cp_service_doc_ref) */
-  $handler->display->display_options['relationships']['field_os2web_cp_service_doc_ref_nid']['id'] = 'field_os2web_cp_service_doc_ref_nid';
-  $handler->display->display_options['relationships']['field_os2web_cp_service_doc_ref_nid']['table'] = 'field_data_field_os2web_cp_service_doc_ref';
-  $handler->display->display_options['relationships']['field_os2web_cp_service_doc_ref_nid']['field'] = 'field_os2web_cp_service_doc_ref_nid';
-  $handler->display->display_options['relationships']['field_os2web_cp_service_doc_ref_nid']['required'] = TRUE;
-  $handler->display->display_options['relationships']['field_os2web_cp_service_doc_ref_nid']['delta'] = '-1';
+  /* Relationship: Entity Reference: Referenced Entity */
+  $handler->display->display_options['relationships']['field_os2web_cp_service_doc_ref_target_id']['id'] = 'field_os2web_cp_service_doc_ref_target_id';
+  $handler->display->display_options['relationships']['field_os2web_cp_service_doc_ref_target_id']['table'] = 'field_data_field_os2web_cp_service_doc_ref';
+  $handler->display->display_options['relationships']['field_os2web_cp_service_doc_ref_target_id']['field'] = 'field_os2web_cp_service_doc_ref_target_id';
+  $handler->display->display_options['relationships']['field_os2web_cp_service_doc_ref_target_id']['required'] = TRUE;
   $handler->display->display_options['defaults']['fields'] = FALSE;
   /* Field: Content: Nid */
   $handler->display->display_options['fields']['nid']['id'] = 'nid';
@@ -537,13 +535,13 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id']['id'] = 'field_os2web_cp_service_doc_id';
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id']['table'] = 'field_data_field_os2web_cp_service_doc_id';
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id']['field'] = 'field_os2web_cp_service_doc_id';
-  $handler->display->display_options['fields']['field_os2web_cp_service_doc_id']['relationship'] = 'field_os2web_cp_service_doc_ref_nid';
+  $handler->display->display_options['fields']['field_os2web_cp_service_doc_id']['relationship'] = 'field_os2web_cp_service_doc_ref_target_id';
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id']['exclude'] = TRUE;
   /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
-  $handler->display->display_options['fields']['title']['relationship'] = 'field_os2web_cp_service_doc_ref_nid';
+  $handler->display->display_options['fields']['title']['relationship'] = 'field_os2web_cp_service_doc_ref_target_id';
   $handler->display->display_options['fields']['title']['label'] = '';
   $handler->display->display_options['fields']['title']['alter']['make_link'] = TRUE;
   $handler->display->display_options['fields']['title']['alter']['path'] = 'dok/[field_os2web_cp_service_doc_id]';
@@ -553,14 +551,14 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['id'] = 'field_os2web_cp_service_doc_id_1';
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['table'] = 'field_data_field_os2web_cp_service_doc_id';
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['field'] = 'field_os2web_cp_service_doc_id';
-  $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['relationship'] = 'field_os2web_cp_service_doc_ref_nid';
+  $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['relationship'] = 'field_os2web_cp_service_doc_ref_target_id';
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['label'] = '';
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['element_label_colon'] = FALSE;
   /* Field: Content: OprettelsesDato */
   $handler->display->display_options['fields']['field_os2web_cp_service_created']['id'] = 'field_os2web_cp_service_created';
   $handler->display->display_options['fields']['field_os2web_cp_service_created']['table'] = 'field_data_field_os2web_cp_service_created';
   $handler->display->display_options['fields']['field_os2web_cp_service_created']['field'] = 'field_os2web_cp_service_created';
-  $handler->display->display_options['fields']['field_os2web_cp_service_created']['relationship'] = 'field_os2web_cp_service_doc_ref_nid';
+  $handler->display->display_options['fields']['field_os2web_cp_service_created']['relationship'] = 'field_os2web_cp_service_doc_ref_target_id';
   $handler->display->display_options['fields']['field_os2web_cp_service_created']['label'] = 'Dato';
   $handler->display->display_options['fields']['field_os2web_cp_service_created']['element_wrapper_class'] = 'documentdate';
   $handler->display->display_options['fields']['field_os2web_cp_service_created']['settings'] = array(
