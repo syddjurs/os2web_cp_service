@@ -29,7 +29,6 @@ function os2web_cp_service_handler() {
     drupal_access_denied();
   }
   $data = os2web_esdh_provider_invoke('cp', 'handle_request');
-  error_log(basename(__FILE__) . ':' . __LINE__ . ' Var: $data = ' . print_r($data, 1));
   return $data;
 }
 
@@ -194,8 +193,64 @@ function os2web_cs_service_default_case() {
  */
 function os2web_cs_service_create_document(array $data) {
   $data = array_replace_recursive(os2web_cs_service_default_document(), $data);
-  error_log(basename(__FILE__) . ':' . __LINE__ . ' Var: $data = ' . print_r($data, 1));
+  // Prepare data.
+  $query = new EntityFieldQuery();
+  $result = $query
+      ->entityCondition('entity_type', 'node')
+      ->propertyCondition('type', 'os2web_cp_service_cp_document')
+      ->propertyCondition('status', 1)
+      ->fieldCondition('field_os2web_cp_service_doc_id', 'value', $data['fields']['SystemID'], '=')
+      ->execute();
+  $nids = array_keys($result['node']);
+  if (count($nids) > 1) {
+    if (is_array($nids)) {
+      node_delete_multiple($nids);
+    }
+    $node = (object) NULL;
+  }
+  else {
+    $node = node_load(array_pop($nids));
+  }
+  $node->type = 'os2web_cp_service_cp_document';
+  $node->uid = 0;
+  $node->status = 1;
+  $node->comment = 0;
+  $node->promote = 0;
+  $node->moderate = 0;
+  $node->sticky = 0;
+  $node->language = LANGUAGE_NONE;
+  node_object_prepare($node);
 
+  $node->title = (string) $data['fields']['Officiel titel'];
+  $node->field_os2web_cp_service_doc_id[LANGUAGE_NONE][]['value'] = $data['fields']['SystemID'];
+  $node->field_os2web_cp_service_case_id[LANGUAGE_NONE][]['value'] = $data['fields']['Sag SystemID'];
+  // TODO: Fill out the list of fields.
+
+  node_submit($node);
+  node_save($node);
+
+  // Update case
+  $query = new EntityFieldQuery();
+  $result = $query
+      ->entityCondition('entity_type', 'node')
+      ->propertyCondition('type', 'os2web_cp_service_cp_case')
+      ->propertyCondition('status', 1)
+      ->fieldCondition('field_os2web_cp_service_sysid', 'value', $data['fields']['Sag SystemID'], '=')
+      ->execute();
+  $nids = array_keys($result['node']);
+  foreach ($nids as $nid) {
+    $cnode = node_load($nid);
+    $is_missing = TRUE;
+    foreach ($cnode->field_os2web_cp_service_doc_ref[LANGUAGE_NONE] as $value) {
+      if ($value['target_id'] == $node->nid) {
+        $is_missing = FALSE;
+      }
+    }
+    if ($is_missing) {
+      $cnode->field_os2web_cp_service_doc_ref[LANGUAGE_NONE][]['target_id'] = $node->nid;
+      node_save($cnode);
+    }
+  }
   return TRUE;
 }
 
@@ -254,4 +309,29 @@ function os2web_cs_service_default_document() {
       'Låst' => NULL,
     ),
   );
+}
+
+function os2web_cp_service_node_delete($node) {
+  if ($node->type == 'os2web_cp_service_cp_document') {
+    // Prepare data.
+    $query = new EntityFieldQuery();
+    $result = $query
+        ->entityCondition('entity_type', 'node')
+        ->propertyCondition('type', 'os2web_cp_service_cp_case')
+        ->propertyCondition('status', 1)
+        ->fieldCondition('field_os2web_cp_service_doc_ref', 'target_id', $node->nid, '=')
+        ->execute();
+    $nids = array_keys($result['node']);
+    $new_nids = array();
+    foreach ($nids as $nid) {
+      $cnode = node_load($nid);
+      foreach ($cnode->field_os2web_cp_service_doc_ref[LANGUAGE_NONE] as $value) {
+        if ($value['target_id'] != $node->nid) {
+          $new_nids[] = $value;
+        }
+      }
+      $cnode->field_os2web_cp_service_doc_ref[LANGUAGE_NONE] = $new_nids;
+      node_save($cnode);
+    }
+  }
 }
