@@ -7,6 +7,18 @@
 include_once 'os2web_cp_service.features.inc';
 
 /**
+ * Implements hook_init().
+ */
+
+function os2web_cp_service_init() {
+  if (arg(0) == 'aaben-indsigt') {
+    drupal_add_js(drupal_get_path('module', 'os2web_cp_service') . '/js/os2web_cp_service.js');
+    drupal_add_css(drupal_get_path('module', 'os2web_cp_service') . '/css/os2web_cp_service.css');
+  }
+  return true;
+}
+
+/**
  * Implements hook_menu().
  */
 function os2web_cp_service_menu() {
@@ -254,4 +266,37 @@ function os2web_cs_service_default_document() {
       'Låst' => NULL,
     ),
   );
+}
+
+
+function os2web_cp_service_preprocess_views_exposed_form(&$variables) {
+  if ($variables['form']['#id'] == 'views-exposed-form-os2web-cp-service-cp-case-search-page') {
+    foreach ($variables['widgets'] as $id => &$widget) {
+      switch ($id) {
+        case 'filter-field_os2web_cp_service_created_value':
+          $widget->prefix = '<div class="filter-widgets-wrapper clearfix">';
+          break;
+        case 'filter-field_os2web_cp_service_created_value_1':
+          $widget->suffix = '<input type="submit" name="" value="Søg" class="form-submit"></div>';
+          break;
+        case 'filter-field_os2web_cp_service_case_id_value':
+          $widget->prefix = '<div class="filter-widgets-wrapper clearfix">';
+          $widget->suffix = '<input type="submit" name="" value="Find sag" class="form-submit"></div>';
+          break;
+        case 'filter-field_os2web_cp_service_doc_id_value':
+          $widget->prefix = '<div class="filter-widgets-wrapper clearfix">';
+          $widget->suffix = '<input type="submit" name="" value="Find dokument" class="form-submit"></div>';
+          break;
+      }
+    }
+  }
+}
+
+/**
+ * Add the tpl for exposed form to the theme registry
+ */
+function os2web_cp_service_theme_registry_alter(&$theme_registry) {
+  if (!empty($theme_registry['views_exposed_form__os2web_cp_service_cp_case_search']['path'])) {
+    $theme_registry['views_exposed_form__os2web_cp_service_cp_case_search']['path'] = drupal_get_path('module', 'os2web_cp_service'). '/theme/';
+  }
 }

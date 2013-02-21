@@ -1,0 +1,36 @@
+/* os2web_cp_service.css */
+
+.view-os2web-cp-service-cp-case-search .views-exposed-widget{
+    display: block;
+}
+.view-os2web-cp-service-cp-case-search .filter-widgets-wrapper{
+    clear: both;
+    float: none;
+}
+.view-os2web-cp-service-cp-case-search .form-submit{
+    margin: 41px 0 0 10px;
+}
+.view-os2web-cp-service-cp-case-search .views-table caption{
+    text-align: left;
+}
+#edit-search-text,
+#edit-from-date-value-datepicker-popup-0,
+#edit-to-date-value-datepicker-popup-0,
+#edit-case-id,
+#edit-doc-id,
+#edit-casetype,
+#edit-field-os2web-cp-service-org-unit-value{
+    width: 100%;
+    border: 1px solid #ddd;
+    margin-bottom: 11px;
+    color: #7A7A7A;
+    margin: 11px 0 0;
+    font-size: 20px;
+}
+
+#edit-search-text-wrapper{
+    float: none;
+}
+#edit-search-text{
+    width: 100%;
+}
