@@ -28,6 +28,7 @@ function os2web_cp_service_views_default_views() {
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Filtrer';
   $handler->display->display_options['pager']['type'] = 'full';
   $handler->display->display_options['pager']['options']['items_per_page'] = '15';
   $handler->display->display_options['pager']['options']['offset'] = '0';
@@ -150,7 +151,7 @@ function os2web_cp_service_views_default_views() {
   $handler->display->display_options['fields']['field_os2web_cp_service_created']['id'] = 'field_os2web_cp_service_created';
   $handler->display->display_options['fields']['field_os2web_cp_service_created']['table'] = 'field_data_field_os2web_cp_service_created';
   $handler->display->display_options['fields']['field_os2web_cp_service_created']['field'] = 'field_os2web_cp_service_created';
-  $handler->display->display_options['fields']['field_os2web_cp_service_created']['label'] = 'Dato';
+  $handler->display->display_options['fields']['field_os2web_cp_service_created']['label'] = 'Oprettelsesdato';
   $handler->display->display_options['fields']['field_os2web_cp_service_created']['settings'] = array(
     'format_type' => 'short',
     'fromto' => 'both',
@@ -233,7 +234,7 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['filters']['combine']['expose']['label'] = 'Søgetekst';
   $handler->display->display_options['filters']['combine']['expose']['description'] = 'fx. Birkevej affald';
   $handler->display->display_options['filters']['combine']['expose']['operator'] = 'combine_op';
-  $handler->display->display_options['filters']['combine']['expose']['identifier'] = 'combine';
+  $handler->display->display_options['filters']['combine']['expose']['identifier'] = 'search-text';
   $handler->display->display_options['filters']['combine']['expose']['remember_roles'] = array(
     2 => '2',
     1 => 0,
@@ -336,7 +337,7 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['filters']['field_os2web_cp_service_org_unit_value']['group'] = 1;
   $handler->display->display_options['filters']['field_os2web_cp_service_org_unit_value']['exposed'] = TRUE;
   $handler->display->display_options['filters']['field_os2web_cp_service_org_unit_value']['expose']['operator_id'] = 'field_os2web_cp_service_org_unit_value_op';
-  $handler->display->display_options['filters']['field_os2web_cp_service_org_unit_value']['expose']['label'] = 'Sagsansvar. enhed';
+  $handler->display->display_options['filters']['field_os2web_cp_service_org_unit_value']['expose']['label'] = 'Vælg afdeling';
   $handler->display->display_options['filters']['field_os2web_cp_service_org_unit_value']['expose']['operator'] = 'field_os2web_cp_service_org_unit_value_op';
   $handler->display->display_options['filters']['field_os2web_cp_service_org_unit_value']['expose']['identifier'] = 'field_os2web_cp_service_org_unit_value';
   $handler->display->display_options['filters']['field_os2web_cp_service_org_unit_value']['expose']['remember_roles'] = array(
@@ -468,7 +469,7 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['fields']['field_os2web_cp_service_content']['id'] = 'field_os2web_cp_service_content';
   $handler->display->display_options['fields']['field_os2web_cp_service_content']['table'] = 'field_data_field_os2web_cp_service_content';
   $handler->display->display_options['fields']['field_os2web_cp_service_content']['field'] = 'field_os2web_cp_service_content';
-  $handler->display->display_options['fields']['field_os2web_cp_service_content']['label'] = 'Beskrivelse';
+  $handler->display->display_options['fields']['field_os2web_cp_service_content']['label'] = 'Beskrivelse af sagen';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Contextual filter: Content: Nid */
   $handler->display->display_options['arguments']['nid']['id'] = 'nid';
@@ -613,7 +614,7 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
   $handler->display->display_options['fields']['title']['alter']['alter_text'] = TRUE;
-  $handler->display->display_options['fields']['title']['alter']['text'] = '[title] <span>Se alle sager på denne addresse</span>';
+  $handler->display->display_options['fields']['title']['alter']['text'] = '[title] <br><span>Se alle sager på denne addresse</span>';
   $handler->display->display_options['fields']['title']['alter']['make_link'] = TRUE;
   $handler->display->display_options['fields']['title']['alter']['path'] = 'aaben-indsigt?search=[title]';
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
@@ -744,7 +745,7 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['fields']['field_os2web_cp_service_content']['id'] = 'field_os2web_cp_service_content';
   $handler->display->display_options['fields']['field_os2web_cp_service_content']['table'] = 'field_data_field_os2web_cp_service_content';
   $handler->display->display_options['fields']['field_os2web_cp_service_content']['field'] = 'field_os2web_cp_service_content';
-  $handler->display->display_options['fields']['field_os2web_cp_service_content']['label'] = 'Beskrivelse';
+  $handler->display->display_options['fields']['field_os2web_cp_service_content']['label'] = 'Beskrivelse af dokumentet';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Contextual filter: Content: Nid */
   $handler->display->display_options['arguments']['nid']['id'] = 'nid';
@@ -798,7 +799,8 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['header']['area_text_custom']['id'] = 'area_text_custom';
   $handler->display->display_options['header']['area_text_custom']['table'] = 'views';
   $handler->display->display_options['header']['area_text_custom']['field'] = 'area_text_custom';
-  $handler->display->display_options['header']['area_text_custom']['content'] = '<h2>Sags Nr.: [field_os2web_cp_service_case_id]</h2>';
+  $handler->display->display_options['header']['area_text_custom']['content'] = '<h2>Fra sag Nr.: [field_os2web_cp_service_case_id]</h2>
+<p>Klik på sags nr. for at se alle dokumenter på sagen</p>';
   $handler->display->display_options['header']['area_text_custom']['tokenize'] = TRUE;
   $handler->display->display_options['defaults']['fields'] = FALSE;
   /* Field: Content: DokumentID */
