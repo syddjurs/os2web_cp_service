@@ -10,6 +10,9 @@
 .view-os2web-cp-service-cp-case-search .form-submit{
     margin: 41px 0 0 10px;
 }
+.view-os2web-cp-service-cp-case-search .views-submit-button{
+    display: none; /* Only the last one */
+}
 .view-os2web-cp-service-cp-case-search .views-table caption{
     text-align: left;
 }

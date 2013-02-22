@@ -348,6 +348,25 @@ function os2web_cp_service_node_delete($node) {
   }
 }
 
+/**
+ * Implements hook_foorm_alter()
+ * Adds placeholder to all textfields with a description
+ */
+function os2web_cp_service_form_alter( &$form, &$form_state, $form_id )
+{
+  if ($form['#id'] === 'views-exposed-form-os2web-cp-service-cp-case-search-page') {
+    foreach ($form['#info'] as $id => &$widget) {
+      if (!empty($widget['description']) && $form[$widget['value']]['#type'] === 'textfield') {
+        $form[$widget['value']]['#attributes']['placeholder'] = $widget['description'];
+      }
+    }
+  }
+}
+
+/**
+ * Implements theme_preprocess_views_exposed_form()
+ * Wrap certain elements in search form. Used for styling etc.
+ */
 function os2web_cp_service_preprocess_views_exposed_form(&$variables) {
   if ($variables['form']['#id'] == 'views-exposed-form-os2web-cp-service-cp-case-search-page') {
     foreach ($variables['widgets'] as $id => &$widget) {
@@ -372,6 +391,7 @@ function os2web_cp_service_preprocess_views_exposed_form(&$variables) {
 }
 
 /**
+ * Implements hook_theme_registry_alter()
  * Add the tpl for exposed form to the theme registry
  */
 function os2web_cp_service_theme_registry_alter(&$theme_registry) {
