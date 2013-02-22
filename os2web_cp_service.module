@@ -7,18 +7,6 @@
 include_once 'os2web_cp_service.features.inc';
 
 /**
- * Implements hook_init().
- */
-
-function os2web_cp_service_init() {
-  if (arg(0) == 'aaben-indsigt') {
-    drupal_add_js(drupal_get_path('module', 'os2web_cp_service') . '/js/os2web_cp_service.js');
-    drupal_add_css(drupal_get_path('module', 'os2web_cp_service') . '/css/os2web_cp_service.css');
-  }
-  return true;
-}
-
-/**
  * Implements hook_menu().
  */
 function os2web_cp_service_menu() {
@@ -354,7 +342,8 @@ function os2web_cp_service_node_delete($node) {
  */
 function os2web_cp_service_form_alter( &$form, &$form_state, $form_id )
 {
-  if ($form['#id'] === 'views-exposed-form-os2web-cp-service-cp-case-search-page') {
+  if ($form['#id'] == 'views-exposed-form-os2web-cp-service-cp-case-search-page' ||
+      $form['#id'] == 'views-exposed-form-os2web-cp-service-cp-case-search-default') {
     foreach ($form['#info'] as $id => &$widget) {
       if (!empty($widget['description']) && $form[$widget['value']]['#type'] === 'textfield') {
         $form[$widget['value']]['#attributes']['placeholder'] = $widget['description'];
@@ -368,7 +357,8 @@ function os2web_cp_service_form_alter( &$form, &$form_state, $form_id )
  * Wrap certain elements in search form. Used for styling etc.
  */
 function os2web_cp_service_preprocess_views_exposed_form(&$variables) {
-  if ($variables['form']['#id'] == 'views-exposed-form-os2web-cp-service-cp-case-search-page') {
+  if ($variables['form']['#id'] == 'views-exposed-form-os2web-cp-service-cp-case-search-page' ||
+      $variables['form']['#id'] == 'views-exposed-form-os2web-cp-service-cp-case-search-default') {
     foreach ($variables['widgets'] as $id => &$widget) {
       switch ($id) {
         case 'filter-field_os2web_cp_service_created_value':
@@ -387,12 +377,33 @@ function os2web_cp_service_preprocess_views_exposed_form(&$variables) {
           break;
       }
     }
+
+    $calIcon = drupal_get_path('theme', variable_get('theme_default', NULL)) . "/images/cal.png";
+    $datepicker = 'jQuery(document).ready(function($) {
+      $( "#edit-from-date-value-datepicker-popup-0" ).datepicker({
+                    showOn: "both",
+                    buttonImage: "' . $calIcon . '",
+                    buttonImageOnly: true,
+                    dateFormat: "dd-mm-yy"
+      });
+      $( "#edit-to-date-value-datepicker-popup-0" ).datepicker({
+                    showOn: "both",
+                    buttonImage: "' . $calIcon . '",
+                    buttonImageOnly: true,
+                    dateFormat: "dd-mm-yy"
+      });
+    });';
+    drupal_add_js($datepicker, array('type' => 'inline', 'scope' => 'footer', 'weight' => 5));
+
+    drupal_add_js(drupal_get_path('module', 'os2web_cp_service') . '/js/os2web_cp_service.js');
+    drupal_add_css(drupal_get_path('module', 'os2web_cp_service') . '/css/os2web_cp_service.css');
   }
 }
 
 /**
  * Implements hook_theme_registry_alter()
  * Add the tpl for exposed form to the theme registry
+ * Somehow this gets overridden by cmstheme.
  */
 function os2web_cp_service_theme_registry_alter(&$theme_registry) {
   if (!empty($theme_registry['views_exposed_form__os2web_cp_service_cp_case_search']['path'])) {
