@@ -263,6 +263,7 @@ return TRUE; // If no exposed inputs, remove all results
     3 => 0,
   );
   $handler->display->display_options['filters']['field_os2web_cp_service_created_value']['form_type'] = 'date_popup';
+  $handler->display->display_options['filters']['field_os2web_cp_service_created_value']['default_date'] = 'now -1 month';
   $handler->display->display_options['filters']['field_os2web_cp_service_created_value']['year_range'] = '-10:+0';
   /* Filter criterion: Content: OprettelsesDato (field_os2web_cp_service_created) */
   $handler->display->display_options['filters']['field_os2web_cp_service_created_value_1']['id'] = 'field_os2web_cp_service_created_value_1';
@@ -281,6 +282,7 @@ return TRUE; // If no exposed inputs, remove all results
     3 => 0,
   );
   $handler->display->display_options['filters']['field_os2web_cp_service_created_value_1']['form_type'] = 'date_popup';
+  $handler->display->display_options['filters']['field_os2web_cp_service_created_value_1']['default_date'] = 'now';
   $handler->display->display_options['filters']['field_os2web_cp_service_created_value_1']['year_range'] = '-10:+0';
   /* Filter criterion: Content: SagsID (field_os2web_cp_service_case_id) */
   $handler->display->display_options['filters']['field_os2web_cp_service_case_id_value']['id'] = 'field_os2web_cp_service_case_id_value';
@@ -406,7 +408,7 @@ return TRUE; // If no exposed inputs, remove all results
       'empty_column' => 0,
     ),
     'title' => array(
-      'sortable' => 1,
+      'sortable' => 0,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
@@ -420,7 +422,7 @@ return TRUE; // If no exposed inputs, remove all results
       'empty_column' => 0,
     ),
     'field_os2web_cp_service_created' => array(
-      'sortable' => 1,
+      'sortable' => 0,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
@@ -553,7 +555,7 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['table'] = 'field_data_field_os2web_cp_service_doc_id';
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['field'] = 'field_os2web_cp_service_doc_id';
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['relationship'] = 'field_os2web_cp_service_doc_ref_target_id';
-  $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['label'] = '';
+  $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['label'] = 'Dokumentnummer';
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['element_label_colon'] = FALSE;
   /* Field: Content: OprettelsesDato */
   $handler->display->display_options['fields']['field_os2web_cp_service_created']['id'] = 'field_os2web_cp_service_created';
@@ -599,7 +601,8 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['header']['area_text_custom']['id'] = 'area_text_custom';
   $handler->display->display_options['header']['area_text_custom']['table'] = 'views';
   $handler->display->display_options['header']['area_text_custom']['field'] = 'area_text_custom';
-  $handler->display->display_options['header']['area_text_custom']['content'] = '<h2>Sags Nr.: [field_os2web_cp_service_case_id]</h2>';
+  $handler->display->display_options['header']['area_text_custom']['content'] = '<h1>%1</h1>
+<h2>Sags Nr.: [field_os2web_cp_service_case_id]</h2>';
   $handler->display->display_options['header']['area_text_custom']['tokenize'] = TRUE;
   $handler->display->display_options['defaults']['fields'] = FALSE;
   /* Field: Content: Nid */
@@ -799,7 +802,8 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['header']['area_text_custom']['id'] = 'area_text_custom';
   $handler->display->display_options['header']['area_text_custom']['table'] = 'views';
   $handler->display->display_options['header']['area_text_custom']['field'] = 'area_text_custom';
-  $handler->display->display_options['header']['area_text_custom']['content'] = '<h2>Fra sag Nr.: [field_os2web_cp_service_case_id]</h2>
+  $handler->display->display_options['header']['area_text_custom']['content'] = '<h1>Dokument [field_os2web_cp_service_doc_id]</h1>
+<h2>Fra sag Nr.: [field_os2web_cp_service_case_id]</h2>
 <p>Klik på sags nr. for at se alle dokumenter på sagen</p>';
   $handler->display->display_options['header']['area_text_custom']['tokenize'] = TRUE;
   $handler->display->display_options['defaults']['fields'] = FALSE;

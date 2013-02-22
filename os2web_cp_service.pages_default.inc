@@ -72,7 +72,7 @@ function os2web_cp_service_default_page_manager_handlers() {
       'offset' => '0',
       'more_link' => 0,
       'feed_icons' => 0,
-      'panel_args' => 0,
+      'panel_args' => 1,
       'link_to_view' => 0,
       'args' => '',
       'url' => '',
