@@ -343,6 +343,7 @@ function os2web_cp_service_node_delete($node) {
 function os2web_cp_service_form_alter( &$form, &$form_state, $form_id )
 {
   if ($form['#id'] == 'views-exposed-form-os2web-cp-service-cp-case-search-page' ||
+      $form['#id'] == 'views-exposed-form-os2web-cp-service-cp-case-search-panel-pane-1' ||
       $form['#id'] == 'views-exposed-form-os2web-cp-service-cp-case-search-default') {
     foreach ($form['#info'] as $id => &$widget) {
       if (!empty($widget['description']) && $form[$widget['value']]['#type'] === 'textfield') {
@@ -358,6 +359,7 @@ function os2web_cp_service_form_alter( &$form, &$form_state, $form_id )
  */
 function os2web_cp_service_preprocess_views_exposed_form(&$variables) {
   if ($variables['form']['#id'] == 'views-exposed-form-os2web-cp-service-cp-case-search-page' ||
+      $variables['form']['#id'] == 'views-exposed-form-os2web-cp-service-cp-case-search-panel-pane-1' ||
       $variables['form']['#id'] == 'views-exposed-form-os2web-cp-service-cp-case-search-default') {
     foreach ($variables['widgets'] as $id => &$widget) {
       switch ($id) {
