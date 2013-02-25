@@ -7,10 +7,10 @@ jQuery(document).ready(function($) {
 		dateFormat: "dd-mm-yy"
 	});
 	$( "#edit-to-date-value-datepicker-popup-0" ).datepicker({
-				showOn: "both",
-				buttonImage: "' . $calIcon . '",
-				buttonImageOnly: true,
-				dateFormat: "dd-mm-yy"
+		showOn: "both",
+		buttonImage: "' . $calIcon . '",
+		buttonImageOnly: true,
+		dateFormat: "dd-mm-yy"
 	});
 	$( "a.qtip-this[title]" ).qtip({
 		style: {
