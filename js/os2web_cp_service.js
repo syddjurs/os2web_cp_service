@@ -1,17 +1,5 @@
 /* os2web_cp_service.js */
 jQuery(document).ready(function($) {
-	$( "#edit-from-date-value-datepicker-popup-0" ).datepicker({
-		showOn: "both",
-		buttonImage: "' . $calIcon . '",
-		buttonImageOnly: true,
-		dateFormat: "dd-mm-yy"
-	});
-	$( "#edit-to-date-value-datepicker-popup-0" ).datepicker({
-		showOn: "both",
-		buttonImage: "' . $calIcon . '",
-		buttonImageOnly: true,
-		dateFormat: "dd-mm-yy"
-	});
 	$( "a.qtip-this[title]" ).qtip({
 		style: {
 			padding: 1,

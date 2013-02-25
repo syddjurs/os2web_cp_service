@@ -64,9 +64,9 @@ function os2web_cp_service_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'pathauto_punctuation_back_slash';
-  $strongarm->value = '0';
-  $export['pathauto_punctuation_back_slash'] = $strongarm;
+  $strongarm->name = 'pathauto_punctuation_slash';
+  $strongarm->value = '2';
+  $export['pathauto_punctuation_slash'] = $strongarm;
 
   return $export;
 }
