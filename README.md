@@ -5,6 +5,8 @@ Description
 -----------
 This module provides a service for OS2web that allows providers
 to publish cases and documents directly from their back-end systems.
+Additionally this module includes views, panels and settings to display
+the cases and documents, and uses PathAuto to generate urls.
 
 Additional Info
 ---------------
