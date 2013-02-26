@@ -29,11 +29,21 @@ function os2web_cp_service_menu() {
     'access callback' => TRUE,
   );
 
+
+  $items['os2web/service/gf/v1/%'] = array(
+    'type' => MENU_CALLBACK,
+    'page callback' => 'os2web_gf_service_handler',
+    'page arguments' => array(4),
+    'access callback' => TRUE,
+  );
+
+
+
   return $items;
 }
 
 /**
- * Callback for service. Forwards handling to provided plugin.
+ * Callback for Case Publishing service. Forwards handling to provided plugin.
  */
 function os2web_cp_service_handler() {
   if (!os2web_esdh_provider_has_api('cp')) {
@@ -41,6 +51,28 @@ function os2web_cp_service_handler() {
   }
   $data = os2web_esdh_provider_invoke('cp', 'handle_request');
   return $data;
+}
+
+/**
+ * Callback for the file provider service.
+ */
+function os2web_gf_service_handler($file_id) {
+  // TODO: Add proper url generation.
+  $url = 'http://www.google.dk/';
+
+  // CURL for transfer:
+  $ch = curl_init($url);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  $data = curl_exec($ch);
+  $header = curl_getinfo($ch);
+  if ($header['http_code'] === 200) {
+    drupal_add_http_header('Content-Type', $header['content_type']);
+    drupal_add_http_header('Content-Length', $header['download_content_length']);
+    echo $data;
+  }
+  else {
+    drupal_not_found();
+  }
 }
 
 /**
@@ -347,6 +379,66 @@ function os2web_cp_service_node_delete($node) {
   }
 }
 
+/**
+ * Implements hook_field_formatter_info().
+ */
+function os2web_cp_service_field_formatter_info() {
+  return array(
+    'os2web_cp_service_file_formatter' => array(
+      'label' => t('OS2Web Filelink'),
+      'field types' => array('text'),
+      'settings' => array(
+        // Base url up which we'll insert the file id
+        'base_url' => 'os2web/service/gf/v1/!id',
+      ),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_formatter_settings_form().
+ */
+function os2web_cp_service_field_formatter_settings_form($field, $instance, $view_mode, $form, &$form_state) {
+  $display = $instance['display'][$view_mode];
+  $element = array();
+  $element['base_url'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Base URL'),
+    '#description' => t('Base URL where to request the file. !id will be substituded for the actual ID.'),
+    '#default_value' => $display['settings']['base_url'],
+  );
+  return $element;
+}
+
+/**
+ * Implements hook_field_formatter_settings_summary().
+ */
+function os2web_cp_service_field_formatter_settings_summary($field, $instance, $view_mode) {
+  $display = $instance['display'][$view_mode];
+  $settings = $display['settings'];
+  $summary = t('Make a link to a file with a base url of @url', array(
+    '@url' => $settings['base_url'],
+      ));
+  return $summary;
+}
+
+/**
+ * Implements hook_field_formatter_view().
+ */
+function os2web_cp_service_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  if ($display['type'] != 'os2web_cp_service_file_formatter') {
+    return;
+  }
+  $base_url = $display['settings']['base_url'];
+  $element = array();
+  foreach ($items as $delta => $item) {
+    error_log(basename(__FILE__) . ':' . __LINE__ . ' Var: $item = ' . print_r($item, 1));
+    $fileID = $item['value'];
+    $url = format_string($base_url, array('!id' => $fileID));
+    $element[$delta]['#markup'] = l(t('Download'), $url);
+  }
+  return $element;
+}
 /**
  * Implements hook_foorm_alter()
  */
