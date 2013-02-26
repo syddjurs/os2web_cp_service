@@ -228,7 +228,7 @@ function os2web_cp_service_default_page_manager_pages() {
     'relationships' => array(),
   );
   $display = new panels_display();
-  $display->layout = 'os2web_fuldbredde';
+  $display->layout = 'flexible';
   $display->layout_settings = array();
   $display->panel_settings = array(
     'style_settings' => array(
@@ -244,7 +244,7 @@ function os2web_cp_service_default_page_manager_pages() {
   $display->panels = array();
     $pane = new stdClass();
     $pane->pid = 'new-1';
-    $pane->panel = 'top_right';
+    $pane->panel = 'center';
     $pane->type = 'views_panes';
     $pane->subtype = 'os2web_cp_service_cp_case_search-panel_pane_1';
     $pane->shown = TRUE;
@@ -259,7 +259,7 @@ function os2web_cp_service_default_page_manager_pages() {
     $pane->position = 0;
     $pane->locks = array();
     $display->content['new-1'] = $pane;
-    $display->panels['top_right'][0] = 'new-1';
+    $display->panels['center'][0] = 'new-1';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = 'new-1';
   $handler->conf['display'] = $display;
