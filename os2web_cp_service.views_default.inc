@@ -610,7 +610,7 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['header']['area_text_custom']['id'] = 'area_text_custom';
   $handler->display->display_options['header']['area_text_custom']['table'] = 'views';
   $handler->display->display_options['header']['area_text_custom']['field'] = 'area_text_custom';
-  $handler->display->display_options['header']['area_text_custom']['content'] = '<h1>%1</h1>
+  $handler->display->display_options['header']['area_text_custom']['content'] = '<h1 class="title">%1</h1>
 <h2>Sags Nr.: [field_os2web_cp_service_case_id]</h2>';
   $handler->display->display_options['header']['area_text_custom']['tokenize'] = TRUE;
   $handler->display->display_options['defaults']['fields'] = FALSE;
@@ -625,6 +625,7 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['label'] = 'Titel';
   $handler->display->display_options['fields']['title']['alter']['alter_text'] = TRUE;
   $handler->display->display_options['fields']['title']['alter']['text'] = '[title] <br><span>Se alle sager på denne addresse</span>';
   $handler->display->display_options['fields']['title']['alter']['make_link'] = TRUE;
@@ -811,7 +812,7 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['header']['area_text_custom']['id'] = 'area_text_custom';
   $handler->display->display_options['header']['area_text_custom']['table'] = 'views';
   $handler->display->display_options['header']['area_text_custom']['field'] = 'area_text_custom';
-  $handler->display->display_options['header']['area_text_custom']['content'] = '<h1>Dokument [field_os2web_cp_service_doc_id]</h1>
+  $handler->display->display_options['header']['area_text_custom']['content'] = '<h1 class="title">Dokument [field_os2web_cp_service_doc_id]</h1>
 <h2>Fra sag Nr.: [field_os2web_cp_service_case_id]</h2>
 <p>Klik på sags nr. for at se alle dokumenter på sagen</p>';
   $handler->display->display_options['header']['area_text_custom']['tokenize'] = TRUE;
@@ -832,6 +833,7 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['label'] = 'Dokumentnavn';
   $handler->display->display_options['fields']['title']['alter']['text'] = '[title] <span>Se alle sager på denne addresse</span>';
   $handler->display->display_options['fields']['title']['alter']['path'] = 'aaben-indsigt?search=[title]';
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;

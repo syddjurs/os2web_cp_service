@@ -10,6 +10,7 @@ include_once 'os2web_cp_service.features.inc';
  * Implements hook_init().
  */
 function os2web_cp_service_init() {
+  // ab@bellcom.dk
   // Menu Minipanels us using qTip. Only add qTip js if module doesnt exits.
   if (!module_exists('menu_minipanels')) {
     drupal_add_js(drupal_get_path('module', 'os2web_cp_service') . '/js/jquery.qtip-1.0.0-rc3.min.js');
@@ -348,13 +349,13 @@ function os2web_cp_service_node_delete($node) {
 
 /**
  * Implements hook_foorm_alter()
- * Adds placeholder to all textfields with a description
  */
 function os2web_cp_service_form_alter( &$form, &$form_state, $form_id )
 {
   if ($form['#id'] == 'views-exposed-form-os2web-cp-service-cp-case-search-page' ||
       $form['#id'] == 'views-exposed-form-os2web-cp-service-cp-case-search-panel-pane-1' ||
       $form['#id'] == 'views-exposed-form-os2web-cp-service-cp-case-search-default') {
+    // Adds placeholder to all textfields with a description - ab@bellcom.dk
     foreach ($form['#info'] as $id => &$widget) {
       if (!empty($widget['description']) && $form[$widget['value']]['#type'] === 'textfield') {
         $form[$widget['value']]['#attributes']['placeholder'] = $widget['description'];
