@@ -259,6 +259,7 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['filters']['field_os2web_cp_service_created_value']['exposed'] = TRUE;
   $handler->display->display_options['filters']['field_os2web_cp_service_created_value']['expose']['operator_id'] = 'field_os2web_cp_service_created_value_op';
   $handler->display->display_options['filters']['field_os2web_cp_service_created_value']['expose']['label'] = 'Fra';
+  $handler->display->display_options['filters']['field_os2web_cp_service_created_value']['expose']['description'] = 'evt. Dato';
   $handler->display->display_options['filters']['field_os2web_cp_service_created_value']['expose']['operator'] = 'field_os2web_cp_service_created_value_op';
   $handler->display->display_options['filters']['field_os2web_cp_service_created_value']['expose']['identifier'] = 'from_date';
   $handler->display->display_options['filters']['field_os2web_cp_service_created_value']['expose']['remember_roles'] = array(
@@ -267,7 +268,6 @@ return TRUE; // If no exposed inputs, remove all results
     3 => 0,
   );
   $handler->display->display_options['filters']['field_os2web_cp_service_created_value']['form_type'] = 'date_popup';
-  $handler->display->display_options['filters']['field_os2web_cp_service_created_value']['default_date'] = 'now -1 month';
   $handler->display->display_options['filters']['field_os2web_cp_service_created_value']['year_range'] = '-10:+0';
   /* Filter criterion: Content: OprettelsesDato (field_os2web_cp_service_created) */
   $handler->display->display_options['filters']['field_os2web_cp_service_created_value_1']['id'] = 'field_os2web_cp_service_created_value_1';
@@ -286,7 +286,6 @@ return TRUE; // If no exposed inputs, remove all results
     3 => 0,
   );
   $handler->display->display_options['filters']['field_os2web_cp_service_created_value_1']['form_type'] = 'date_popup';
-  $handler->display->display_options['filters']['field_os2web_cp_service_created_value_1']['default_date'] = 'now';
   $handler->display->display_options['filters']['field_os2web_cp_service_created_value_1']['year_range'] = '-10:+0';
   /* Filter criterion: Content: SagsID (field_os2web_cp_service_case_id) */
   $handler->display->display_options['filters']['field_os2web_cp_service_case_id_value']['id'] = 'field_os2web_cp_service_case_id_value';

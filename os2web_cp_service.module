@@ -449,7 +449,7 @@ function os2web_cp_service_form_alter( &$form, &$form_state, $form_id )
       $form['#id'] == 'views-exposed-form-os2web-cp-service-cp-case-search-default') {
     // Adds placeholder to all textfields with a description - ab@bellcom.dk
     foreach ($form['#info'] as $id => &$widget) {
-      if (!empty($widget['description']) && $form[$widget['value']]['#type'] === 'textfield') {
+      if (!empty($widget['description']) && isset($form[$widget['value']]['#type']) && $form[$widget['value']]['#type'] === 'textfield') {
         $form[$widget['value']]['#attributes']['placeholder'] = $widget['description'];
       }
     }
