@@ -547,7 +547,9 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['fields']['field_os2web_cp_service_content']['relationship'] = 'field_os2web_cp_service_doc_ref_target_id';
   $handler->display->display_options['fields']['field_os2web_cp_service_content']['label'] = '';
   $handler->display->display_options['fields']['field_os2web_cp_service_content']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_os2web_cp_service_content']['alter']['trim_whitespace'] = TRUE;
   $handler->display->display_options['fields']['field_os2web_cp_service_content']['alter']['max_length'] = '140';
+  $handler->display->display_options['fields']['field_os2web_cp_service_content']['alter']['strip_tags'] = TRUE;
   $handler->display->display_options['fields']['field_os2web_cp_service_content']['alter']['trim'] = TRUE;
   $handler->display->display_options['fields']['field_os2web_cp_service_content']['element_label_colon'] = FALSE;
   /* Field: Content: Nid */
