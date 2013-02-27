@@ -132,9 +132,11 @@ function os2web_cp_service_views_default_views() {
   $handler->display->display_options['fields']['field_os2web_cp_service_content']['label'] = '';
   $handler->display->display_options['fields']['field_os2web_cp_service_content']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_os2web_cp_service_content']['alter']['trim_whitespace'] = TRUE;
+  $handler->display->display_options['fields']['field_os2web_cp_service_content']['alter']['max_length'] = '140';
   $handler->display->display_options['fields']['field_os2web_cp_service_content']['alter']['strip_tags'] = TRUE;
+  $handler->display->display_options['fields']['field_os2web_cp_service_content']['alter']['trim'] = TRUE;
   $handler->display->display_options['fields']['field_os2web_cp_service_content']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_os2web_cp_service_content']['type'] = 'text_summary_or_trimmed';
+  $handler->display->display_options['fields']['field_os2web_cp_service_content']['type'] = 'text_plain';
   $handler->display->display_options['fields']['field_os2web_cp_service_content']['settings'] = array(
     'trim_length' => '150',
   );
@@ -538,6 +540,16 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['relationships']['field_os2web_cp_service_doc_ref_target_id']['field'] = 'field_os2web_cp_service_doc_ref_target_id';
   $handler->display->display_options['relationships']['field_os2web_cp_service_doc_ref_target_id']['required'] = TRUE;
   $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: Content: Sagsindhold */
+  $handler->display->display_options['fields']['field_os2web_cp_service_content']['id'] = 'field_os2web_cp_service_content';
+  $handler->display->display_options['fields']['field_os2web_cp_service_content']['table'] = 'field_data_field_os2web_cp_service_content';
+  $handler->display->display_options['fields']['field_os2web_cp_service_content']['field'] = 'field_os2web_cp_service_content';
+  $handler->display->display_options['fields']['field_os2web_cp_service_content']['relationship'] = 'field_os2web_cp_service_doc_ref_target_id';
+  $handler->display->display_options['fields']['field_os2web_cp_service_content']['label'] = '';
+  $handler->display->display_options['fields']['field_os2web_cp_service_content']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_os2web_cp_service_content']['alter']['max_length'] = '140';
+  $handler->display->display_options['fields']['field_os2web_cp_service_content']['alter']['trim'] = TRUE;
+  $handler->display->display_options['fields']['field_os2web_cp_service_content']['element_label_colon'] = FALSE;
   /* Field: Content: Nid */
   $handler->display->display_options['fields']['nid']['id'] = 'nid';
   $handler->display->display_options['fields']['nid']['table'] = 'node';
@@ -559,6 +571,8 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['fields']['title']['label'] = '';
   $handler->display->display_options['fields']['title']['alter']['make_link'] = TRUE;
   $handler->display->display_options['fields']['title']['alter']['path'] = 'dok/[field_os2web_cp_service_doc_id]';
+  $handler->display->display_options['fields']['title']['alter']['alt'] = '[field_os2web_cp_service_content]';
+  $handler->display->display_options['fields']['title']['alter']['link_class'] = 'qtip-this';
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
   /* Field: Content: DokumentID */
