@@ -368,6 +368,7 @@ return TRUE; // If no exposed inputs, remove all results
 
   /* Display: Content pane */
   $handler = $view->new_display('panel_pane', 'Content pane', 'panel_pane_1');
+  $handler->display->display_options['defaults']['title'] = FALSE;
   $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
   $handler->display->display_options['inherit_panels_path'] = '1';
   $export['os2web_cp_service_cp_case_search'] = $view;
