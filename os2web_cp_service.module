@@ -281,10 +281,12 @@ function os2web_cs_service_create_document(array $data) {
       ->entityCondition('entity_type', 'node')
       ->propertyCondition('type', 'os2web_cp_service_cp_document')
       ->propertyCondition('status', 1)
-      ->fieldCondition('field_os2web_cp_service_doc_id', 'value', $data['fields']['SystemID'], '=')
+      ->fieldCondition('field_os2web_cp_service_sysid', 'value', $data['fields']['SystemID'], '=')
       ->execute();
   $node = new stdClass();
   $nids = (isset($result['node']))?array_keys($result['node']):array();
+error_log('Result: '. print_r($result, 1));
+error_log('nodes to delete: '. print_r($nids, 1));
   if (count($nids) > 1) {
     if (is_array($nids)) {
       node_delete_multiple($nids);
@@ -335,6 +337,8 @@ function os2web_cs_service_create_document(array $data) {
   $nids = array_keys($result['node']);
   foreach ($nids as $nid) {
     $cnode = node_load($nid);
+    $node->field_os2web_cp_service_case_id[LANGUAGE_NONE][]['value'] = $cnode->field_os2web_cp_service_case_id[LANGUAGE_NONE][0]['value'];
+    node_save($node);
     $is_missing = TRUE;
     foreach ($cnode->field_os2web_cp_service_doc_ref[LANGUAGE_NONE] as $value) {
       if ($value['target_id'] == $node->nid) {
