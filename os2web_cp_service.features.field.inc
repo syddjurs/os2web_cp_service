@@ -713,75 +713,6 @@ function os2web_cp_service_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-os2web_cp_service_cp_case-field_os2web_cp_service_title'.
-  $fields['node-os2web_cp_service_cp_case-field_os2web_cp_service_title'] = array(
-    'field_config' => array(
-      'active' => '1',
-      'cardinality' => '1',
-      'deleted' => '0',
-      'entity_types' => array(),
-      'field_name' => 'field_os2web_cp_service_title',
-      'foreign keys' => array(
-        'format' => array(
-          'columns' => array(
-            'format' => 'format',
-          ),
-          'table' => 'filter_format',
-        ),
-      ),
-      'indexes' => array(
-        'format' => array(
-          0 => 'format',
-        ),
-      ),
-      'locked' => '0',
-      'module' => 'text',
-      'settings' => array(
-        'max_length' => '255',
-      ),
-      'translatable' => '0',
-      'type' => 'text',
-    ),
-    'field_instance' => array(
-      'bundle' => 'os2web_cp_service_cp_case',
-      'default_value' => NULL,
-      'deleted' => '0',
-      'description' => '',
-      'display' => array(
-        'default' => array(
-          'label' => 'above',
-          'module' => 'text',
-          'settings' => array(),
-          'type' => 'text_default',
-          'weight' => 16,
-        ),
-        'teaser' => array(
-          'label' => 'above',
-          'settings' => array(),
-          'type' => 'hidden',
-          'weight' => 0,
-        ),
-      ),
-      'entity_type' => 'node',
-      'field_name' => 'field_os2web_cp_service_title',
-      'label' => 'Sagstitel',
-      'required' => 0,
-      'settings' => array(
-        'text_processing' => '0',
-        'user_register_form' => FALSE,
-      ),
-      'widget' => array(
-        'active' => 1,
-        'module' => 'text',
-        'settings' => array(
-          'size' => '60',
-        ),
-        'type' => 'text_textfield',
-        'weight' => '33',
-      ),
-    ),
-  );
-
   // Exported field: 'node-os2web_cp_service_cp_document-field_os2web_cp_service_case_id'.
   $fields['node-os2web_cp_service_cp_document-field_os2web_cp_service_case_id'] = array(
     'field_config' => array(
@@ -850,6 +781,75 @@ function os2web_cp_service_field_default_fields() {
     ),
   );
 
+  // Exported field: 'node-os2web_cp_service_cp_document-field_os2web_cp_service_case_sid'.
+  $fields['node-os2web_cp_service_cp_document-field_os2web_cp_service_case_sid'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_os2web_cp_service_case_sid',
+      'foreign keys' => array(
+        'format' => array(
+          'columns' => array(
+            'format' => 'format',
+          ),
+          'table' => 'filter_format',
+        ),
+      ),
+      'indexes' => array(
+        'format' => array(
+          0 => 'format',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'text',
+      'settings' => array(
+        'max_length' => '255',
+      ),
+      'translatable' => '0',
+      'type' => 'text',
+    ),
+    'field_instance' => array(
+      'bundle' => 'os2web_cp_service_cp_document',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'text',
+          'settings' => array(),
+          'type' => 'text_default',
+          'weight' => 11,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_os2web_cp_service_case_sid',
+      'label' => 'Sag SystemID',
+      'required' => 0,
+      'settings' => array(
+        'text_processing' => '0',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'text',
+        'settings' => array(
+          'size' => '60',
+        ),
+        'type' => 'text_textfield',
+        'weight' => '34',
+      ),
+    ),
+  );
+
   // Exported field: 'node-os2web_cp_service_cp_document-field_os2web_cp_service_content'.
   $fields['node-os2web_cp_service_cp_document-field_os2web_cp_service_content'] = array(
     'field_config' => array(
@@ -899,7 +899,7 @@ function os2web_cp_service_field_default_fields() {
       ),
       'entity_type' => 'node',
       'field_name' => 'field_os2web_cp_service_content',
-      'label' => 'Sagsindhold',
+      'label' => 'Indholdsbeskrivelse',
       'required' => 0,
       'settings' => array(
         'display_summary' => 0,
@@ -915,89 +915,6 @@ function os2web_cp_service_field_default_fields() {
         ),
         'type' => 'text_textarea_with_summary',
         'weight' => '7',
-      ),
-    ),
-  );
-
-  // Exported field: 'node-os2web_cp_service_cp_document-field_os2web_cp_service_created'.
-  $fields['node-os2web_cp_service_cp_document-field_os2web_cp_service_created'] = array(
-    'field_config' => array(
-      'active' => '1',
-      'cardinality' => '1',
-      'deleted' => '0',
-      'entity_types' => array(),
-      'field_name' => 'field_os2web_cp_service_created',
-      'foreign keys' => array(),
-      'indexes' => array(),
-      'locked' => '0',
-      'module' => 'date',
-      'settings' => array(
-        'cache_count' => '4',
-        'cache_enabled' => 0,
-        'granularity' => array(
-          'day' => 'day',
-          'hour' => 0,
-          'minute' => 0,
-          'month' => 'month',
-          'second' => 0,
-          'year' => 'year',
-        ),
-        'timezone_db' => '',
-        'todate' => '',
-        'tz_handling' => 'none',
-      ),
-      'translatable' => '0',
-      'type' => 'datetime',
-    ),
-    'field_instance' => array(
-      'bundle' => 'os2web_cp_service_cp_document',
-      'deleted' => '0',
-      'description' => '',
-      'display' => array(
-        'default' => array(
-          'label' => 'above',
-          'module' => 'date',
-          'settings' => array(
-            'format_type' => 'long',
-            'fromto' => 'both',
-            'multiple_from' => '',
-            'multiple_number' => '',
-            'multiple_to' => '',
-          ),
-          'type' => 'date_default',
-          'weight' => 4,
-        ),
-        'teaser' => array(
-          'label' => 'above',
-          'settings' => array(),
-          'type' => 'hidden',
-          'weight' => 0,
-        ),
-      ),
-      'entity_type' => 'node',
-      'field_name' => 'field_os2web_cp_service_created',
-      'label' => 'OprettelsesDato',
-      'required' => 0,
-      'settings' => array(
-        'default_value' => 'now',
-        'default_value2' => 'same',
-        'default_value_code' => '',
-        'default_value_code2' => '',
-        'user_register_form' => FALSE,
-      ),
-      'widget' => array(
-        'active' => 1,
-        'module' => 'date',
-        'settings' => array(
-          'increment' => '15',
-          'input_format' => 'Y-m-d H:i:s',
-          'input_format_custom' => '',
-          'label_position' => 'above',
-          'text_parts' => array(),
-          'year_range' => '-3:+3',
-        ),
-        'type' => 'date_popup',
-        'weight' => '6',
       ),
     ),
   );
@@ -1059,7 +976,7 @@ function os2web_cp_service_field_default_fields() {
       ),
       'entity_type' => 'node',
       'field_name' => 'field_os2web_cp_service_date',
-      'label' => 'Dato',
+      'label' => 'Dokumentdato',
       'required' => 0,
       'settings' => array(
         'default_value' => 'now',
@@ -1136,7 +1053,7 @@ function os2web_cp_service_field_default_fields() {
       ),
       'entity_type' => 'node',
       'field_name' => 'field_os2web_cp_service_doc_id',
-      'label' => 'DokumentID',
+      'label' => 'Journalnummer',
       'required' => 0,
       'settings' => array(
         'text_processing' => '0',
@@ -1171,7 +1088,10 @@ function os2web_cp_service_field_default_fields() {
       'locked' => '0',
       'module' => 'list',
       'settings' => array(
-        'allowed_values' => array(),
+        'allowed_values' => array(
+          'I' => 'Indgående',
+          'U' => 'Udgående',
+        ),
         'allowed_values_function' => '',
       ),
       'translatable' => '0',
@@ -1199,7 +1119,7 @@ function os2web_cp_service_field_default_fields() {
       ),
       'entity_type' => 'node',
       'field_name' => 'field_os2web_cp_service_doc_type',
-      'label' => 'DokumentType',
+      'label' => 'Dokumenttype - Dokumenttype',
       'required' => 0,
       'settings' => array(
         'user_register_form' => FALSE,
@@ -1366,6 +1286,75 @@ function os2web_cp_service_field_default_fields() {
     ),
   );
 
+  // Exported field: 'node-os2web_cp_service_cp_document-field_os2web_cp_service_filetype'.
+  $fields['node-os2web_cp_service_cp_document-field_os2web_cp_service_filetype'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_os2web_cp_service_filetype',
+      'foreign keys' => array(
+        'format' => array(
+          'columns' => array(
+            'format' => 'format',
+          ),
+          'table' => 'filter_format',
+        ),
+      ),
+      'indexes' => array(
+        'format' => array(
+          0 => 'format',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'text',
+      'settings' => array(
+        'max_length' => '255',
+      ),
+      'translatable' => '0',
+      'type' => 'text',
+    ),
+    'field_instance' => array(
+      'bundle' => 'os2web_cp_service_cp_document',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'text',
+          'settings' => array(),
+          'type' => 'text_default',
+          'weight' => 10,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_os2web_cp_service_filetype',
+      'label' => 'Filformat',
+      'required' => 0,
+      'settings' => array(
+        'text_processing' => '0',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'text',
+        'settings' => array(
+          'size' => '60',
+        ),
+        'type' => 'text_textfield',
+        'weight' => '33',
+      ),
+    ),
+  );
+
   // Exported field: 'node-os2web_cp_service_cp_document-field_os2web_cp_service_full_xml'.
   $fields['node-os2web_cp_service_cp_document-field_os2web_cp_service_full_xml'] = array(
     'field_config' => array(
@@ -1432,24 +1421,94 @@ function os2web_cp_service_field_default_fields() {
     ),
   );
 
+  // Exported field: 'node-os2web_cp_service_cp_document-field_os2web_cp_service_sysid'.
+  $fields['node-os2web_cp_service_cp_document-field_os2web_cp_service_sysid'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_os2web_cp_service_sysid',
+      'foreign keys' => array(
+        'format' => array(
+          'columns' => array(
+            'format' => 'format',
+          ),
+          'table' => 'filter_format',
+        ),
+      ),
+      'indexes' => array(
+        'format' => array(
+          0 => 'format',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'text',
+      'settings' => array(
+        'max_length' => '255',
+      ),
+      'translatable' => '0',
+      'type' => 'text',
+    ),
+    'field_instance' => array(
+      'bundle' => 'os2web_cp_service_cp_document',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'text',
+          'settings' => array(),
+          'type' => 'text_default',
+          'weight' => 9,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_os2web_cp_service_sysid',
+      'label' => 'SystemID',
+      'required' => 0,
+      'settings' => array(
+        'text_processing' => '0',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'text',
+        'settings' => array(
+          'size' => '60',
+        ),
+        'type' => 'text_textfield',
+        'weight' => '32',
+      ),
+    ),
+  );
+
   // Translatables
   // Included for use with string extractors like potx.
-  t('Dato');
-  t('DokumentID');
-  t('DokumentType');
+  t('Dokumentdato');
   t('Dokumenter');
+  t('Dokumenttype - Dokumenttype');
   t('Ejendomsnummer');
   t('FilID');
+  t('Filformat');
   t('FullXML');
-  t('OprettelsesDato');
+  t('Indholdsbeskrivelse');
+  t('Journalnummer');
   t('RedigeringsDato');
+  t('Sag SystemID');
   t('SagsID');
   t('Sagsansvarlig enhed - Administrativ enhed');
   t('Sagsdato');
   t('Sagsindhold');
   t('Sagsnummer');
   t('Sagsstatus - Sagstypebetegnelse');
-  t('Sagstitel');
   t('Sagstype - Sagstype');
   t('SystemID');
 
