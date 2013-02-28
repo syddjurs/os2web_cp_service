@@ -57,21 +57,44 @@ function os2web_cp_service_handler() {
  * Callback for the file provider service.
  */
 function os2web_gf_service_handler($file_id) {
-  // TODO: Add proper url generation.
-  $url = 'http://www.google.dk/';
 
-  // CURL for transfer:
-  $ch = curl_init($url);
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-  $data = curl_exec($ch);
-  $header = curl_getinfo($ch);
-  if ($header['http_code'] === 200) {
-    drupal_add_http_header('Content-Type', $header['content_type']);
-    drupal_add_http_header('Content-Length', $header['download_content_length']);
-    echo $data;
-  }
-  else {
+  if($url = variable_get('os2web_cp_service_cp_document_fileurl')){
+
+    // CURL for transfer:
+    $ch = curl_init($url.$file_id);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    $data = curl_exec($ch);
+    $header = curl_getinfo($ch);
+    if ($header['http_code'] === 200) {
+      drupal_add_http_header('Content-Type', $header['content_type']);
+      drupal_add_http_header('Content-Length', $header['download_content_length']);
+      echo $data;
+    }
+    else {
+      drupal_not_found();
+    }
+
+  }else{
     drupal_not_found();
+  }
+}
+
+/**
+ * Function to control/alter any configurations before added to the variable table.
+ * Make cases of those confs you allow to be stored from the ws.
+ *
+ * @param string $key
+ *   The key of the configuration.
+ * @param string $value
+ *   The value of the conf, which has to be altered/stored.
+ *
+ * @return void
+ */
+function os2web_cs_service_alter_configuration($key, $value) {
+  switch ($key) {
+    case 'FileServiceURL':
+        variable_set('os2web_cp_service_cp_document_fileurl', $value);
+      break;
   }
 }
 
@@ -95,7 +118,7 @@ function os2web_cs_service_create_case(array $data) {
       ->propertyCondition('status', 1)
       ->fieldCondition('field_os2web_cp_service_sysid', 'value', $data['fields']['SystemID'], '=')
       ->execute();
-  $nids = array_keys($result['node']);
+  $nids = (isset($result['node']))?array_keys($result['node']):null;
 
   if (is_array($nids)) {
     node_delete_multiple($nids);
@@ -111,10 +134,23 @@ function os2web_cs_service_create_case(array $data) {
   $node->language = LANGUAGE_NONE;
   node_object_prepare($node);
 
-  $node->title = (string) $data['fields']['Officiel titel'];
-  $node->field_os2web_cp_service_sysid[LANGUAGE_NONE][]['value'] = $data['fields']['SystemID'];
-  $node->field_os2web_cp_service_case_id[LANGUAGE_NONE][]['value'] = $data['fields']['SagsID'];
-  // TODO: Fill out the list of fields.
+  $node->title = (string) !empty($data['fields']['Officiel Titel'])?$data['fields']['Officiel Titel']:$data['fields']['Sagstitel'];
+  $node_fields = field_info_instances('node','os2web_cp_service_cp_case'); // Has all fields of a node type case
+  foreach ($node_fields as $field_name => $field) {
+    if(!empty($data['fields'][$field['label']])){
+
+      $field_info = field_info_field($field_name);
+
+      switch ($field_info['type']) {
+        case 'text':
+          $node->{$field_name}[LANGUAGE_NONE][0]['value'] = (string) $data['fields'][$field['label']];
+          break;
+        default:
+          $node->{$field_name}[LANGUAGE_NONE][0]['value'] = $data['fields'][$field['label']];
+          break;
+      }
+    }
+  }
 
   node_submit($node);
   node_save($node);
@@ -244,12 +280,12 @@ function os2web_cs_service_create_document(array $data) {
       ->propertyCondition('status', 1)
       ->fieldCondition('field_os2web_cp_service_doc_id', 'value', $data['fields']['SystemID'], '=')
       ->execute();
-  $nids = array_keys($result['node']);
+  $node = new stdClass();
+  $nids = (isset($result['node']))?array_keys($result['node']):array();
   if (count($nids) > 1) {
     if (is_array($nids)) {
       node_delete_multiple($nids);
     }
-    $node = (object) NULL;
   }
   else {
     $node = node_load(array_pop($nids));
@@ -264,10 +300,23 @@ function os2web_cs_service_create_document(array $data) {
   $node->language = LANGUAGE_NONE;
   node_object_prepare($node);
 
-  $node->title = (string) $data['fields']['Officiel titel'];
-  $node->field_os2web_cp_service_doc_id[LANGUAGE_NONE][]['value'] = $data['fields']['SystemID'];
-  $node->field_os2web_cp_service_case_id[LANGUAGE_NONE][]['value'] = $data['fields']['Sag SystemID'];
-  // TODO: Fill out the list of fields.
+  $node->title = (string) !empty($data['fields']['Officiel Titel'])?$data['fields']['Officiel Titel']:$data['fields']['Dokumenttitel'];
+  $node_fields = field_info_instances('node','os2web_cp_service_cp_document'); // Has all fields of a node type case
+  foreach ($node_fields as $field_name => $field) {
+    if(!empty($data['fields'][$field['label']])){
+
+      $field_info = field_info_field($field_name);
+
+      switch ($field_info['type']) {
+        case 'text':
+          $node->{$field_name}[LANGUAGE_NONE][0]['value'] = (string) $data['fields'][$field['label']];
+          break;
+        default:
+          $node->{$field_name}[LANGUAGE_NONE][0]['value'] = $data['fields'][$field['label']];
+          break;
+      }
+    }
+  }
 
   node_submit($node);
   node_save($node);

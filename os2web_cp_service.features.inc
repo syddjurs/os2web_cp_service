@@ -35,7 +35,7 @@ function os2web_cp_service_node_info() {
       'base' => 'node_content',
       'description' => t('Holds a case, published via the case publishing service.'),
       'has_title' => '1',
-      'title_label' => t('Officiel titel'),
+      'title_label' => t('Sagstitel'),
       'help' => '',
     ),
     'os2web_cp_service_cp_document' => array(
@@ -43,7 +43,7 @@ function os2web_cp_service_node_info() {
       'base' => 'node_content',
       'description' => t('Holds a document from the case publishing service.'),
       'has_title' => '1',
-      'title_label' => t('Officiel titel'),
+      'title_label' => t('Dokumenttitel'),
       'help' => '',
     ),
   );

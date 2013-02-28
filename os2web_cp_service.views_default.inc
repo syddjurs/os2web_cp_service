@@ -163,7 +163,7 @@ function os2web_cp_service_views_default_views() {
     'multiple_from' => '',
     'multiple_to' => '',
   );
-  /* Field: Content: Sagstype */
+  /* Field: Content: Sagstype - Sagstype */
   $handler->display->display_options['fields']['field_os2web_cp_service_casetype']['id'] = 'field_os2web_cp_service_casetype';
   $handler->display->display_options['fields']['field_os2web_cp_service_casetype']['table'] = 'field_data_field_os2web_cp_service_casetype';
   $handler->display->display_options['fields']['field_os2web_cp_service_casetype']['field'] = 'field_os2web_cp_service_casetype';
@@ -320,7 +320,7 @@ return TRUE; // If no exposed inputs, remove all results
     1 => 0,
     3 => 0,
   );
-  /* Filter criterion: Content: Sagstype (field_os2web_cp_service_casetype) */
+  /* Filter criterion: Content: Sagstype - Sagstype (field_os2web_cp_service_casetype) */
   $handler->display->display_options['filters']['field_os2web_cp_service_casetype_value']['id'] = 'field_os2web_cp_service_casetype_value';
   $handler->display->display_options['filters']['field_os2web_cp_service_casetype_value']['table'] = 'field_data_field_os2web_cp_service_casetype';
   $handler->display->display_options['filters']['field_os2web_cp_service_casetype_value']['field'] = 'field_os2web_cp_service_casetype_value';
@@ -335,7 +335,7 @@ return TRUE; // If no exposed inputs, remove all results
     1 => 0,
     3 => 0,
   );
-  /* Filter criterion: Content: Sagsansvar. enhed (field_os2web_cp_service_org_unit) */
+  /* Filter criterion: Content: Sagsansvarlig enhed - Administrativ enhed (field_os2web_cp_service_org_unit) */
   $handler->display->display_options['filters']['field_os2web_cp_service_org_unit_value']['id'] = 'field_os2web_cp_service_org_unit_value';
   $handler->display->display_options['filters']['field_os2web_cp_service_org_unit_value']['table'] = 'field_data_field_os2web_cp_service_org_unit';
   $handler->display->display_options['filters']['field_os2web_cp_service_org_unit_value']['field'] = 'field_os2web_cp_service_org_unit_value';
