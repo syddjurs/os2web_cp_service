@@ -25,7 +25,8 @@ projects[strongarm][version] = "2.0"
 
 ;Views
 projects[views][subdir] = "contrib"
-projects[views][version] = "3.x-dev"
+projects[views][version] = "3.5"
+projects[views][patch][] = "http://drupal.org/files/combine_and_contains_word-1782678-9.patch"
 
 projects[views_php][subdir] = "contrib"
 projects[views_php][version] = "1.x-dev"
