@@ -528,6 +528,16 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['fields']['nid']['label'] = '';
   $handler->display->display_options['fields']['nid']['exclude'] = TRUE;
   $handler->display->display_options['fields']['nid']['element_label_colon'] = FALSE;
+  /* Field: Content: Indholdsbeskrivelse */
+  $handler->display->display_options['fields']['field_os2web_cp_service_content']['id'] = 'field_os2web_cp_service_content';
+  $handler->display->display_options['fields']['field_os2web_cp_service_content']['table'] = 'field_data_field_os2web_cp_service_content';
+  $handler->display->display_options['fields']['field_os2web_cp_service_content']['field'] = 'field_os2web_cp_service_content';
+  $handler->display->display_options['fields']['field_os2web_cp_service_content']['relationship'] = 'field_os2web_cp_service_doc_ref_target_id';
+  $handler->display->display_options['fields']['field_os2web_cp_service_content']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_os2web_cp_service_content']['alter']['trim_whitespace'] = TRUE;
+  $handler->display->display_options['fields']['field_os2web_cp_service_content']['alter']['max_length'] = '140';
+  $handler->display->display_options['fields']['field_os2web_cp_service_content']['alter']['strip_tags'] = TRUE;
+  $handler->display->display_options['fields']['field_os2web_cp_service_content']['alter']['trim'] = TRUE;
   /* Field: Content: Journalnummer */
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id']['id'] = 'field_os2web_cp_service_doc_id';
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id']['table'] = 'field_data_field_os2web_cp_service_doc_id';
@@ -543,6 +553,8 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['fields']['title']['label'] = '';
   $handler->display->display_options['fields']['title']['alter']['make_link'] = TRUE;
   $handler->display->display_options['fields']['title']['alter']['path'] = 'dok/[field_os2web_cp_service_doc_id]';
+  $handler->display->display_options['fields']['title']['alter']['alt'] = '[field_os2web_cp_service_content]';
+  $handler->display->display_options['fields']['title']['alter']['link_class'] = 'qtip-this';
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
   /* Field: Content: Journalnummer */
@@ -552,13 +564,6 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['relationship'] = 'field_os2web_cp_service_doc_ref_target_id';
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['label'] = 'Dokumentnummer';
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['element_label_colon'] = FALSE;
-  /* Field: Broken/missing handler */
-  $handler->display->display_options['fields']['field_os2web_cp_service_created']['id'] = 'field_os2web_cp_service_created';
-  $handler->display->display_options['fields']['field_os2web_cp_service_created']['table'] = 'field_data_field_os2web_cp_service_created';
-  $handler->display->display_options['fields']['field_os2web_cp_service_created']['field'] = 'field_os2web_cp_service_created';
-  $handler->display->display_options['fields']['field_os2web_cp_service_created']['relationship'] = 'field_os2web_cp_service_doc_ref_target_id';
-  $handler->display->display_options['fields']['field_os2web_cp_service_created']['label'] = 'Dato';
-  $handler->display->display_options['fields']['field_os2web_cp_service_created']['element_wrapper_class'] = 'documentdate';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Contextual filter: Content: Nid */
   $handler->display->display_options['arguments']['nid']['id'] = 'nid';
@@ -607,7 +612,7 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['fields']['title']['alter']['alter_text'] = TRUE;
   $handler->display->display_options['fields']['title']['alter']['text'] = '[title] <br><span>Se alle sager på denne addresse</span>';
   $handler->display->display_options['fields']['title']['alter']['make_link'] = TRUE;
-  $handler->display->display_options['fields']['title']['alter']['path'] = 'aaben-indsigt?search=[title]';
+  $handler->display->display_options['fields']['title']['alter']['path'] = 'aaben-indsigt?search-text=[title]';
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
   $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
