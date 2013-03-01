@@ -522,10 +522,10 @@ function os2web_cp_service_preprocess_views_exposed_form(&$variables) {
       $variables['form']['#id'] == 'views-exposed-form-os2web-cp-service-cp-case-search-default') {
     foreach ($variables['widgets'] as $id => &$widget) {
       switch ($id) {
-        case 'filter-field_os2web_cp_service_created_value_1':
+        case 'filter-field_os2web_cp_service_date_value_1':
           $widget->prefix = '<div class="filter-widgets-wrapper clearfix">';
           break;
-        case 'filter-field_os2web_cp_service_created_value_2':
+        case 'filter-field_os2web_cp_service_date_value_2':
           $widget->suffix = '<input type="submit" name="" value="Søg" class="form-submit"></div>';
           break;
         case 'filter-field_os2web_cp_service_case_id_value':
