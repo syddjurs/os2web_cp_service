@@ -293,8 +293,6 @@ function os2web_cs_service_create_document(array $data) {
       ->execute();
   $node = new stdClass();
   $nids = (isset($result['node']))?array_keys($result['node']):array();
-error_log('Result: '. print_r($result, 1));
-error_log('nodes to delete: '. print_r($nids, 1));
   if (count($nids) > 1) {
     if (is_array($nids)) {
       node_delete_multiple($nids);
@@ -330,9 +328,11 @@ error_log('nodes to delete: '. print_r($nids, 1));
       }
     }
   }
-
-  node_submit($node);
-  if (!node_save($node)) {
+  try {
+    node_submit($node);
+    node_save($node);
+  } catch (Exception $e) {
+    error_log('Error on save: '. print_r($e->getMessage(), 1));
     return false;
   }
 
