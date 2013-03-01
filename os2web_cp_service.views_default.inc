@@ -792,11 +792,6 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['fields']['field_os2web_cp_service_filetype']['table'] = 'field_data_field_os2web_cp_service_filetype';
   $handler->display->display_options['fields']['field_os2web_cp_service_filetype']['field'] = 'field_os2web_cp_service_filetype';
   $handler->display->display_options['fields']['field_os2web_cp_service_filetype']['exclude'] = TRUE;
-  /* Field: Content: SystemID */
-  $handler->display->display_options['fields']['field_os2web_cp_service_sysid']['id'] = 'field_os2web_cp_service_sysid';
-  $handler->display->display_options['fields']['field_os2web_cp_service_sysid']['table'] = 'field_data_field_os2web_cp_service_sysid';
-  $handler->display->display_options['fields']['field_os2web_cp_service_sysid']['field'] = 'field_os2web_cp_service_sysid';
-  $handler->display->display_options['fields']['field_os2web_cp_service_sysid']['exclude'] = TRUE;
   /* Field: Content: Journalnummer */
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id']['id'] = 'field_os2web_cp_service_doc_id';
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id']['table'] = 'field_data_field_os2web_cp_service_doc_id';
@@ -828,18 +823,17 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['fields']['field_os2web_cp_service_case_id']['alter']['make_link'] = TRUE;
   $handler->display->display_options['fields']['field_os2web_cp_service_case_id']['alter']['path'] = 'sag/[field_os2web_cp_service_case_id]';
   $handler->display->display_options['fields']['field_os2web_cp_service_case_id']['element_label_colon'] = FALSE;
-  /* Field: Global: Custom text */
-  $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
-  $handler->display->display_options['fields']['nothing']['table'] = 'views';
-  $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
-  $handler->display->display_options['fields']['nothing']['label'] = '';
-  $handler->display->display_options['fields']['nothing']['alter']['text'] = 'Download Fil';
-  $handler->display->display_options['fields']['nothing']['alter']['make_link'] = TRUE;
-  $handler->display->display_options['fields']['nothing']['alter']['path'] = 'os2web/service/gf/v1/[field_os2web_cp_service_sysid]';
-  $handler->display->display_options['fields']['nothing']['alter']['absolute'] = TRUE;
-  $handler->display->display_options['fields']['nothing']['alter']['alt'] = 'Download [title]';
-  $handler->display->display_options['fields']['nothing']['alter']['link_class'] = 'download [field_os2web_cp_service_filetype]';
-  $handler->display->display_options['fields']['nothing']['element_label_colon'] = FALSE;
+  /* Field: Content: FilID */
+  $handler->display->display_options['fields']['field_os2web_cp_service_file_id']['id'] = 'field_os2web_cp_service_file_id';
+  $handler->display->display_options['fields']['field_os2web_cp_service_file_id']['table'] = 'field_data_field_os2web_cp_service_file_id';
+  $handler->display->display_options['fields']['field_os2web_cp_service_file_id']['field'] = 'field_os2web_cp_service_file_id';
+  $handler->display->display_options['fields']['field_os2web_cp_service_file_id']['label'] = '';
+  $handler->display->display_options['fields']['field_os2web_cp_service_file_id']['element_class'] = 'download';
+  $handler->display->display_options['fields']['field_os2web_cp_service_file_id']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_os2web_cp_service_file_id']['type'] = 'os2web_cp_service_file_formatter';
+  $handler->display->display_options['fields']['field_os2web_cp_service_file_id']['settings'] = array(
+    'base_url' => 'os2web/service/gf/v1/!id',
+  );
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Contextual filter: Content: Nid */
   $handler->display->display_options['arguments']['nid']['id'] = 'nid';

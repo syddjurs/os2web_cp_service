@@ -73,3 +73,4 @@ features[variable][] = pathauto_punctuation_slash
 features[views_view][] = os2web_cp_service_cp_case_search
 features[views_view][] = os2web_cp_service_cp_case_view
 features[views_view][] = os2web_cp_service_cp_document_view
+features_exclude[dependencies][os2web_cp_service] = os2web_cp_service
