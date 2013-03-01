@@ -67,9 +67,9 @@ function os2web_gf_service_handler($file_id) {
     $password = variable_get('os2web_cp_service_endpoint_pass');
     if (!empty($username, $password)) {
       // CURL for transfer:
-      $ch = curl_init($url.$file_id);
+      $ch = curl_init($url.'?FileID='.$file_id.'&FileFormat=Published');
       curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-      curl_setopt($ch, CURLOPT_USERPWD, "$username:$password");
+      curl_setopt($ch, CURLOPT_USERPWD, "{$username}:{$password}");
       curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
       $data = curl_exec($ch);
       $header = curl_getinfo($ch);
