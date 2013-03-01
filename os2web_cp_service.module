@@ -61,25 +61,32 @@ function os2web_cp_service_handler() {
  */
 function os2web_gf_service_handler($file_id) {
 
-  if($url = variable_get('os2web_cp_service_cp_document_fileurl')){
-    error_log(basename(__FILE__) . ':' . __LINE__ . ' File URL from variable_get = ' . $url);
+  if ($url = variable_get('os2web_cp_service_cp_document_fileurl')) {
 
-    // CURL for transfer:
-    $ch = curl_init($url.$file_id);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    $data = curl_exec($ch);
-    $header = curl_getinfo($ch);
-    if ($header['http_code'] === 200) {
-      drupal_add_http_header('Content-Type', $header['content_type']);
-      drupal_add_http_header('Content-Length', $header['download_content_length']);
-      echo $data;
-    }
-    else {
-      error_log(basename(__FILE__) . ':' . __LINE__ . ' HTTP header recieved = ' . print_r($header, 1));
+    $username = variable_get('os2web_cp_service_endpoint_user');
+    $password = variable_get('os2web_cp_service_endpoint_pass');
+    if (!empty($username, $password)) {
+      // CURL for transfer:
+      $ch = curl_init($url.$file_id);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+      curl_setopt($ch, CURLOPT_USERPWD, "$username:$password");
+      curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+      $data = curl_exec($ch);
+      $header = curl_getinfo($ch);
+      if ($header['http_code'] === 200) {
+        drupal_add_http_header('Content-Type', $header['content_type']);
+        drupal_add_http_header('Content-Length', $header['download_content_length']);
+        echo $data;
+      } else {
+        error_log(basename(__FILE__) . ':' . __LINE__ . ' HTTP header recieved = ' . print_r($header, 1));
+        drupal_not_found();
+      }
+    } else {
+      error_log(basename(__FILE__) . ':' . __LINE__ . ' Settings are wrong.');
       drupal_not_found();
     }
 
-  }else{
+  } else {
     error_log(basename(__FILE__) . ':' . __LINE__ . ' No URL found in variable DB');
     drupal_not_found();
   }
@@ -570,4 +577,30 @@ function os2web_cp_service_theme_registry_alter(&$theme_registry) {
   if (!empty($theme_registry['views_exposed_form__os2web_cp_service_cp_case_search']['path'])) {
     $theme_registry['views_exposed_form__os2web_cp_service_cp_case_search']['path'] = drupal_get_path('module', 'os2web_cp_service'). '/theme/';
   }
+}
+
+
+/**
+ * Implements hook_form_alter().
+ *
+ * Add configuration to the settings form.
+ */
+function os2web_cp_service_form_os2web_settings_settings_form_alter(&$form, &$form_state) {
+  // CM Configuration.
+  $form['os2web_cp_service_config_group'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('CP File Endpoint configuration'),
+  );
+  $form['os2web_cp_service_config_group']['os2web_cp_service_endpoint_user'] = array(
+    '#type' => 'textfield',
+    '#default_value' => variable_get('os2web_cp_service_endpoint_user'),
+    '#title' => t('CP File endpoint user'),
+    '#description' => t('CP File endpoint HTTP authentification user.'),
+  );
+  $form['os2web_cp_service_config_group']['os2web_cp_service_endpoint_password'] = array(
+    '#type' => 'textfield',
+    '#default_value' => variable_get('os2web_cp_service_endpoint_password'),
+    '#title' => t('CP File endpoint password'),
+    '#description' => t('CP File endpoint HTTP authentification password.'),
+  );
 }
