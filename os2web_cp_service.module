@@ -167,6 +167,7 @@ function os2web_cs_service_create_case(array $data) {
   try {
     node_submit($node);
     node_save($node);
+    return true;
   } catch (Exception $e) {
     error_log('Error on save: '. print_r($e->getMessage(), 1));
     return false;
