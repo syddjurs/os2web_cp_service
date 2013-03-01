@@ -1270,7 +1270,7 @@ function os2web_cp_service_field_default_fields() {
       ),
       'entity_type' => 'node',
       'field_name' => 'field_os2web_cp_service_file_id',
-      'label' => 'FilID',
+      'label' => 'Indhold - FileID',
       'required' => 0,
       'settings' => array(
         'text_processing' => '0',
@@ -1498,9 +1498,9 @@ function os2web_cp_service_field_default_fields() {
   t('Dokumenter');
   t('Dokumenttype - Dokumenttype');
   t('Ejendomsnummer');
-  t('FilID');
   t('Filformat');
   t('FullXML');
+  t('Indhold - FileID');
   t('Indholdsbeskrivelse');
   t('Journalnummer');
   t('RedigeringsDato');
