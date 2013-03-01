@@ -62,6 +62,7 @@ function os2web_cp_service_handler() {
 function os2web_gf_service_handler($file_id) {
 
   if($url = variable_get('os2web_cp_service_cp_document_fileurl')){
+    error_log(basename(__FILE__) . ':' . __LINE__ . ' File URL from variable_get = ' . $url);
 
     // CURL for transfer:
     $ch = curl_init($url.$file_id);
@@ -74,10 +75,12 @@ function os2web_gf_service_handler($file_id) {
       echo $data;
     }
     else {
+      error_log(basename(__FILE__) . ':' . __LINE__ . ' HTTP header recieved = ' . print_r($header, 1));
       drupal_not_found();
     }
 
   }else{
+    error_log(basename(__FILE__) . ':' . __LINE__ . ' No URL found in variable DB');
     drupal_not_found();
   }
 }
@@ -156,9 +159,7 @@ function os2web_cs_service_create_case(array $data) {
   }
 
   node_submit($node);
-  node_save($node);
-
-  return TRUE;
+  return node_save($node);
 }
 
 /**
@@ -324,7 +325,9 @@ error_log('nodes to delete: '. print_r($nids, 1));
   }
 
   node_submit($node);
-  node_save($node);
+  if (!node_save($node)) {
+    return false;
+  }
 
   // Update case
   $query = new EntityFieldQuery();
