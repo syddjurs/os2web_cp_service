@@ -164,9 +164,13 @@ function os2web_cs_service_create_case(array $data) {
       }
     }
   }
-
-  node_submit($node);
-  return node_save($node);
+  try {
+    node_submit($node);
+    node_save($node);
+  } catch (Exception $e) {
+    error_log('Error on save: '. print_r($e->getMessage(), 1));
+    return false;
+  }
 }
 
 /**
