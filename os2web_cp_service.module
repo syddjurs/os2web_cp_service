@@ -96,7 +96,7 @@ function os2web_gf_service_handler($file_id) {
 function os2web_cs_service_alter_configuration($key, $value) {
   switch ($key) {
     case 'FileServiceURL':
-        variable_set('os2web_cp_service_cp_document_fileurl', $value);
+        return variable_set('os2web_cp_service_cp_document_fileurl', $value);
       break;
   }
 }
@@ -522,10 +522,10 @@ function os2web_cp_service_preprocess_views_exposed_form(&$variables) {
       $variables['form']['#id'] == 'views-exposed-form-os2web-cp-service-cp-case-search-default') {
     foreach ($variables['widgets'] as $id => &$widget) {
       switch ($id) {
-        case 'filter-field_os2web_cp_service_created_value':
+        case 'filter-field_os2web_cp_service_created_value_1':
           $widget->prefix = '<div class="filter-widgets-wrapper clearfix">';
           break;
-        case 'filter-field_os2web_cp_service_created_value_1':
+        case 'filter-field_os2web_cp_service_created_value_2':
           $widget->suffix = '<input type="submit" name="" value="Søg" class="form-submit"></div>';
           break;
         case 'filter-field_os2web_cp_service_case_id_value':
@@ -541,13 +541,13 @@ function os2web_cp_service_preprocess_views_exposed_form(&$variables) {
 
     $calIcon = drupal_get_path('theme', variable_get('theme_default', NULL)) . "/images/cal.png";
     $datepicker = 'jQuery(document).ready(function($) {
-      $( "#edit-from-date-value-datepicker-popup-0" ).datepicker({
+      $( "#edit-field-os2web-cp-service-date-from-value-datepicker-popup-0" ).datepicker({
                     showOn: "both",
                     buttonImage: "' . $calIcon . '",
                     buttonImageOnly: true,
                     dateFormat: "dd-mm-yy"
       });
-      $( "#edit-to-date-value-datepicker-popup-0" ).datepicker({
+      $( "#edit-field-os2web-cp-service-date-to-value-datepicker-popup-0" ).datepicker({
                     showOn: "both",
                     buttonImage: "' . $calIcon . '",
                     buttonImageOnly: true,

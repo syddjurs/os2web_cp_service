@@ -14,8 +14,8 @@
     text-align: left;
 }
 #edit-search-text,
-#edit-from-date-value-datepicker-popup-0,
-#edit-to-date-value-datepicker-popup-0,
+#edit-field-os2web-cp-service-date-from-value-datepicker-popup-0,
+#edit-field-os2web-cp-service-date-to-value-datepicker-popup-0,
 #edit-case-id,
 #edit-doc-id,
 #edit-casetype,
@@ -34,8 +34,8 @@
 #edit-search-text{
     width: 100%;
 }
-#edit-from-date-value-datepicker-popup-0,
-#edit-to-date-value-datepicker-popup-0{
+#edit-field-os2web-cp-service-date-from-value-datepicker-popup-0,
+#edit-field-os2web-cp-service-date-to-value-datepicker-popup-0{
     width: 120px;
     border: 1px solid #ddd;
     margin-bottom: 11px;
