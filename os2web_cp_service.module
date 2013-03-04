@@ -567,7 +567,7 @@ function os2web_cp_service_preprocess_views_exposed_form(&$variables) {
       }
     }
 
-    $cal_icon = drupal_get_path('theme', variable_get('theme_default', NULL)) . "/images/cal.png";
+    $cal_icon = drupal_get_path('module', 'os2web_cp_service') . "/images/cal.png";
     $datepicker = 'jQuery(document).ready(function($) {
       $( "#edit-field-os2web-cp-service-date-from-value-datepicker-popup-0" ).datepicker({
                     showOn: "both",
