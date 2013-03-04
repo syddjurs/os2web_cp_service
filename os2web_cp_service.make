@@ -42,7 +42,6 @@ projects[panels][version] = "3.2"
 projects[ctools][subdir] = "contrib"
 projects[ctools][version] = "1.2"
 
-
 projects[date][subdir] = "contrib"
 projects[date][version] = "2.6"
 

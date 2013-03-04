@@ -4,6 +4,7 @@
  * @file
  * Code for the OS2Web Case Publishing Service feature.
  */
+
 include_once 'os2web_cp_service.features.inc';
 
 /**
@@ -32,15 +33,12 @@ function os2web_cp_service_menu() {
     'access callback' => TRUE,
   );
 
-
   $items['os2web/service/gf/v1/%'] = array(
     'type' => MENU_CALLBACK,
     'page callback' => 'os2web_gf_service_handler',
     'page arguments' => array(4),
     'access callback' => TRUE,
   );
-
-
 
   return $items;
 }
@@ -67,7 +65,7 @@ function os2web_gf_service_handler($file_id) {
     $password = variable_get('os2web_cp_service_endpoint_password');
     if (!empty($username) && !empty($password)) {
       // CURL for transfer:
-      $ch = curl_init($url.'?FileID='.$file_id.'&FileFormat=Original');
+      $ch = curl_init($url . '?FileID=' . $file_id . '&FileFormat=Original');
       curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
       curl_setopt($ch, CURLOPT_USERPWD, "{$username}:{$password}");
       curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_NTLM);
@@ -77,16 +75,19 @@ function os2web_gf_service_handler($file_id) {
         drupal_add_http_header('Content-Type', $header['content_type']);
         drupal_add_http_header('Content-Length', $header['download_content_length']);
         echo $data;
-      } else {
+      }
+      else {
         error_log(basename(__FILE__) . ':' . __LINE__ . ' HTTP header recieved = ' . print_r($header, 1));
         drupal_not_found();
       }
-    } else {
+    }
+    else {
       error_log(basename(__FILE__) . ':' . __LINE__ . ' Settings are wrong.');
       drupal_not_found();
     }
 
-  } else {
+  }
+  else {
     error_log(basename(__FILE__) . ':' . __LINE__ . ' No URL found in variable DB');
     drupal_not_found();
   }
@@ -94,20 +95,18 @@ function os2web_gf_service_handler($file_id) {
 
 /**
  * Function to control/alter any configurations before added to the variable table.
- * Make cases of those confs you allow to be stored from the ws.
  *
  * @param string $key
  *   The key of the configuration.
  * @param string $value
  *   The value of the conf, which has to be altered/stored.
- *
- * @return void
  */
 function os2web_cs_service_alter_configuration($key, $value) {
   switch ($key) {
     case 'FileServiceURL':
-        return variable_set('os2web_cp_service_cp_document_fileurl', $value);
-      break;
+      return variable_set('os2web_cp_service_cp_document_fileurl', $value);
+
+    break;
   }
 }
 
@@ -117,7 +116,7 @@ function os2web_cs_service_alter_configuration($key, $value) {
  * @param array $data
  *   Structured array with data for the Case.
  *
- * @return boolean
+ * @return bool
  *   TRUE on successful content creation.
  */
 function os2web_cs_service_create_case(array $data) {
@@ -131,7 +130,7 @@ function os2web_cs_service_create_case(array $data) {
       ->propertyCondition('status', 1)
       ->fieldCondition('field_os2web_cp_service_sysid', 'value', $data['fields']['SystemID'], '=')
       ->execute();
-  $nids = (isset($result['node']))?array_keys($result['node']):null;
+  $nids = (isset($result['node']))?array_keys($result['node']) : NULL;
 
   if (is_array($nids)) {
     node_delete_multiple($nids);
@@ -147,10 +146,13 @@ function os2web_cs_service_create_case(array $data) {
   $node->language = LANGUAGE_NONE;
   node_object_prepare($node);
 
-  $node->title = (string) !empty($data['fields']['Officiel Titel'])?$data['fields']['Officiel Titel']:$data['fields']['Sagstitel'];
-  $node_fields = field_info_instances('node','os2web_cp_service_cp_case'); // Has all fields of a node type case
+  $node->title = (string) !empty($data['fields']['Officiel Titel'])?$data['fields']['Officiel Titel'] : $data['fields']['Sagstitel'];
+
+  // Has all fields of a node type "case".
+  $node_fields = field_info_instances('node', 'os2web_cp_service_cp_case');
+
   foreach ($node_fields as $field_name => $field) {
-    if(!empty($data['fields'][$field['label']])){
+    if (!empty($data['fields'][$field['label']])) {
 
       $field_info = field_info_field($field_name);
 
@@ -158,6 +160,7 @@ function os2web_cs_service_create_case(array $data) {
         case 'text':
           $node->{$field_name}[LANGUAGE_NONE][0]['value'] = (string) $data['fields'][$field['label']];
           break;
+
         default:
           $node->{$field_name}[LANGUAGE_NONE][0]['value'] = $data['fields'][$field['label']];
           break;
@@ -167,10 +170,11 @@ function os2web_cs_service_create_case(array $data) {
   try {
     node_submit($node);
     node_save($node);
-    return true;
-  } catch (Exception $e) {
-    error_log('Error on save: '. print_r($e->getMessage(), 1));
-    return false;
+    return TRUE;
+  }
+  catch (Exception $e) {
+    error_log('Error on save: ' . print_r($e->getMessage(), 1));
+    return FALSE;
   }
 }
 
@@ -283,7 +287,7 @@ function os2web_cs_service_default_case() {
  * @param array $data
  *   Structured array with data for the Case.
  *
- * @return boolean
+ * @return bool
  *   TRUE on successful content creation.
  */
 function os2web_cs_service_create_document(array $data) {
@@ -297,7 +301,7 @@ function os2web_cs_service_create_document(array $data) {
       ->fieldCondition('field_os2web_cp_service_sysid', 'value', $data['fields']['SystemID'], '=')
       ->execute();
   $node = new stdClass();
-  $nids = (isset($result['node']))?array_keys($result['node']):array();
+  $nids = (isset($result['node']))?array_keys($result['node']) : array();
   if (count($nids) > 1) {
     if (is_array($nids)) {
       node_delete_multiple($nids);
@@ -316,10 +320,12 @@ function os2web_cs_service_create_document(array $data) {
   $node->language = LANGUAGE_NONE;
   node_object_prepare($node);
 
-  $node->title = (string) !empty($data['fields']['Officiel Titel'])?$data['fields']['Officiel Titel']:$data['fields']['Dokumenttitel'];
-  $node_fields = field_info_instances('node','os2web_cp_service_cp_document'); // Has all fields of a node type case
+  $node->title = (string) !empty($data['fields']['Officiel Titel'])?$data['fields']['Officiel Titel'] : $data['fields']['Dokumenttitel'];
+
+  // Has all fields of a node type "document".
+  $node_fields = field_info_instances('node', 'os2web_cp_service_cp_document');
   foreach ($node_fields as $field_name => $field) {
-    if(!empty($data['fields'][$field['label']])){
+    if (!empty($data['fields'][$field['label']])) {
 
       $field_info = field_info_field($field_name);
 
@@ -327,6 +333,7 @@ function os2web_cs_service_create_document(array $data) {
         case 'text':
           $node->{$field_name}[LANGUAGE_NONE][0]['value'] = (string) $data['fields'][$field['label']];
           break;
+
         default:
           $node->{$field_name}[LANGUAGE_NONE][0]['value'] = $data['fields'][$field['label']];
           break;
@@ -336,12 +343,13 @@ function os2web_cs_service_create_document(array $data) {
   try {
     node_submit($node);
     node_save($node);
-  } catch (Exception $e) {
-    error_log('Error on save: '. print_r($e->getMessage(), 1));
-    return false;
+  }
+  catch (Exception $e) {
+    error_log('Error on save: ' . print_r($e->getMessage(), 1));
+    return FALSE;
   }
 
-  // Update case
+  // Update case.
   $query = new EntityFieldQuery();
   $result = $query
       ->entityCondition('entity_type', 'node')
@@ -425,6 +433,9 @@ function os2web_cs_service_default_document() {
   );
 }
 
+/**
+ * Implements hook_node_delete().
+ */
 function os2web_cp_service_node_delete($node) {
   if ($node->type == 'os2web_cp_service_cp_document') {
     // Prepare data.
@@ -459,7 +470,7 @@ function os2web_cp_service_field_formatter_info() {
       'label' => t('OS2Web Filelink'),
       'field types' => array('text'),
       'settings' => array(
-        // Base url up which we'll insert the file id
+        // Base url up which we'll insert the file id.
         'base_url' => 'os2web/service/gf/v1/!id',
       ),
     ),
@@ -504,22 +515,21 @@ function os2web_cp_service_field_formatter_view($entity_type, $entity, $field, $
   $element = array();
   foreach ($items as $delta => $item) {
     error_log(basename(__FILE__) . ':' . __LINE__ . ' Var: $item = ' . print_r($item, 1));
-    $fileID = $item['value'];
-    $url = format_string($base_url, array('!id' => $fileID));
+    $file_id = $item['value'];
+    $url = format_string($base_url, array('!id' => $file_id));
     $element[$delta]['#markup'] = l(t('Download'), $url);
   }
   return $element;
 }
 /**
- * Implements hook_foorm_alter()
+ * Implements hook_foorm_alter().
  */
-function os2web_cp_service_form_alter( &$form, &$form_state, $form_id )
-{
+function os2web_cp_service_form_alter(&$form, &$form_state, $form_id) {
   if ($form['#id'] == 'views-exposed-form-os2web-cp-service-cp-case-search-page' ||
       $form['#id'] == 'views-exposed-form-os2web-cp-service-cp-case-search-panel-pane-1' ||
       $form['#id'] == 'views-exposed-form-os2web-cp-service-cp-case-search-default') {
-    // Adds placeholder to all textfields with a description - ab@bellcom.dk
-    foreach ($form['#info'] as $id => &$widget) {
+    // Adds placeholder to all textfields with a description - ab@bellcom.dk.
+    foreach ($form['#info'] as &$widget) {
       if (!empty($widget['description']) && isset($form[$widget['value']]['#type']) && $form[$widget['value']]['#type'] === 'textfield') {
         $form[$widget['value']]['#attributes']['placeholder'] = $widget['description'];
       }
@@ -528,10 +538,10 @@ function os2web_cp_service_form_alter( &$form, &$form_state, $form_id )
 }
 
 /**
- * Implements theme_preprocess_views_exposed_form()
- * Wrap certain elements in search form. Used for styling etc.
+ * Implements theme_preprocess_views_exposed_form().
  */
 function os2web_cp_service_preprocess_views_exposed_form(&$variables) {
+  // Wrap certain elements in search form. Used for styling etc.
   if ($variables['form']['#id'] == 'views-exposed-form-os2web-cp-service-cp-case-search-page' ||
       $variables['form']['#id'] == 'views-exposed-form-os2web-cp-service-cp-case-search-panel-pane-1' ||
       $variables['form']['#id'] == 'views-exposed-form-os2web-cp-service-cp-case-search-default') {
@@ -540,13 +550,16 @@ function os2web_cp_service_preprocess_views_exposed_form(&$variables) {
         case 'filter-field_os2web_cp_service_date_value_1':
           $widget->prefix = '<div class="filter-widgets-wrapper clearfix">';
           break;
+
         case 'filter-field_os2web_cp_service_date_value_2':
           $widget->suffix = '<input type="submit" name="" value="Søg" class="form-submit"></div>';
           break;
+
         case 'filter-field_os2web_cp_service_case_id_value':
           $widget->prefix = '<div class="filter-widgets-wrapper clearfix">';
           $widget->suffix = '<input type="submit" name="" value="Find sag" class="form-submit"></div>';
           break;
+
         case 'filter-field_os2web_cp_service_doc_id_value':
           $widget->prefix = '<div class="filter-widgets-wrapper clearfix">';
           $widget->suffix = '<input type="submit" name="" value="Find dokument" class="form-submit"></div>';
@@ -554,33 +567,39 @@ function os2web_cp_service_preprocess_views_exposed_form(&$variables) {
       }
     }
 
-    $calIcon = drupal_get_path('theme', variable_get('theme_default', NULL)) . "/images/cal.png";
+    $cal_icon = drupal_get_path('theme', variable_get('theme_default', NULL)) . "/images/cal.png";
     $datepicker = 'jQuery(document).ready(function($) {
       $( "#edit-field-os2web-cp-service-date-from-value-datepicker-popup-0" ).datepicker({
                     showOn: "both",
-                    buttonImage: "' . $calIcon . '",
+                    buttonImage: "' . $cal_icon . '",
                     buttonImageOnly: true,
                     dateFormat: "dd-mm-yy"
       });
       $( "#edit-field-os2web-cp-service-date-to-value-datepicker-popup-0" ).datepicker({
                     showOn: "both",
-                    buttonImage: "' . $calIcon . '",
+                    buttonImage: "' . $cal_icon . '",
                     buttonImageOnly: true,
                     dateFormat: "dd-mm-yy"
       });
     });';
-    drupal_add_js($datepicker, array('type' => 'inline', 'scope' => 'footer', 'weight' => 5));
+    drupal_add_js($datepicker,
+      array(
+        'type' => 'inline',
+        'scope' => 'footer',
+        'weight' => 5,
+      )
+    );
   }
 }
 
 /**
- * Implements hook_theme_registry_alter()
- * Add the tpl for exposed form to the theme registry
- * Somehow this gets overridden by cmstheme.
+ * Implements hook_theme_registry_alter().
  */
 function os2web_cp_service_theme_registry_alter(&$theme_registry) {
+  // Add the tpl for exposed form to the theme registry
+  // Somehow this gets overridden by cmstheme.
   if (!empty($theme_registry['views_exposed_form__os2web_cp_service_cp_case_search']['path'])) {
-    $theme_registry['views_exposed_form__os2web_cp_service_cp_case_search']['path'] = drupal_get_path('module', 'os2web_cp_service'). '/theme/';
+    $theme_registry['views_exposed_form__os2web_cp_service_cp_case_search']['path'] = drupal_get_path('module', 'os2web_cp_service') . '/theme/';
   }
 }
 
