@@ -70,7 +70,7 @@ function os2web_gf_service_handler($file_id) {
       $ch = curl_init($url.'?FileID='.$file_id.'&FileFormat=Published');
       curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
       curl_setopt($ch, CURLOPT_USERPWD, "{$username}:{$password}");
-      curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+      curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_NTLM);
       $data = curl_exec($ch);
       $header = curl_getinfo($ch);
       if ($header['http_code'] === 200) {
