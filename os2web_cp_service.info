@@ -15,7 +15,6 @@ dependencies[] = list
 dependencies[] = node
 dependencies[] = number
 dependencies[] = options
-dependencies[] = os2web_cp_service
 dependencies[] = os2web_esdh_provider
 dependencies[] = page_manager
 dependencies[] = panels
