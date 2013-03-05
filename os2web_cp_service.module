@@ -65,7 +65,7 @@ function os2web_gf_service_handler($file_id) {
     $password = variable_get('os2web_cp_service_endpoint_password');
     if (!empty($username) && !empty($password)) {
       // CURL for transfer:
-      $ch = curl_init($url . '?FileID=' . $file_id . '&FileFormat=Original');
+      $ch = curl_init($url . '?FileID=' . $file_id . '&FileFormat=Published');
       curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
       curl_setopt($ch, CURLOPT_USERPWD, "{$username}:{$password}");
       curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_NTLM);
@@ -610,7 +610,7 @@ function os2web_cp_service_theme_registry_alter(&$theme_registry) {
  * Add configuration to the settings form.
  */
 function os2web_cp_service_form_os2web_settings_settings_form_alter(&$form, &$form_state) {
-  // CM Configuration.
+  // CP Configuration.
   $form['os2web_cp_service_config_group'] = array(
     '#type' => 'fieldset',
     '#title' => t('CP File Endpoint configuration'),
