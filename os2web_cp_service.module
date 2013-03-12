@@ -439,9 +439,13 @@ function os2web_cs_service_default_document() {
 }
 
 /**
- * Service function to delete an Case or Document
- * @param  [type] $guid [description]
- * @return [type]       [description]
+ * Service function to delete an Case or Document.
+ *
+ * @param string $guid
+ *   The key of the node stored in field_os2web_cp_service_key
+ *
+ * @return bool
+ *   Success
  */
 function os2web_cp_service_delete($guid) {
   $query = new EntityFieldQuery();
