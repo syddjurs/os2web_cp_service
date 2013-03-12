@@ -437,6 +437,31 @@ function os2web_cs_service_default_document() {
   );
 }
 
+function os2web_cp_service_delete($guid) {
+  $query = new EntityFieldQuery();
+  $result = $query
+      ->entityCondition('entity_type', 'node')
+      ->propertyCondition('status', 1)
+      ->fieldCondition('field_os2web_cp_service_key', 'target_id', $guid, '=')
+      ->execute();
+  $nids = (isset($result['node']))?array_keys($result['node']) : array();
+  try {
+    if (count($nids) > 1) {
+      if (is_array($nids)) {
+        node_delete_multiple($nids);
+      }
+    }
+    else {
+      node_delete(array_pop($nids));
+    }
+    return TRUE;
+  }
+  catch (Exception $e) {
+    error_log('Error on delete: ' . print_r($e->getMessage(), 1));
+    return FALSE;
+  }
+}
+
 /**
  * Implements hook_node_delete().
  */
