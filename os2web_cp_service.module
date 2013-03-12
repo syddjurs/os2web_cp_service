@@ -156,7 +156,7 @@ function os2web_cs_service_create_case(array $data) {
   $node_fields = field_info_instances('node', 'os2web_cp_service_cp_case');
 
   foreach ($node_fields as $field_name => $field) {
-    if (!empty($data['fields'][$field['label']])) {
+    if (!empty($data['fields'][$field['label']]) && $field_name !== 'title') {
 
       $field_info = field_info_field($field_name);
 
@@ -329,7 +329,7 @@ function os2web_cs_service_create_document(array $data) {
   // Has all fields of a node type "document".
   $node_fields = field_info_instances('node', 'os2web_cp_service_cp_document');
   foreach ($node_fields as $field_name => $field) {
-    if (!empty($data['fields'][$field['label']])) {
+    if (!empty($data['fields'][$field['label']]) && $field_name !== 'title') {
 
       $field_info = field_info_field($field_name);
 
