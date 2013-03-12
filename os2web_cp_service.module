@@ -150,7 +150,7 @@ function os2web_cs_service_create_case(array $data) {
   $node->language = LANGUAGE_NONE;
   node_object_prepare($node);
 
-  $node->title = (string) !empty($data['fields']['Officiel Titel'])?$data['fields']['Officiel Titel'] : $data['fields']['Sagstitel'];
+  $node->title = (string) !empty($data['fields']['Officiel titel'])?$data['fields']['Officiel titel'] : $data['fields']['Sagstitel'];
 
   // Has all fields of a node type "case".
   $node_fields = field_info_instances('node', 'os2web_cp_service_cp_case');
@@ -324,7 +324,7 @@ function os2web_cs_service_create_document(array $data) {
   $node->language = LANGUAGE_NONE;
   node_object_prepare($node);
 
-  $node->title = (string) !empty($data['fields']['Officiel Titel'])?$data['fields']['Officiel Titel'] : $data['fields']['Dokumenttitel'];
+  $node->title = (string) !empty($data['fields']['Officiel titel'])?$data['fields']['Officiel titel'] : $data['fields']['Dokumenttitel'];
 
   // Has all fields of a node type "document".
   $node_fields = field_info_instances('node', 'os2web_cp_service_cp_document');
@@ -437,12 +437,17 @@ function os2web_cs_service_default_document() {
   );
 }
 
+/**
+ * Service function to delete an Case or Document
+ * @param  [type] $guid [description]
+ * @return [type]       [description]
+ */
 function os2web_cp_service_delete($guid) {
   $query = new EntityFieldQuery();
   $result = $query
       ->entityCondition('entity_type', 'node')
       ->propertyCondition('status', 1)
-      ->fieldCondition('field_os2web_cp_service_key', 'target_id', $guid, '=')
+      ->fieldCondition('field_os2web_cp_service_key', 'value', $guid, '=')
       ->execute();
   $nids = (isset($result['node']))?array_keys($result['node']) : array();
   try {
