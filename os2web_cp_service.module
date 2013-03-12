@@ -120,6 +120,7 @@ function os2web_cs_service_alter_configuration($key, $value) {
  *   TRUE on successful content creation.
  */
 function os2web_cs_service_create_case(array $data) {
+  error_log("Var: \$data = " . print_r($data, 1));
   // Prepare data.
   $data = array_replace_recursive(os2web_cs_service_default_case(), $data);
 
