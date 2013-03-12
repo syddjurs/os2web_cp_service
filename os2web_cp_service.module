@@ -65,7 +65,7 @@ function os2web_gf_service_handler($file_id) {
     $password = variable_get('os2web_cp_service_endpoint_password');
     if (!empty($username) && !empty($password)) {
       // CURL for transfer:
-      $ch = curl_init($url . '?FileID=' . $file_id . '&FileFormat=Published');
+      $ch = curl_init($url . '?FileID=' . $file_id . '&FileFormat=Available');
       curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
       curl_setopt($ch, CURLOPT_USERPWD, "{$username}:{$password}");
       curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_NTLM);
@@ -131,11 +131,15 @@ function os2web_cs_service_create_case(array $data) {
       ->fieldCondition('field_os2web_cp_service_sysid', 'value', $data['fields']['SystemID'], '=')
       ->execute();
   $nids = (isset($result['node']))?array_keys($result['node']) : NULL;
-
-  if (is_array($nids)) {
-    node_delete_multiple($nids);
+  $node = new stdClass();
+  if (count($nids) > 1) {
+    if (is_array($nids)) {
+      node_delete_multiple($nids);
+    }
   }
-  $node = (object) NULL;
+  else {
+    $node = node_load(array_pop($nids));
+  }
   $node->type = 'os2web_cp_service_cp_case';
   $node->uid = 0;
   $node->status = 1;
