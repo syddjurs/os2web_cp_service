@@ -157,7 +157,7 @@ function os2web_cp_service_views_default_views() {
   $handler->display->display_options['fields']['field_os2web_cp_service_casetype']['label'] = '';
   $handler->display->display_options['fields']['field_os2web_cp_service_casetype']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_os2web_cp_service_casetype']['element_label_colon'] = FALSE;
-  /* Field: Content: Journalnummer */
+  /* Field: Content: DokumentID */
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['id'] = 'field_os2web_cp_service_doc_id_1';
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['table'] = 'field_data_field_os2web_cp_service_doc_id';
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['field'] = 'field_os2web_cp_service_doc_id';
@@ -289,7 +289,7 @@ return TRUE; // If no exposed inputs, remove all results
     1 => 0,
     3 => 0,
   );
-  /* Filter criterion: Content: Journalnummer (field_os2web_cp_service_doc_id) */
+  /* Filter criterion: Content: DokumentID (field_os2web_cp_service_doc_id) */
   $handler->display->display_options['filters']['field_os2web_cp_service_doc_id_value']['id'] = 'field_os2web_cp_service_doc_id_value';
   $handler->display->display_options['filters']['field_os2web_cp_service_doc_id_value']['table'] = 'field_data_field_os2web_cp_service_doc_id';
   $handler->display->display_options['filters']['field_os2web_cp_service_doc_id_value']['field'] = 'field_os2web_cp_service_doc_id_value';
@@ -355,6 +355,40 @@ return TRUE; // If no exposed inputs, remove all results
   /* Display: Content pane */
   $handler = $view->new_display('panel_pane', 'Content pane', 'panel_pane_1');
   $handler->display->display_options['inherit_panels_path'] = '1';
+  $translatables['os2web_cp_service_cp_case_search'] = array(
+    t('Master'),
+    t('more'),
+    t('Filtrer'),
+    t('Reset'),
+    t('Sort by'),
+    t('Asc'),
+    t('Desc'),
+    t('Items per page'),
+    t('- All -'),
+    t('Offset'),
+    t('« Første'),
+    t('‹ Forrige'),
+    t('Næste ›'),
+    t('Sidste »'),
+    t('Content entity referenced from field_os2web_cp_service_doc_ref'),
+    t('Title'),
+    t('[title]'),
+    t('[field_os2web_cp_service_content]'),
+    t('Søgetekst'),
+    t('fx. Birkevej affald'),
+    t('Fra'),
+    t('Til'),
+    t('Sagsnummer'),
+    t('fx. 12/99999999'),
+    t('Dokumentnummer'),
+    t('fx. 9999999/12'),
+    t('Type'),
+    t('Vælg afdeling'),
+    t('Page'),
+    t('Der kunne ikke findes nogle sager ud fra dine søgekriterier. '),
+    t('Content pane'),
+    t('View panes'),
+  );
   $export['os2web_cp_service_cp_case_search'] = $view;
 
   $view = new view();
@@ -538,12 +572,11 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['fields']['field_os2web_cp_service_content']['alter']['max_length'] = '140';
   $handler->display->display_options['fields']['field_os2web_cp_service_content']['alter']['strip_tags'] = TRUE;
   $handler->display->display_options['fields']['field_os2web_cp_service_content']['alter']['trim'] = TRUE;
-  /* Field: Content: Journalnummer */
+  /* Field: Content: DokumentID */
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id']['id'] = 'field_os2web_cp_service_doc_id';
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id']['table'] = 'field_data_field_os2web_cp_service_doc_id';
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id']['field'] = 'field_os2web_cp_service_doc_id';
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id']['relationship'] = 'field_os2web_cp_service_doc_ref_target_id';
-  $handler->display->display_options['fields']['field_os2web_cp_service_doc_id']['label'] = 'DokumentID';
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id']['exclude'] = TRUE;
   /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
@@ -557,7 +590,7 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['fields']['title']['alter']['link_class'] = 'qtip-this';
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
-  /* Field: Content: Journalnummer */
+  /* Field: Content: DokumentID */
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['id'] = 'field_os2web_cp_service_doc_id_1';
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['table'] = 'field_data_field_os2web_cp_service_doc_id';
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['field'] = 'field_os2web_cp_service_doc_id';
@@ -665,6 +698,30 @@ return TRUE; // If no exposed inputs, remove all results
     'os2web_cp_service_cp_case' => 'os2web_cp_service_cp_case',
   );
   $handler->display->display_options['path'] = 'cp-case/%';
+  $translatables['os2web_cp_service_cp_case_view'] = array(
+    t('Master'),
+    t('more'),
+    t('Apply'),
+    t('Reset'),
+    t('Sort by'),
+    t('Asc'),
+    t('Desc'),
+    t('Title'),
+    t('Description'),
+    t('Beskrivelse af sagen'),
+    t('All'),
+    t('Documents'),
+    t('Attachent to display all documents for a case'),
+    t('Content entity referenced from field_os2web_cp_service_doc_ref'),
+    t('Indholdsbeskrivelse'),
+    t('DokumentID'),
+    t('[field_os2web_cp_service_content]'),
+    t('Dokumentnummer'),
+    t('Page'),
+    t('<h2>Sags Nr.: [field_os2web_cp_service_case_id]</h2>'),
+    t('Titel'),
+    t('[title] <br><span>Se alle sager på denne addresse</span>'),
+  );
   $export['os2web_cp_service_cp_case_view'] = $view;
 
   $view = new view();
@@ -792,7 +849,7 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['fields']['field_os2web_cp_service_filetype']['table'] = 'field_data_field_os2web_cp_service_filetype';
   $handler->display->display_options['fields']['field_os2web_cp_service_filetype']['field'] = 'field_os2web_cp_service_filetype';
   $handler->display->display_options['fields']['field_os2web_cp_service_filetype']['exclude'] = TRUE;
-  /* Field: Content: Journalnummer */
+  /* Field: Content: DokumentID */
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id']['id'] = 'field_os2web_cp_service_doc_id';
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id']['table'] = 'field_data_field_os2web_cp_service_doc_id';
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id']['field'] = 'field_os2web_cp_service_doc_id';
@@ -868,6 +925,26 @@ return TRUE; // If no exposed inputs, remove all results
   );
   $handler->display->display_options['filters']['type']['group'] = 1;
   $handler->display->display_options['path'] = 'cp-document/%';
+  $translatables['os2web_cp_service_cp_document_view'] = array(
+    t('Master'),
+    t('more'),
+    t('Apply'),
+    t('Reset'),
+    t('Sort by'),
+    t('Asc'),
+    t('Desc'),
+    t('Title'),
+    t('Description'),
+    t('Beskrivelse af dokumentet'),
+    t('All'),
+    t('Page'),
+    t('<h2>Fra sag Nr.: [field_os2web_cp_service_case_id]</h2>
+<p>Klik på sags nr. for at se alle dokumenter på sagen</p>'),
+    t('Filformat'),
+    t('Dokumentnummer'),
+    t('Dokumentnavn'),
+    t('[title] <span>Se alle sager på denne addresse</span>'),
+  );
   $export['os2web_cp_service_cp_document_view'] = $view;
 
   return $export;
