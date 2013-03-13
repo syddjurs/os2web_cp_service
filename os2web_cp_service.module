@@ -88,7 +88,7 @@ function os2web_gf_service_handler($file_id) {
         $node = node_load(array_pop($nids));
 
         if ($node) {
-          drupal_add_http_header('Content-Disposition', 'attachment; filename=' . $node->field_os2web_cp_service_doc_id[LANGUAGE_NONE][0]['value'] . '.' . $node->field_os2web_cp_service_filetype[LANGUAGE_NONE][0]['value']);
+          drupal_add_http_header('Content-Disposition', 'attachment; filename=' . $node->field_os2web_cp_service_doc_id[LANGUAGE_NONE][0]['value'] . '.' . _os2web_cp_service_get_extension_from_mime($header['content_type']));
         }
         echo $data;
         drupal_exit();
@@ -683,4 +683,33 @@ function os2web_cp_service_form_os2web_settings_settings_form_alter(&$form, &$fo
     '#title' => t('CP File endpoint password'),
     '#description' => t('CP File endpoint HTTP authentification password.'),
   );
+}
+
+/**
+ * Turns a mime type to its corresponding file ext.
+ *
+ * @param string $mime
+ *   The mime-type.
+ *
+ * @return string
+ *   The file ext without the dot.
+ */
+protected function _os2web_cp_service_get_extension_from_mime($mime) {
+  $map = array(
+    'application/pdf'   => '.pdf',
+    'application/zip'   => '.zip',
+    'image/gif'         => '.gif',
+    'image/jpeg'        => '.jpg',
+    'image/png'         => '.png',
+    'text/css'          => '.css',
+    'text/html'         => '.html',
+    'text/javascript'   => '.js',
+    'text/plain'        => '.txt',
+    'text/xml'          => '.xml',
+  );
+  if (isset($map[$mime])) {
+    return $map[$mime];
+  }
+  $pieces = explode('/', $mime);
+  return array_pop($pieces);
 }
