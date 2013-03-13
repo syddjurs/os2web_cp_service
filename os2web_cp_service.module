@@ -81,16 +81,17 @@ function os2web_gf_service_handler($file_id) {
             ->entityCondition('entity_type', 'node')
             ->propertyCondition('type', 'os2web_cp_service_cp_document')
             ->propertyCondition('status', 1)
-            ->fieldCondition('field_os2web_cp_service_key', 'value', $file_id, '=')
+            ->fieldCondition('field_os2web_cp_service_file_id', 'value', $file_id, '=')
             ->execute();
         $nids = (isset($result['node']))?array_keys($result['node']) : NULL;
 
         $node = node_load(array_pop($nids));
 
         if ($node) {
-          drupal_add_http_header('Content-Disposition', 'attachment; filename=' . $node->title . '.' . $node->field_os2web_cp_service_filetype);
+          drupal_add_http_header('Content-Disposition', 'attachment; filename=' . $node->field_os2web_cp_service_doc_id . '.' . $node->field_os2web_cp_service_filetype);
         }
         echo $data;
+        drupal_exit();
       }
       else {
         error_log(basename(__FILE__) . ':' . __LINE__ . ' HTTP header recieved = ' . print_r($header, 1));
