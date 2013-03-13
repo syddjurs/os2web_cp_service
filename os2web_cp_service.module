@@ -88,7 +88,7 @@ function os2web_gf_service_handler($file_id) {
         $node = node_load(array_pop($nids));
 
         if ($node) {
-          drupal_add_http_header('Content-Disposition', 'attachment; filename=' . $node->field_os2web_cp_service_doc_id . '.' . $node->field_os2web_cp_service_filetype);
+          drupal_add_http_header('Content-Disposition', 'attachment; filename=' . $node->field_os2web_cp_service_doc_id[LANGUAGE_NONE][0]['value'] . '.' . $node->field_os2web_cp_service_filetype[LANGUAGE_NONE][0]['value']);
         }
         echo $data;
         drupal_exit();
