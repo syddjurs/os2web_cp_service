@@ -71,9 +71,20 @@ function os2web_gf_service_handler($file_id) {
       curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_NTLM);
       $data = curl_exec($ch);
       $header = curl_getinfo($ch);
+      curl_close($ch);
       if ($header['http_code'] === 200) {
         drupal_add_http_header('Content-Type', $header['content_type']);
         drupal_add_http_header('Content-Length', $header['download_content_length']);
+        drupal_add_http_header('Expires', 0);
+
+        // Check for IE only headers.
+        if (isset($_SERVER['HTTP_USER_AGENT']) && (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== FALSE))) {
+          drupal_add_http_header('Cache-Control', 'must-revalidate, post-check=0, pre-check=0');
+          drupal_add_http_header('Pragma', 'public');
+        }
+        else {
+          drupal_add_http_header('Pragma', 'no-cache');
+        }
 
         // Load the title to use it as the filename.
         $query = new EntityFieldQuery();
@@ -88,7 +99,7 @@ function os2web_gf_service_handler($file_id) {
         $node = node_load(array_pop($nids));
 
         if ($node) {
-          drupal_add_http_header('Content-Disposition', 'attachment; filename=' . $node->field_os2web_cp_service_doc_id[LANGUAGE_NONE][0]['value'] . '.' . _os2web_cp_service_get_extension_from_mime($header['content_type']));
+          drupal_add_http_header('Content-Disposition', 'attachment; filename=' . $node->field_os2web_cp_service_doc_id[LANGUAGE_NONE][0]['value'] . '.' . os2web_cp_service_get_extension_from_mime($header['content_type']));
         }
         echo $data;
         drupal_exit();
@@ -694,7 +705,7 @@ function os2web_cp_service_form_os2web_settings_settings_form_alter(&$form, &$fo
  * @return string
  *   The file ext without the dot.
  */
-protected function _os2web_cp_service_get_extension_from_mime($mime) {
+function os2web_cp_service_get_extension_from_mime($mime) {
   $map = array(
     'application/pdf'   => '.pdf',
     'application/zip'   => '.zip',
