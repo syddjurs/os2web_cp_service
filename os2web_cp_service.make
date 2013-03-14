@@ -53,3 +53,9 @@ projects[pathauto][version] = "1.1"
 
 projects[entityreference][subdir] = "contrib"
 projects[entityreference][version] = "1.0"
+
+projects[token][subdir] = "contrib"
+projects[token][version] = "1.4"
+
+projects[entity][subdir] = "contrib"
+projects[entity][version] = "1.0-rc3"
