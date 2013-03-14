@@ -75,7 +75,10 @@ function os2web_gf_service_handler($file_id) {
       if ($header['http_code'] === 200) {
         drupal_add_http_header('Content-Type', $header['content_type']);
         drupal_add_http_header('Content-Length', $header['download_content_length']);
-        drupal_add_http_header('Expires', 0);
+        drupal_add_http_header('Cache-Control', 'must-revalidate, post-check=0, pre-check=0');
+        drupal_add_http_header('Cache-Control', 'private',false);
+        drupal_add_http_header('Connection', 'close');
+        drupal_add_http_header('Expires', '0');
 
         // Check for IE only headers.
         if (isset($_SERVER['HTTP_USER_AGENT']) && (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== FALSE)) {
@@ -98,7 +101,8 @@ function os2web_gf_service_handler($file_id) {
         $node = node_load(array_pop($nids));
 
         if ($node) {
-          drupal_add_http_header('Content-Disposition', 'attachment; filename=' . $node->field_os2web_cp_service_doc_id[LANGUAGE_NONE][0]['value'] . '.' . os2web_cp_service_get_extension_from_mime($header['content_type']));
+          $filename = str_replace('/', '_', $node->field_os2web_cp_service_doc_id[LANGUAGE_NONE][0]['value'] . '.' . os2web_cp_service_get_extension_from_mime($header['content_type']);
+          drupal_add_http_header('Content-Disposition', 'attachment; filename=' . $filename));
         }
         echo $data;
         drupal_exit();
@@ -706,16 +710,16 @@ function os2web_cp_service_form_os2web_settings_settings_form_alter(&$form, &$fo
  */
 function os2web_cp_service_get_extension_from_mime($mime) {
   $map = array(
-    'application/pdf'   => '.pdf',
-    'application/zip'   => '.zip',
-    'image/gif'         => '.gif',
-    'image/jpeg'        => '.jpg',
-    'image/png'         => '.png',
-    'text/css'          => '.css',
-    'text/html'         => '.html',
-    'text/javascript'   => '.js',
-    'text/plain'        => '.txt',
-    'text/xml'          => '.xml',
+    'application/pdf'   => 'pdf',
+    'application/zip'   => 'zip',
+    'image/gif'         => 'gif',
+    'image/jpeg'        => 'jpg',
+    'image/png'         => 'png',
+    'text/css'          => 'css',
+    'text/html'         => 'html',
+    'text/javascript'   => 'js',
+    'text/plain'        => 'txt',
+    'text/xml'          => 'xml',
   );
   if (isset($map[$mime])) {
     return $map[$mime];
