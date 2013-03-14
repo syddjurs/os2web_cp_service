@@ -78,8 +78,7 @@ function os2web_gf_service_handler($file_id) {
         drupal_add_http_header('Expires', 0);
 
         // Check for IE only headers.
-        if (isset($_SERVER['HTTP_USER_AGENT']) && (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== FALSE))) {
-          drupal_add_http_header('Cache-Control', 'must-revalidate, post-check=0, pre-check=0');
+        if (isset($_SERVER['HTTP_USER_AGENT']) && (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== FALSE)) {
           drupal_add_http_header('Pragma', 'public');
         }
         else {
