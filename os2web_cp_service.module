@@ -182,7 +182,7 @@ function os2web_cs_service_create_case(array $data) {
   $node->language = LANGUAGE_NONE;
   node_object_prepare($node);
 
-  $node->title = (string) !empty($data['fields']['Officiel titel'])?$data['fields']['Officiel titel'] : $data['fields']['Sagstitel'];
+  $node->title = (string) !empty($data['fields']['Sagstitel'])?$data['fields']['Sagstitel'] : $data['fields']['Officiel titel'];
 
   // Has all fields of a node type "case".
   $node_fields = field_info_instances('node', 'os2web_cp_service_cp_case');
@@ -356,7 +356,7 @@ function os2web_cs_service_create_document(array $data) {
   $node->language = LANGUAGE_NONE;
   node_object_prepare($node);
 
-  $node->title = (string) !empty($data['fields']['Officiel titel'])?$data['fields']['Officiel titel'] : $data['fields']['Dokumenttitel'];
+  $node->title = (string) !empty($data['fields']['Dokumenttitel'])?$data['fields']['Dokumenttitel'] : $data['fields']['Officiel titel'];
 
   // Has all fields of a node type "document".
   $node_fields = field_info_instances('node', 'os2web_cp_service_cp_document');
