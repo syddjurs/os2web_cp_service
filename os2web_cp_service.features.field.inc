@@ -250,8 +250,8 @@ function os2web_cp_service_field_default_fields() {
         'cache_enabled' => 0,
         'granularity' => array(
           'day' => 'day',
-          'hour' => 'hour',
-          'minute' => 'minute',
+          'hour' => 0,
+          'minute' => 0,
           'month' => 'month',
           'second' => 0,
           'year' => 'year',
@@ -1049,8 +1049,8 @@ function os2web_cp_service_field_default_fields() {
         'cache_enabled' => 0,
         'granularity' => array(
           'day' => 'day',
-          'hour' => 'hour',
-          'minute' => 'minute',
+          'hour' => 0,
+          'minute' => 0,
           'month' => 'month',
           'second' => 0,
           'year' => 'year',
@@ -1286,8 +1286,8 @@ function os2web_cp_service_field_default_fields() {
         'cache_enabled' => 0,
         'granularity' => array(
           'day' => 'day',
-          'hour' => 'hour',
-          'minute' => 'minute',
+          'hour' => 0,
+          'minute' => 0,
           'month' => 'month',
           'second' => 0,
           'year' => 'year',
