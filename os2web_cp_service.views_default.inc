@@ -147,8 +147,8 @@ function os2web_cp_service_views_default_views() {
   $handler->display->display_options['fields']['title']['alter']['path'] = 'sag/[field_os2web_cp_service_case_id]';
   $handler->display->display_options['fields']['title']['alter']['alt'] = '[field_os2web_cp_service_content]';
   $handler->display->display_options['fields']['title']['alter']['link_class'] = 'qtip-this';
-  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
-  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  $handler->display->display_options['fields']['title']['alter']['max_length'] = '100';
+  $handler->display->display_options['fields']['title']['alter']['trim'] = TRUE;
   $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
   /* Field: Content: Sagstype - Sagstype */
   $handler->display->display_options['fields']['field_os2web_cp_service_casetype']['id'] = 'field_os2web_cp_service_casetype';
@@ -157,7 +157,7 @@ function os2web_cp_service_views_default_views() {
   $handler->display->display_options['fields']['field_os2web_cp_service_casetype']['label'] = '';
   $handler->display->display_options['fields']['field_os2web_cp_service_casetype']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_os2web_cp_service_casetype']['element_label_colon'] = FALSE;
-  /* Field: Content: DokumentID */
+  /* Field: Content: Journalnummer */
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['id'] = 'field_os2web_cp_service_doc_id_1';
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['table'] = 'field_data_field_os2web_cp_service_doc_id';
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['field'] = 'field_os2web_cp_service_doc_id';
@@ -169,7 +169,6 @@ function os2web_cp_service_views_default_views() {
   $handler->display->display_options['fields']['field_os2web_cp_service_content_1']['id'] = 'field_os2web_cp_service_content_1';
   $handler->display->display_options['fields']['field_os2web_cp_service_content_1']['table'] = 'field_data_field_os2web_cp_service_content';
   $handler->display->display_options['fields']['field_os2web_cp_service_content_1']['field'] = 'field_os2web_cp_service_content';
-  $handler->display->display_options['fields']['field_os2web_cp_service_content_1']['relationship'] = 'field_os2web_cp_service_doc_ref_target_id';
   $handler->display->display_options['fields']['field_os2web_cp_service_content_1']['label'] = '';
   $handler->display->display_options['fields']['field_os2web_cp_service_content_1']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_os2web_cp_service_content_1']['element_label_colon'] = FALSE;
@@ -289,7 +288,7 @@ return TRUE; // If no exposed inputs, remove all results
     1 => 0,
     3 => 0,
   );
-  /* Filter criterion: Content: DokumentID (field_os2web_cp_service_doc_id) */
+  /* Filter criterion: Content: Journalnummer (field_os2web_cp_service_doc_id) */
   $handler->display->display_options['filters']['field_os2web_cp_service_doc_id_value']['id'] = 'field_os2web_cp_service_doc_id_value';
   $handler->display->display_options['filters']['field_os2web_cp_service_doc_id_value']['table'] = 'field_data_field_os2web_cp_service_doc_id';
   $handler->display->display_options['filters']['field_os2web_cp_service_doc_id_value']['field'] = 'field_os2web_cp_service_doc_id_value';
@@ -572,7 +571,7 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['fields']['field_os2web_cp_service_content']['alter']['max_length'] = '140';
   $handler->display->display_options['fields']['field_os2web_cp_service_content']['alter']['strip_tags'] = TRUE;
   $handler->display->display_options['fields']['field_os2web_cp_service_content']['alter']['trim'] = TRUE;
-  /* Field: Content: DokumentID */
+  /* Field: Content: Journalnummer */
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id']['id'] = 'field_os2web_cp_service_doc_id';
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id']['table'] = 'field_data_field_os2web_cp_service_doc_id';
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id']['field'] = 'field_os2web_cp_service_doc_id';
@@ -590,13 +589,27 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['fields']['title']['alter']['link_class'] = 'qtip-this';
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
-  /* Field: Content: DokumentID */
+  /* Field: Content: Journalnummer */
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['id'] = 'field_os2web_cp_service_doc_id_1';
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['table'] = 'field_data_field_os2web_cp_service_doc_id';
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['field'] = 'field_os2web_cp_service_doc_id';
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['relationship'] = 'field_os2web_cp_service_doc_ref_target_id';
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['label'] = 'Dokumentnummer';
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id_1']['element_label_colon'] = FALSE;
+  /* Field: Content: Dokumentdato */
+  $handler->display->display_options['fields']['field_os2web_cp_service_date']['id'] = 'field_os2web_cp_service_date';
+  $handler->display->display_options['fields']['field_os2web_cp_service_date']['table'] = 'field_data_field_os2web_cp_service_date';
+  $handler->display->display_options['fields']['field_os2web_cp_service_date']['field'] = 'field_os2web_cp_service_date';
+  $handler->display->display_options['fields']['field_os2web_cp_service_date']['relationship'] = 'field_os2web_cp_service_doc_ref_target_id';
+  $handler->display->display_options['fields']['field_os2web_cp_service_date']['label'] = 'Dato';
+  $handler->display->display_options['fields']['field_os2web_cp_service_date']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_os2web_cp_service_date']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Contextual filter: Content: Nid */
   $handler->display->display_options['arguments']['nid']['id'] = 'nid';
@@ -665,6 +678,19 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['fields']['title_1']['exclude'] = TRUE;
   $handler->display->display_options['fields']['title_1']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['title_1']['link_to_node'] = FALSE;
+  /* Field: Content: Dokumentdato */
+  $handler->display->display_options['fields']['field_os2web_cp_service_date']['id'] = 'field_os2web_cp_service_date';
+  $handler->display->display_options['fields']['field_os2web_cp_service_date']['table'] = 'field_data_field_os2web_cp_service_date';
+  $handler->display->display_options['fields']['field_os2web_cp_service_date']['field'] = 'field_os2web_cp_service_date';
+  $handler->display->display_options['fields']['field_os2web_cp_service_date']['label'] = 'Dato';
+  $handler->display->display_options['fields']['field_os2web_cp_service_date']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_os2web_cp_service_date']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Contextual filter: Content: Nid */
   $handler->display->display_options['arguments']['nid']['id'] = 'nid';
@@ -714,9 +740,10 @@ return TRUE; // If no exposed inputs, remove all results
     t('Attachent to display all documents for a case'),
     t('Content entity referenced from field_os2web_cp_service_doc_ref'),
     t('Indholdsbeskrivelse'),
-    t('DokumentID'),
+    t('Journalnummer'),
     t('[field_os2web_cp_service_content]'),
     t('Dokumentnummer'),
+    t('Dato'),
     t('Page'),
     t('<h2>Sags Nr.: [field_os2web_cp_service_case_id]</h2>'),
     t('Titel'),
@@ -849,7 +876,7 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['fields']['field_os2web_cp_service_filetype']['table'] = 'field_data_field_os2web_cp_service_filetype';
   $handler->display->display_options['fields']['field_os2web_cp_service_filetype']['field'] = 'field_os2web_cp_service_filetype';
   $handler->display->display_options['fields']['field_os2web_cp_service_filetype']['exclude'] = TRUE;
-  /* Field: Content: DokumentID */
+  /* Field: Content: Journalnummer */
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id']['id'] = 'field_os2web_cp_service_doc_id';
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id']['table'] = 'field_data_field_os2web_cp_service_doc_id';
   $handler->display->display_options['fields']['field_os2web_cp_service_doc_id']['field'] = 'field_os2web_cp_service_doc_id';
@@ -890,6 +917,19 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['fields']['field_os2web_cp_service_file_id']['type'] = 'os2web_cp_service_file_formatter';
   $handler->display->display_options['fields']['field_os2web_cp_service_file_id']['settings'] = array(
     'base_url' => 'os2web/service/gf/v1/!id',
+  );
+  /* Field: Content: Dokumentdato */
+  $handler->display->display_options['fields']['field_os2web_cp_service_date']['id'] = 'field_os2web_cp_service_date';
+  $handler->display->display_options['fields']['field_os2web_cp_service_date']['table'] = 'field_data_field_os2web_cp_service_date';
+  $handler->display->display_options['fields']['field_os2web_cp_service_date']['field'] = 'field_os2web_cp_service_date';
+  $handler->display->display_options['fields']['field_os2web_cp_service_date']['label'] = 'Dato';
+  $handler->display->display_options['fields']['field_os2web_cp_service_date']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_os2web_cp_service_date']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
   );
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Contextual filter: Content: Nid */
@@ -944,6 +984,7 @@ return TRUE; // If no exposed inputs, remove all results
     t('Dokumentnummer'),
     t('Dokumentnavn'),
     t('[title] <span>Se alle sager på denne addresse</span>'),
+    t('Dato'),
   );
   $export['os2web_cp_service_cp_document_view'] = $view;
 
