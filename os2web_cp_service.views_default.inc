@@ -181,6 +181,19 @@ function os2web_cp_service_views_default_views() {
   $handler->display->display_options['fields']['title_1']['exclude'] = TRUE;
   $handler->display->display_options['fields']['title_1']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['title_1']['link_to_node'] = FALSE;
+  /* Field: Content: Dokumentdato */
+  $handler->display->display_options['fields']['field_os2web_cp_service_date']['id'] = 'field_os2web_cp_service_date';
+  $handler->display->display_options['fields']['field_os2web_cp_service_date']['table'] = 'field_data_field_os2web_cp_service_date';
+  $handler->display->display_options['fields']['field_os2web_cp_service_date']['field'] = 'field_os2web_cp_service_date';
+  $handler->display->display_options['fields']['field_os2web_cp_service_date']['label'] = 'Dato';
+  $handler->display->display_options['fields']['field_os2web_cp_service_date']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_os2web_cp_service_date']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
@@ -373,6 +386,7 @@ return TRUE; // If no exposed inputs, remove all results
     t('Title'),
     t('[title]'),
     t('[field_os2web_cp_service_content]'),
+    t('Dato'),
     t('Søgetekst'),
     t('fx. Birkevej affald'),
     t('Fra'),
