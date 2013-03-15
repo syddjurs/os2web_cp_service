@@ -182,7 +182,15 @@ function os2web_cs_service_create_case(array $data) {
   $node->language = LANGUAGE_NONE;
   node_object_prepare($node);
 
-  $node->title = (string) !empty($data['fields']['Sagstitel'])?$data['fields']['Sagstitel'] : $data['fields']['Officiel titel'];
+  switch ($data['fields']['Sagstype - Sagstype']) {
+    case 'EJSAG':
+      $node->title = (string) $data['fields']['Sagstitel'] . ' - ' . $data['fields']['Sagsindhold'];
+      break;
+
+    default:
+      $node->title = (string) !empty($data['fields']['Sagstitel'])?$data['fields']['Sagstitel'] : $data['fields']['Officiel titel'];
+      break;
+  }
 
   // Has all fields of a node type "case".
   $node_fields = field_info_instances('node', 'os2web_cp_service_cp_case');
