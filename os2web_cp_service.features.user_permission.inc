@@ -13,70 +13,54 @@ function os2web_cp_service_user_default_permissions() {
   // Exported permission: create os2web_cp_service_cp_case content.
   $permissions['create os2web_cp_service_cp_case content'] = array(
     'name' => 'create os2web_cp_service_cp_case content',
-    'roles' => array(),
+    'roles' => array(
+      0 => 'Administrator',
+    ),
     'module' => 'node',
   );
 
   // Exported permission: create os2web_cp_service_cp_document content.
   $permissions['create os2web_cp_service_cp_document content'] = array(
     'name' => 'create os2web_cp_service_cp_document content',
-    'roles' => array(),
+    'roles' => array(
+      0 => 'Administrator',
+    ),
     'module' => 'node',
   );
 
-  // Exported permission: delete any os2web_cp_service_cp_case content.
-  $permissions['delete any os2web_cp_service_cp_case content'] = array(
-    'name' => 'delete any os2web_cp_service_cp_case content',
-    'roles' => array(),
+  // Exported permission: delete own os2web_cp_service_document content.
+  $permissions['delete own os2web_cp_service_document content'] = array(
+    'name' => 'delete own os2web_cp_service_document content',
+    'roles' => array(
+      0 => 'Administrator',
+    ),
     'module' => 'node',
   );
 
-  // Exported permission: delete any os2web_cp_service_cp_document content.
-  $permissions['delete any os2web_cp_service_cp_document content'] = array(
-    'name' => 'delete any os2web_cp_service_cp_document content',
-    'roles' => array(),
+  // Exported permission: delete own os2web_cp_service_case content.
+  $permissions['delete own os2web_cp_service_case content'] = array(
+    'name' => 'delete own os2web_cp_service_case content',
+    'roles' => array(
+      0 => 'Administrator',
+    ),
     'module' => 'node',
   );
 
-  // Exported permission: delete own os2web_cp_service_cp_case content.
-  $permissions['delete own os2web_cp_service_cp_case content'] = array(
-    'name' => 'delete own os2web_cp_service_cp_case content',
-    'roles' => array(),
+  // Exported permission: edit own os2web_cp_service_document content.
+  $permissions['edit own os2web_cp_service_document content'] = array(
+    'name' => 'edit own os2web_cp_service_document content',
+    'roles' => array(
+      0 => 'Administrator',
+    ),
     'module' => 'node',
   );
 
-  // Exported permission: delete own os2web_cp_service_cp_document content.
-  $permissions['delete own os2web_cp_service_cp_document content'] = array(
-    'name' => 'delete own os2web_cp_service_cp_document content',
-    'roles' => array(),
-    'module' => 'node',
-  );
-
-  // Exported permission: edit any os2web_cp_service_cp_case content.
-  $permissions['edit any os2web_cp_service_cp_case content'] = array(
-    'name' => 'edit any os2web_cp_service_cp_case content',
-    'roles' => array(),
-    'module' => 'node',
-  );
-
-  // Exported permission: edit any os2web_cp_service_cp_document content.
-  $permissions['edit any os2web_cp_service_cp_document content'] = array(
-    'name' => 'edit any os2web_cp_service_cp_document content',
-    'roles' => array(),
-    'module' => 'node',
-  );
-
-  // Exported permission: edit own os2web_cp_service_cp_case content.
-  $permissions['edit own os2web_cp_service_cp_case content'] = array(
-    'name' => 'edit own os2web_cp_service_cp_case content',
-    'roles' => array(),
-    'module' => 'node',
-  );
-
-  // Exported permission: edit own os2web_cp_service_cp_document content.
-  $permissions['edit own os2web_cp_service_cp_document content'] = array(
-    'name' => 'edit own os2web_cp_service_cp_document content',
-    'roles' => array(),
+  // Exported permission: edit own os2web_cp_service_case content.
+  $permissions['edit own os2web_cp_service_case content'] = array(
+    'name' => 'edit own os2web_cp_service_case content',
+    'roles' => array(
+      0 => 'Administrator',
+    ),
     'module' => 'node',
   );
 
