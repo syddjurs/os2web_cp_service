@@ -43,3 +43,6 @@
 .view-os2web-cp-service-cp-case-search .ui-datepicker-trigger{
     margin-left: 15px;
 }
+th.views-field-field-os2web-cp-service-date {
+    white-space: nowrap;
+}
