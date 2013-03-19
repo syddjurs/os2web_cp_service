@@ -157,7 +157,9 @@ function os2web_cp_service_field_default_fields() {
       'widget' => array(
         'active' => 1,
         'module' => 'options',
-        'settings' => array(),
+        'settings' => array(
+          'content_taxonomy_opt_groups' => FALSE,
+        ),
         'type' => 'options_select',
         'weight' => '3',
       ),
@@ -250,8 +252,8 @@ function os2web_cp_service_field_default_fields() {
         'cache_enabled' => 0,
         'granularity' => array(
           'day' => 'day',
-          'hour' => 0,
-          'minute' => 0,
+          'hour' => 'hour',
+          'minute' => 'minute',
           'month' => 'month',
           'second' => 0,
           'year' => 'year',
@@ -612,7 +614,9 @@ function os2web_cp_service_field_default_fields() {
       'widget' => array(
         'active' => 1,
         'module' => 'options',
-        'settings' => array(),
+        'settings' => array(
+          'content_taxonomy_opt_groups' => FALSE,
+        ),
         'type' => 'options_select',
         'weight' => '10',
       ),
@@ -684,6 +688,79 @@ function os2web_cp_service_field_default_fields() {
         ),
         'type' => 'text_textfield',
         'weight' => '9',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-os2web_cp_service_cp_case-field_os2web_cp_service_rules'.
+  $fields['node-os2web_cp_service_cp_case-field_os2web_cp_service_rules'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '-1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_os2web_cp_service_rules',
+      'foreign keys' => array(
+        'tid' => array(
+          'columns' => array(
+            'tid' => 'tid',
+          ),
+          'table' => 'taxonomy_term_data',
+        ),
+      ),
+      'indexes' => array(
+        'tid' => array(
+          0 => 'tid',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'taxonomy',
+      'settings' => array(
+        'allowed_values' => array(
+          0 => array(
+            'vocabulary' => 'os2web_cp_service_tax_approved_rules',
+            'parent' => '0',
+            'depth' => '',
+          ),
+        ),
+        'options_list_callback' => 'content_taxonomy_allowed_values',
+      ),
+      'translatable' => '0',
+      'type' => 'taxonomy_term_reference',
+    ),
+    'field_instance' => array(
+      'bundle' => 'os2web_cp_service_cp_case',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'taxonomy',
+          'settings' => array(),
+          'type' => 'taxonomy_term_reference_link',
+          'weight' => 20,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_os2web_cp_service_rules',
+      'label' => 'TriggerRules',
+      'required' => 0,
+      'settings' => array(
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'options',
+        'settings' => array(),
+        'type' => 'options_buttons',
+        'weight' => '37',
       ),
     ),
   );
@@ -1049,8 +1126,8 @@ function os2web_cp_service_field_default_fields() {
         'cache_enabled' => 0,
         'granularity' => array(
           'day' => 'day',
-          'hour' => 0,
-          'minute' => 0,
+          'hour' => 'hour',
+          'minute' => 'minute',
           'month' => 'month',
           'second' => 0,
           'year' => 'year',
@@ -1262,7 +1339,9 @@ function os2web_cp_service_field_default_fields() {
       'widget' => array(
         'active' => 1,
         'module' => 'options',
-        'settings' => array(),
+        'settings' => array(
+          'content_taxonomy_opt_groups' => FALSE,
+        ),
         'type' => 'options_select',
         'weight' => '8',
       ),
@@ -1286,8 +1365,8 @@ function os2web_cp_service_field_default_fields() {
         'cache_enabled' => 0,
         'granularity' => array(
           'day' => 'day',
-          'hour' => 0,
-          'minute' => 0,
+          'hour' => 'hour',
+          'minute' => 'minute',
           'month' => 'month',
           'second' => 0,
           'year' => 'year',
@@ -1649,6 +1728,79 @@ function os2web_cp_service_field_default_fields() {
     ),
   );
 
+  // Exported field: 'node-os2web_cp_service_cp_document-field_os2web_cp_service_rules'.
+  $fields['node-os2web_cp_service_cp_document-field_os2web_cp_service_rules'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '-1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_os2web_cp_service_rules',
+      'foreign keys' => array(
+        'tid' => array(
+          'columns' => array(
+            'tid' => 'tid',
+          ),
+          'table' => 'taxonomy_term_data',
+        ),
+      ),
+      'indexes' => array(
+        'tid' => array(
+          0 => 'tid',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'taxonomy',
+      'settings' => array(
+        'allowed_values' => array(
+          0 => array(
+            'vocabulary' => 'os2web_cp_service_tax_approved_rules',
+            'parent' => '0',
+            'depth' => '',
+          ),
+        ),
+        'options_list_callback' => 'content_taxonomy_allowed_values',
+      ),
+      'translatable' => '0',
+      'type' => 'taxonomy_term_reference',
+    ),
+    'field_instance' => array(
+      'bundle' => 'os2web_cp_service_cp_document',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'taxonomy',
+          'settings' => array(),
+          'type' => 'taxonomy_term_reference_link',
+          'weight' => 13,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_os2web_cp_service_rules',
+      'label' => 'TriggerRules',
+      'required' => 0,
+      'settings' => array(
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'options',
+        'settings' => array(),
+        'type' => 'options_buttons',
+        'weight' => '38',
+      ),
+    ),
+  );
+
   // Exported field: 'node-os2web_cp_service_cp_document-field_os2web_cp_service_sysid'.
   $fields['node-os2web_cp_service_cp_document-field_os2web_cp_service_sysid'] = array(
     'field_config' => array(
@@ -1740,6 +1892,7 @@ function os2web_cp_service_field_default_fields() {
   t('Sagsstatus - Sagstypebetegnelse');
   t('Sagstype - Sagstype');
   t('SystemID');
+  t('TriggerRules');
 
   return $fields;
 }
