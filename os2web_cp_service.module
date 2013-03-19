@@ -159,7 +159,6 @@ function os2web_cs_service_create_case(array $data) {
   $result = $query
       ->entityCondition('entity_type', 'node')
       ->propertyCondition('type', 'os2web_cp_service_cp_case')
-      ->propertyCondition('status', 1)
       ->fieldCondition('field_os2web_cp_service_sysid', 'value', $data['fields']['SystemID'], '=')
       ->execute();
   $nids = (isset($result['node']))?array_keys($result['node']) : NULL;
@@ -170,13 +169,13 @@ function os2web_cs_service_create_case(array $data) {
     }
   }
   else {
-    $node = node_load($nids);
+    $node = node_load(array_pop($nids));
   }
 
   // See if the triggered rules on the published node, is approved
   // in the vocabulary. Otherwise the node will be unpublished.
-  $vocabulary = taxonomy_vocabulary_machine_name_load('os2web_cp_service_tax_approved_rules');
-  $approved_rules = taxonomy_get_tree($vocabulary->vid);
+  $approved_vocabulary = taxonomy_vocabulary_machine_name_load('os2web_cp_service_tax_approved_rules');
+  $approved_rules = taxonomy_get_tree($approved_vocabulary->vid);
   $approved = FALSE;
   foreach ($data['rules'] as $trigger_rule) {
     foreach ($approved_rules as $approved_rule) {
@@ -229,7 +228,17 @@ function os2web_cs_service_create_case(array $data) {
 
   unset($node->field_os2web_cp_service_rules[LANGUAGE_NONE]);
   foreach ($data['rules'] as $name) {
-    $term = array_pop(taxonomy_get_term_by_name($name, 'os2web_cp_service_tax_approved_rules'));
+    $term = taxonomy_get_term_by_name($name, 'os2web_cp_service_tax_rules');
+    if (empty($term)) {
+      $rules_vocabulary = taxonomy_vocabulary_machine_name_load('os2web_cp_service_tax_rules');
+      $term = new stdClass();
+      $term->vid = $rules_vocabulary->vid;
+      $term->name = $name;
+      taxonomy_term_save($term);
+    }
+    if (is_array($term)) {
+      $term = array_pop($term);
+    }
     $node->field_os2web_cp_service_rules[LANGUAGE_NONE][]['tid'] = $term->tid;
   }
 
@@ -363,7 +372,6 @@ function os2web_cs_service_create_document(array $data) {
   $result = $query
       ->entityCondition('entity_type', 'node')
       ->propertyCondition('type', 'os2web_cp_service_cp_document')
-      ->propertyCondition('status', 1)
       ->fieldCondition('field_os2web_cp_service_sysid', 'value', $data['fields']['SystemID'], '=')
       ->execute();
   $node = new stdClass();
@@ -424,7 +432,17 @@ function os2web_cs_service_create_document(array $data) {
 
   unset($node->field_os2web_cp_service_rules[LANGUAGE_NONE]);
   foreach ($data['rules'] as $name) {
-    $term = array_pop(taxonomy_get_term_by_name($name, 'os2web_cp_service_tax_approved_rules'));
+    $term = taxonomy_get_term_by_name($name, 'os2web_cp_service_tax_rules');
+    if (empty($term)) {
+      $rules_vocabulary = taxonomy_vocabulary_machine_name_load('os2web_cp_service_tax_rules');
+      $term = new stdClass();
+      $term->vid = $rules_vocabulary->vid;
+      $term->name = $name;
+      taxonomy_term_save($term);
+    }
+    if (is_array($term)) {
+      $term = array_pop($term);
+    }
     $node->field_os2web_cp_service_rules[LANGUAGE_NONE][]['tid'] = $term->tid;
   }
 
@@ -437,28 +455,29 @@ function os2web_cs_service_create_document(array $data) {
     return FALSE;
   }
 
-  // Update case.
+  // Update reference on cases.
   $query = new EntityFieldQuery();
   $result = $query
       ->entityCondition('entity_type', 'node')
       ->propertyCondition('type', 'os2web_cp_service_cp_case')
-      ->propertyCondition('status', 1)
       ->fieldCondition('field_os2web_cp_service_sysid', 'value', $data['fields']['Sag SystemID'], '=')
       ->execute();
-  $nids = array_keys($result['node']);
-  foreach ($nids as $nid) {
-    $cnode = node_load($nid);
-    $node->field_os2web_cp_service_case_id[LANGUAGE_NONE][]['value'] = $cnode->field_os2web_cp_service_case_id[LANGUAGE_NONE][0]['value'];
-    node_save($node);
-    $is_missing = TRUE;
-    foreach ($cnode->field_os2web_cp_service_doc_ref[LANGUAGE_NONE] as $value) {
-      if ($value['target_id'] == $node->nid) {
-        $is_missing = FALSE;
+  if (!empty($result['node'])) {
+    $nids = array_keys($result['node']);
+    foreach ($nids as $nid) {
+      $cnode = node_load($nid);
+      $node->field_os2web_cp_service_case_id[LANGUAGE_NONE][]['value'] = $cnode->field_os2web_cp_service_case_id[LANGUAGE_NONE][0]['value'];
+      node_save($node);
+      $is_missing = TRUE;
+      foreach ($cnode->field_os2web_cp_service_doc_ref[LANGUAGE_NONE] as $value) {
+        if ($value['target_id'] == $node->nid) {
+          $is_missing = FALSE;
+        }
       }
-    }
-    if ($is_missing) {
-      $cnode->field_os2web_cp_service_doc_ref[LANGUAGE_NONE][]['target_id'] = $node->nid;
-      node_save($cnode);
+      if ($is_missing) {
+        $cnode->field_os2web_cp_service_doc_ref[LANGUAGE_NONE][]['target_id'] = $node->nid;
+        node_save($cnode);
+      }
     }
   }
   return TRUE;
