@@ -13,42 +13,60 @@ function os2web_cp_service_user_default_permissions() {
   // Exported permission: create os2web_cp_service_cp_case content.
   $permissions['create os2web_cp_service_cp_case content'] = array(
     'name' => 'create os2web_cp_service_cp_case content',
-    'roles' => array(),
+    'roles' => array(
+      0 => 'os2web_base_role_administrator',
+      1 => 'os2web_base_role_webmaster',
+    ),
     'module' => 'node',
   );
 
   // Exported permission: create os2web_cp_service_cp_document content.
   $permissions['create os2web_cp_service_cp_document content'] = array(
     'name' => 'create os2web_cp_service_cp_document content',
-    'roles' => array(),
+    'roles' => array(
+      0 => 'os2web_base_role_administrator',
+      1 => 'os2web_base_role_webmaster',
+    ),
     'module' => 'node',
   );
 
   // Exported permission: delete own os2web_cp_service_cp_case content.
   $permissions['delete own os2web_cp_service_cp_case content'] = array(
     'name' => 'delete own os2web_cp_service_cp_case content',
-    'roles' => array(),
+    'roles' => array(
+      0 => 'os2web_base_role_administrator',
+      1 => 'os2web_base_role_webmaster',
+    ),
     'module' => 'node',
   );
 
   // Exported permission: delete own os2web_cp_service_cp_document content.
   $permissions['delete own os2web_cp_service_cp_document content'] = array(
     'name' => 'delete own os2web_cp_service_cp_document content',
-    'roles' => array(),
+    'roles' => array(
+      0 => 'os2web_base_role_administrator',
+      1 => 'os2web_base_role_webmaster',
+    ),
     'module' => 'node',
   );
 
   // Exported permission: edit own os2web_cp_service_cp_case content.
   $permissions['edit own os2web_cp_service_cp_case content'] = array(
     'name' => 'edit own os2web_cp_service_cp_case content',
-    'roles' => array(),
+    'roles' => array(
+      0 => 'os2web_base_role_administrator',
+      1 => 'os2web_base_role_webmaster',
+    ),
     'module' => 'node',
   );
 
   // Exported permission: edit own os2web_cp_service_cp_document content.
   $permissions['edit own os2web_cp_service_cp_document content'] = array(
     'name' => 'edit own os2web_cp_service_cp_document content',
-    'roles' => array(),
+    'roles' => array(
+      0 => 'os2web_base_role_administrator',
+      1 => 'os2web_base_role_webmaster',
+    ),
     'module' => 'node',
   );
 
