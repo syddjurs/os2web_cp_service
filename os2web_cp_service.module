@@ -179,7 +179,7 @@ function os2web_cs_service_create_case(array $data) {
   $approved = FALSE;
   foreach ($data['rules'] as $trigger_rule) {
     foreach ($approved_rules as $approved_rule) {
-      if ($approved_rule->name === $trigger_rule) {
+      if ($approved_rule->name === $trigger_rule['tag']) {
         $approved = TRUE;
         break;
       }
@@ -227,13 +227,13 @@ function os2web_cs_service_create_case(array $data) {
   }
 
   unset($node->field_os2web_cp_service_rules[LANGUAGE_NONE]);
-  foreach ($data['rules'] as $name) {
-    $term = taxonomy_get_term_by_name($name, 'os2web_cp_service_tax_rules');
+  foreach ($data['rules'] as $rule) {
+    $term = taxonomy_get_term_by_name($rule['name'], 'os2web_cp_service_tax_rules');
     if (empty($term)) {
       $rules_vocabulary = taxonomy_vocabulary_machine_name_load('os2web_cp_service_tax_rules');
       $term = new stdClass();
       $term->vid = $rules_vocabulary->vid;
-      $term->name = $name;
+      $term->name = $rule['name'];
       taxonomy_term_save($term);
     }
     if (is_array($term)) {
@@ -392,7 +392,7 @@ function os2web_cs_service_create_document(array $data) {
   $approved = FALSE;
   foreach ($data['rules'] as $trigger_rule) {
     foreach ($approved_rules as $approved_rule) {
-      if ($approved_rule->name === $trigger_rule) {
+      if ($approved_rule->name === $trigger_rule['tag']) {
         $approved = TRUE;
         break;
       }
@@ -431,13 +431,13 @@ function os2web_cs_service_create_document(array $data) {
   }
 
   unset($node->field_os2web_cp_service_rules[LANGUAGE_NONE]);
-  foreach ($data['rules'] as $name) {
-    $term = taxonomy_get_term_by_name($name, 'os2web_cp_service_tax_rules');
+  foreach ($data['rules'] as $rule) {
+    $term = taxonomy_get_term_by_name($rule['name'], 'os2web_cp_service_tax_rules');
     if (empty($term)) {
       $rules_vocabulary = taxonomy_vocabulary_machine_name_load('os2web_cp_service_tax_rules');
       $term = new stdClass();
       $term->vid = $rules_vocabulary->vid;
-      $term->name = $name;
+      $term->name = $rule['name'];
       taxonomy_term_save($term);
     }
     if (is_array($term)) {
