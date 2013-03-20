@@ -692,14 +692,14 @@ function os2web_cp_service_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-os2web_cp_service_cp_case-field_os2web_cp_service_tax_rules'.
-  $fields['node-os2web_cp_service_cp_case-field_os2web_cp_service_tax_rules'] = array(
+  // Exported field: 'node-os2web_cp_service_cp_case-field_os2web_cp_service_rules'.
+  $fields['node-os2web_cp_service_cp_case-field_os2web_cp_service_rules'] = array(
     'field_config' => array(
       'active' => '1',
       'cardinality' => '-1',
       'deleted' => '0',
       'entity_types' => array(),
-      'field_name' => 'field_os2web_cp_service_tax_rules',
+      'field_name' => 'field_os2web_cp_service_rules',
       'foreign keys' => array(
         'tid' => array(
           'columns' => array(
@@ -748,7 +748,7 @@ function os2web_cp_service_field_default_fields() {
         ),
       ),
       'entity_type' => 'node',
-      'field_name' => 'field_os2web_cp_service_tax_rules',
+      'field_name' => 'field_os2web_cp_service_rules',
       'label' => 'TriggerRules',
       'required' => 0,
       'settings' => array(
@@ -1727,14 +1727,14 @@ function os2web_cp_service_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-os2web_cp_service_cp_document-field_os2web_cp_service_tax_rules'.
-  $fields['node-os2web_cp_service_cp_document-field_os2web_cp_service_tax_rules'] = array(
+  // Exported field: 'node-os2web_cp_service_cp_document-field_os2web_cp_service_rules'.
+  $fields['node-os2web_cp_service_cp_document-field_os2web_cp_service_rules'] = array(
     'field_config' => array(
       'active' => '1',
       'cardinality' => '-1',
       'deleted' => '0',
       'entity_types' => array(),
-      'field_name' => 'field_os2web_cp_service_tax_rules',
+      'field_name' => 'field_os2web_cp_service_rules',
       'foreign keys' => array(
         'tid' => array(
           'columns' => array(
@@ -1783,7 +1783,7 @@ function os2web_cp_service_field_default_fields() {
         ),
       ),
       'entity_type' => 'node',
-      'field_name' => 'field_os2web_cp_service_tax_rules',
+      'field_name' => 'field_os2web_cp_service_rules',
       'label' => 'TriggerRules',
       'required' => 0,
       'settings' => array(
