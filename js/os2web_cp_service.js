@@ -1,4 +1,8 @@
-/* os2web_cp_service.js */
+/**
+ * @file
+ * os2web_cp_service.js
+ */
+
 jQuery(document).ready(function($) {
 	$( "a.qtip-this[title]" ).qtip({
 		style: {

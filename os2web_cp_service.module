@@ -76,7 +76,7 @@ function os2web_gf_service_handler($file_id) {
         drupal_add_http_header('Content-Type', $header['content_type']);
         drupal_add_http_header('Content-Length', $header['download_content_length']);
         drupal_add_http_header('Cache-Control', 'must-revalidate, post-check=0, pre-check=0');
-        drupal_add_http_header('Cache-Control', 'private',false);
+        drupal_add_http_header('Cache-Control', 'private', FALSE);
         drupal_add_http_header('Connection', 'close');
         drupal_add_http_header('Expires', '0');
 
