@@ -1,7 +1,7 @@
 name = OS2Web Case Publishing Service
 description = This feature provides the content publishing services. Requires a publishing plugin
 core = 7.x
-package = OS2Web
+package = OS2Web - Frontend
 php = 5.2.4
 version = 7.x-0.1
 project = os2web_cp_service
