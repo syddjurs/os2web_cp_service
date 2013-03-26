@@ -52,6 +52,12 @@ function os2web_cp_service_field_default_fields() {
           'type' => 'text_default',
           'weight' => '0',
         ),
+        'related_block' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
         'teaser' => array(
           'label' => 'above',
           'settings' => array(),
@@ -140,6 +146,12 @@ function os2web_cp_service_field_default_fields() {
           'type' => 'list_default',
           'weight' => '2',
         ),
+        'related_block' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
         'teaser' => array(
           'label' => 'above',
           'settings' => array(),
@@ -205,6 +217,12 @@ function os2web_cp_service_field_default_fields() {
           'settings' => array(),
           'type' => 'text_default',
           'weight' => 6,
+        ),
+        'related_block' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
         ),
         'teaser' => array(
           'label' => 'above',
@@ -282,6 +300,12 @@ function os2web_cp_service_field_default_fields() {
           ),
           'type' => 'date_default',
           'weight' => 10,
+        ),
+        'related_block' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
         ),
         'teaser' => array(
           'label' => 'above',
@@ -376,6 +400,12 @@ function os2web_cp_service_field_default_fields() {
           'type' => 'entityreference_label',
           'weight' => 14,
         ),
+        'related_block' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
         'teaser' => array(
           'label' => 'above',
           'settings' => array(),
@@ -442,6 +472,12 @@ function os2web_cp_service_field_default_fields() {
           'settings' => array(),
           'type' => 'hidden',
           'weight' => '3',
+        ),
+        'related_block' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
         ),
         'teaser' => array(
           'label' => 'above',
@@ -511,6 +547,12 @@ function os2web_cp_service_field_default_fields() {
           'settings' => array(),
           'type' => 'text_default',
           'weight' => 19,
+        ),
+        'related_block' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
         ),
         'teaser' => array(
           'label' => 'above',
@@ -597,6 +639,12 @@ function os2web_cp_service_field_default_fields() {
           'type' => 'list_default',
           'weight' => 9,
         ),
+        'related_block' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
         'teaser' => array(
           'label' => 'above',
           'settings' => array(),
@@ -664,6 +712,12 @@ function os2web_cp_service_field_default_fields() {
           'settings' => array(),
           'type' => 'text_default',
           'weight' => 8,
+        ),
+        'related_block' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
         ),
         'teaser' => array(
           'label' => 'above',
@@ -740,6 +794,12 @@ function os2web_cp_service_field_default_fields() {
           'type' => 'taxonomy_term_reference_link',
           'weight' => 20,
         ),
+        'related_block' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
         'teaser' => array(
           'label' => 'above',
           'settings' => array(),
@@ -805,6 +865,12 @@ function os2web_cp_service_field_default_fields() {
           'settings' => array(),
           'type' => 'text_default',
           'weight' => 17,
+        ),
+        'related_block' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
         ),
         'teaser' => array(
           'label' => 'above',
@@ -875,6 +941,12 @@ function os2web_cp_service_field_default_fields() {
           'type' => 'text_default',
           'weight' => '1',
         ),
+        'related_block' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
         'teaser' => array(
           'label' => 'above',
           'settings' => array(),
@@ -944,6 +1016,12 @@ function os2web_cp_service_field_default_fields() {
           'type' => 'text_default',
           'weight' => '1',
         ),
+        'related_block' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
         'teaser' => array(
           'label' => 'above',
           'settings' => array(),
@@ -1012,6 +1090,12 @@ function os2web_cp_service_field_default_fields() {
           'type' => 'text_default',
           'weight' => '11',
         ),
+        'related_block' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
         'teaser' => array(
           'label' => 'above',
           'settings' => array(),
@@ -1078,6 +1162,12 @@ function os2web_cp_service_field_default_fields() {
           'settings' => array(),
           'type' => 'text_default',
           'weight' => '5',
+        ),
+        'related_block' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
         ),
         'teaser' => array(
           'label' => 'above',
@@ -1156,6 +1246,12 @@ function os2web_cp_service_field_default_fields() {
           'type' => 'date_default',
           'weight' => '7',
         ),
+        'related_block' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
         'teaser' => array(
           'label' => 'above',
           'settings' => array(),
@@ -1232,6 +1328,12 @@ function os2web_cp_service_field_default_fields() {
           'settings' => array(),
           'type' => 'text_default',
           'weight' => '0',
+        ),
+        'related_block' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
         ),
         'teaser' => array(
           'label' => 'above',
@@ -1321,6 +1423,12 @@ function os2web_cp_service_field_default_fields() {
           'type' => 'list_default',
           'weight' => '6',
         ),
+        'related_block' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
         'teaser' => array(
           'label' => 'above',
           'settings' => array(),
@@ -1394,6 +1502,12 @@ function os2web_cp_service_field_default_fields() {
           ),
           'type' => 'date_default',
           'weight' => '8',
+        ),
+        'related_block' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
         ),
         'teaser' => array(
           'label' => 'above',
@@ -1474,6 +1588,12 @@ function os2web_cp_service_field_default_fields() {
           'type' => 'os2web_cp_service_file_formatter',
           'weight' => '2',
         ),
+        'related_block' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
         'teaser' => array(
           'label' => 'above',
           'settings' => array(),
@@ -1543,6 +1663,12 @@ function os2web_cp_service_field_default_fields() {
           'type' => 'text_default',
           'weight' => '10',
         ),
+        'related_block' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
         'teaser' => array(
           'label' => 'above',
           'settings' => array(),
@@ -1608,6 +1734,12 @@ function os2web_cp_service_field_default_fields() {
           'settings' => array(),
           'type' => 'hidden',
           'weight' => '3',
+        ),
+        'related_block' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
         ),
         'teaser' => array(
           'label' => 'above',
@@ -1677,6 +1809,12 @@ function os2web_cp_service_field_default_fields() {
           'settings' => array(),
           'type' => 'text_default',
           'weight' => 12,
+        ),
+        'related_block' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
         ),
         'teaser' => array(
           'label' => 'above',
@@ -1775,6 +1913,12 @@ function os2web_cp_service_field_default_fields() {
           'type' => 'taxonomy_term_reference_link',
           'weight' => 13,
         ),
+        'related_block' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
         'teaser' => array(
           'label' => 'above',
           'settings' => array(),
@@ -1840,6 +1984,12 @@ function os2web_cp_service_field_default_fields() {
           'settings' => array(),
           'type' => 'text_default',
           'weight' => '9',
+        ),
+        'related_block' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
         ),
         'teaser' => array(
           'label' => 'above',
