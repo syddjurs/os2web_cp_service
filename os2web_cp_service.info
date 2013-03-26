@@ -82,3 +82,9 @@ features_exclude[field][node-os2web_cp_service_cp_case-field_os2web_cp_service_c
 features_exclude[field][node-os2web_cp_service_cp_document-field_os2web_cp_service_doc_num] = node-os2web_cp_service_cp_document-field_os2web_cp_service_doc_num
 features_exclude[dependencies][os2web_cp_service] = os2web_cp_service
 features_exclude[taxonomy][os2web_cp_service_tax_rules] = os2web_cp_service_tax_rules
+
+;Added by OS2Web 2013-03-26
+project=os2web_cp_service
+version=1.0
+timestamp=1364288477
+
