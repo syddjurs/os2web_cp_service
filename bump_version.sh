@@ -1,6 +1,6 @@
 #!/bin/sh
 
-PROJECT=OS2Web
+PROJECT=os2web_cp_service
 VERSION=$1
 DATE=`date "+%s"`
 
