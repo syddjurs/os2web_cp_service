@@ -3,7 +3,7 @@ description = This feature provides the content publishing services. Requires a 
 core = 7.x
 package = OS2Web - Frontend
 php = 5.2.4
-version = 7.x-1.0
+version = 7.x-1.01
 project = os2web_cp_service
 dependencies[] = context
 dependencies[] = ctools
@@ -81,10 +81,4 @@ features[views_view][] = os2web_cp_service_cp_document_view
 features_exclude[field][node-os2web_cp_service_cp_case-field_os2web_cp_service_case_num] = node-os2web_cp_service_cp_case-field_os2web_cp_service_case_num
 features_exclude[field][node-os2web_cp_service_cp_document-field_os2web_cp_service_doc_num] = node-os2web_cp_service_cp_document-field_os2web_cp_service_doc_num
 features_exclude[dependencies][os2web_cp_service] = os2web_cp_service
-timestamp = 1364288477
-
-;Added by OS2Web 2013-03-26
-project=os2web_cp_service
-version=7.x-1.01
-timestamp=1364292909
-
+timestamp = 1364292909
