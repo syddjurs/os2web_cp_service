@@ -603,6 +603,89 @@ function os2web_cp_service_field_default_fields() {
     ),
   );
 
+  // Exported field: 'node-os2web_cp_service_cp_case-field_os2web_cp_service_kle_ref'.
+  $fields['node-os2web_cp_service_cp_case-field_os2web_cp_service_kle_ref'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_os2web_cp_service_kle_ref',
+      'foreign keys' => array(
+        'tid' => array(
+          'columns' => array(
+            'tid' => 'tid',
+          ),
+          'table' => 'taxonomy_term_data',
+        ),
+      ),
+      'indexes' => array(
+        'tid' => array(
+          0 => 'tid',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'taxonomy',
+      'settings' => array(
+        'allowed_values' => array(
+          0 => array(
+            'vocabulary' => 'kle',
+            'parent' => '0',
+          ),
+        ),
+        'options_list_callback' => 'content_taxonomy_allowed_values',
+      ),
+      'translatable' => '0',
+      'type' => 'taxonomy_term_reference',
+    ),
+    'field_instance' => array(
+      'bundle' => 'os2web_cp_service_cp_case',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'taxonomy',
+          'settings' => array(),
+          'type' => 'taxonomy_term_reference_link',
+          'weight' => 21,
+        ),
+        'related_block' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'ds_extras_field_template' => '',
+      'entity_type' => 'node',
+      'field_name' => 'field_os2web_cp_service_kle_ref',
+      'label' => 'KL emnenummer - KL emnenummer og beskrivelse',
+      'required' => 0,
+      'settings' => array(
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 0,
+        'module' => 'taxonomy',
+        'settings' => array(
+          'autocomplete_path' => 'taxonomy/autocomplete',
+          'content_taxonomy_autocomplete_new_terms' => 'allow',
+          'size' => 60,
+        ),
+        'type' => 'taxonomy_autocomplete',
+        'weight' => '38',
+      ),
+    ),
+  );
+
   // Exported field: 'node-os2web_cp_service_cp_case-field_os2web_cp_service_org_unit'.
   $fields['node-os2web_cp_service_cp_case-field_os2web_cp_service_org_unit'] = array(
     'field_config' => array(
@@ -2030,6 +2113,7 @@ function os2web_cp_service_field_default_fields() {
   t('Indhold - FileID');
   t('Indholdsbeskrivelse');
   t('Journalnummer');
+  t('KL emnenummer - KL emnenummer og beskrivelse');
   t('RedigeringsDato');
   t('Sag SystemID');
   t('SagsID');

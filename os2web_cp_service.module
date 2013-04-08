@@ -151,7 +151,6 @@ function os2web_cs_service_alter_configuration($key, $value) {
  *   TRUE on successful content creation.
  */
 function os2web_cs_service_create_case(array $data) {
-  error_log("Var: \$data = " . print_r($data, 1));
   // Prepare data.
   $data = array_replace_recursive(os2web_cs_service_default_case(), $data);
 
@@ -217,6 +216,16 @@ function os2web_cs_service_create_case(array $data) {
       switch ($field_info['type']) {
         case 'text':
           $node->{$field_name}[LANGUAGE_NONE][0]['value'] = (string) $data['fields'][$field['label']];
+          break;
+
+        case 'taxonomy_term_reference':
+          // Retrieve the first occurance of the term.
+          $term = array_pop(taxonomy_get_term_by_name((string) $data['fields'][$field['label']], NULL));
+          if (!empty($term)) {
+            // Note that if its an update of an existing node,
+            // it will ńot be resat.
+            $node->{$field_name}['und'][0]['tid'] = $term->tid;
+          }
           break;
 
         default:
@@ -657,7 +666,6 @@ function os2web_cp_service_field_formatter_view($entity_type, $entity, $field, $
   $base_url = $display['settings']['base_url'];
   $element = array();
   foreach ($items as $delta => $item) {
-    error_log(basename(__FILE__) . ':' . __LINE__ . ' Var: $item = ' . print_r($item, 1));
     $file_id = $item['value'];
     $url = format_string($base_url, array('!id' => $file_id));
     $element[$delta]['#markup'] = l(t('Download'), $url);

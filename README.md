@@ -8,6 +8,17 @@ to publish cases and documents directly from their back-end systems.
 Additionally this module includes views, panels and settings to display
 the cases and documents, and uses PathAuto to generate urls.
 
+Configuration
+-----------
+Add more content to CP case/docs by adding the field with the name of the recieved input field tag.
+Remember if the field type is different than taxonomy_term_reference it will be treated as text.
+
+Todo
+-----------
+OS2web 1.0 migration
+- Use os2web_taxonomies field as kle_ref instead of os2web_cp_service_kle_ref.
+- Change dependency to os2web_taxonomies instead of old one.
+
 Dependencies
 -----------
 - ctools
