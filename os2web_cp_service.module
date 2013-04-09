@@ -679,10 +679,13 @@ function os2web_cp_service_form_alter(&$form, &$form_state, $form_id) {
   if ($form['#id'] == 'views-exposed-form-os2web-cp-service-cp-case-search-page' ||
       $form['#id'] == 'views-exposed-form-os2web-cp-service-cp-case-search-panel-pane-1' ||
       $form['#id'] == 'views-exposed-form-os2web-cp-service-cp-case-search-default') {
-    // Adds placeholder to all textfields with a description - ab@bellcom.dk.
     foreach ($form['#info'] as &$widget) {
+      // Adds placeholder to all textfields with a description - ab@bellcom.dk.
       if (!empty($widget['description']) && isset($form[$widget['value']]['#type']) && $form[$widget['value']]['#type'] === 'textfield') {
         $form[$widget['value']]['#attributes']['placeholder'] = $widget['description'];
+      }
+      if ($form[$widget['value']]['value']['#type'] === 'date_popup') {
+        $form[$widget['value']]['value']['#date_format'] = 'd-m-Y';
       }
     }
   }
