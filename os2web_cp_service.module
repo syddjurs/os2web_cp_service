@@ -132,7 +132,7 @@ function os2web_gf_service_handler($file_id) {
  * @param string $value
  *   The value of the conf, which has to be altered/stored.
  */
-function os2web_cs_service_alter_configuration($key, $value) {
+function os2web_cp_service_alter_configuration($key, $value) {
   switch ($key) {
     case 'FileServiceURL':
       return variable_set('os2web_cp_service_cp_document_fileurl', $value);
@@ -150,9 +150,9 @@ function os2web_cs_service_alter_configuration($key, $value) {
  * @return bool
  *   TRUE on successful content creation.
  */
-function os2web_cs_service_create_case(array $data) {
+function os2web_cp_service_create_case(array $data) {
   // Prepare data.
-  $data = array_replace_recursive(os2web_cs_service_default_case(), $data);
+  $data = array_replace_recursive(os2web_cp_service_default_case(), $data);
 
   $query = new EntityFieldQuery();
   $result = $query
@@ -287,7 +287,7 @@ function os2web_cs_service_create_case(array $data) {
 /**
  * Default array structure for a case.
  */
-function os2web_cs_service_default_case() {
+function os2web_cp_service_default_case() {
   return array(
     'type' => 'case',
     'rules' => array(),
@@ -396,8 +396,8 @@ function os2web_cs_service_default_case() {
  * @return bool
  *   TRUE on successful content creation.
  */
-function os2web_cs_service_create_document(array $data) {
-  $data = array_replace_recursive(os2web_cs_service_default_document(), $data);
+function os2web_cp_service_create_document(array $data) {
+  $data = array_replace_recursive(os2web_cp_service_default_document(), $data);
   // Prepare data.
   $query = new EntityFieldQuery();
   $result = $query
@@ -519,7 +519,7 @@ function os2web_cs_service_create_document(array $data) {
 /**
  * Default array structure for a case.
  */
-function os2web_cs_service_default_document() {
+function os2web_cp_service_default_document() {
   return array(
     'type' => 'document',
     'rules' => array(),
