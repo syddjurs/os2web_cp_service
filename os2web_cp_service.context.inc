@@ -27,7 +27,7 @@ function os2web_cp_service_context_default_contexts() {
   );
   $context->reactions = array(
     'delta' => array(
-      'delta_template' => 'os2web_theme_uden_h_jre_sidebar',
+      'delta_template' => 'hide_second_sidebar',
     ),
   );
   $context->condition_mode = 0;

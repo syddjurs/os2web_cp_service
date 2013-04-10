@@ -18,6 +18,7 @@ Todo
 OS2web 1.0 migration
 - Use os2web_taxonomies field as kle_ref instead of os2web_cp_service_kle_ref.
 - Change dependency to os2web_taxonomies instead of old one.
+- Use os2web_base date only date format
 
 Dependencies
 -----------

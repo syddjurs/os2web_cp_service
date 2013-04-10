@@ -219,9 +219,29 @@ function os2web_cs_service_create_case(array $data) {
           break;
 
         case 'taxonomy_term_reference':
+          $choosen_term = NULL;
+
+          // Search of the term in KLE vocabulary.
+          if (strpos($field['label'], 'KL emnenummer') !== FALSE) {
+            // TODO: Use os2web_taxonomies_kle.
+            $vocabulary = taxonomy_vocabulary_machine_name_load('kle');
+            $terms = taxonomy_get_tree($vocabulary->vid);
+            foreach ($terms as $term) {
+              // Does the term start with the numbers xx.xx.xx.
+              if (strpos($term->name, substr($data['fields'][$field['label']], 0, strpos($data['fields'][$field['label']], ' '))) !== FALSE) {
+                $choosen_term = $term->name;
+                break;
+              }
+            }
+          }
+
+          // If non found, find in every vocabularies.
           // Retrieve the first occurance of the term.
-          $term = array_pop(taxonomy_get_term_by_name((string) $data['fields'][$field['label']], NULL));
-          if (!empty($term)) {
+          if (empty($choosen_term)) {
+            $choosen_term = array_pop(taxonomy_get_term_by_name((string) $data['fields'][$field['label']], NULL));
+          }
+
+          if (!empty($choosen_term)) {
             // Note that if its an update of an existing node,
             // it will ńot be resat.
             $node->{$field_name}['und'][0]['tid'] = $term->tid;
@@ -781,6 +801,29 @@ function os2web_cp_service_form_os2web_settings_settings_form_alter(&$form, &$fo
     '#title' => t('CP File endpoint password'),
     '#description' => t('CP File endpoint HTTP authentification password.'),
   );
+}
+
+/**
+ * Implements hook_date_formats().
+ */
+function os2web_cp_service_date_formats() {
+  return array(
+    array(
+      'type' => 'os2web_cp_service_date_only',
+      'format' => 'Y',
+      'locales' => array(),
+    ),
+  );
+}
+/**
+ * Implements hook_date_format_types().
+ */
+function os2web_cp_service_date_format_types() {
+  // Define the core date format types.
+  return array(
+    'os2web_cp_service_date_only' => t('Date Only'),
+  );
+
 }
 
 /**
