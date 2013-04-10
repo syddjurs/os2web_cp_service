@@ -197,7 +197,9 @@ function os2web_cs_service_create_case(array $data) {
 
   switch ($data['fields']['Sagstype - Sagstype']) {
     case 'EJSAG':
-      $node->title = (string) $data['fields']['Sagstitel'] . ' - ' . $data['fields']['Sagsindhold'];
+      // Old cases comes as: "Birkevej (8410) 11, 8410 Rønde"
+      // regex removes " (8410)"
+      $node->title = (string) preg_replace('/\s\(\d{4}\)/', '', $data['fields']['Sagstitel']) . ' - ' . $data['fields']['Sagsindhold'];
       break;
 
     default:
