@@ -732,7 +732,7 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['fields']['field_os2web_cp_service_date']['label'] = 'Dato';
   $handler->display->display_options['fields']['field_os2web_cp_service_date']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_os2web_cp_service_date']['settings'] = array(
-    'format_type' => 'short',
+    'format_type' => 'os2web_cp_service_date_only',
     'fromto' => 'both',
     'multiple_number' => '',
     'multiple_from' => '',
