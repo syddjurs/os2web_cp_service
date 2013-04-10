@@ -13,6 +13,7 @@ dependencies[] = date_views
 dependencies[] = entityreference
 dependencies[] = features
 dependencies[] = list
+dependencies[] = menu
 dependencies[] = node
 dependencies[] = number
 dependencies[] = options

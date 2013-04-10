@@ -703,12 +703,21 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
-  $handler->display->display_options['fields']['title']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['title']['label'] = '';
+  $handler->display->display_options['fields']['title']['exclude'] = TRUE;
   $handler->display->display_options['fields']['title']['alter']['text'] = '[title] <br>[nothing]';
   $handler->display->display_options['fields']['title']['alter']['path'] = 'aaben-indsigt?search-text=[title]';
-  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
-  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  $handler->display->display_options['fields']['title']['alter']['max_length'] = '70';
+  $handler->display->display_options['fields']['title']['alter']['trim'] = TRUE;
+  $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
+  /* Felt: Global: Tilpasset tekst */
+  $handler->display->display_options['fields']['nothing_1']['id'] = 'nothing_1';
+  $handler->display->display_options['fields']['nothing_1']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing_1']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing_1']['label'] = 'Titel';
+  $handler->display->display_options['fields']['nothing_1']['alter']['text'] = '[title] <br> [nothing]';
+  $handler->display->display_options['fields']['nothing_1']['element_label_colon'] = FALSE;
   /* Felt: Indhold: SagsID */
   $handler->display->display_options['fields']['field_os2web_cp_service_case_id']['id'] = 'field_os2web_cp_service_case_id';
   $handler->display->display_options['fields']['field_os2web_cp_service_case_id']['table'] = 'field_data_field_os2web_cp_service_case_id';
@@ -798,6 +807,7 @@ return TRUE; // If no exposed inputs, remove all results
     t('<h2>Sags Nr.: [field_os2web_cp_service_case_id]</h2>'),
     t('Se alle sager på denne addresse'),
     t('[title] <br>[nothing]'),
+    t('[title] <br> [nothing]'),
   );
   $export['os2web_cp_service_cp_case_view'] = $view;
 
