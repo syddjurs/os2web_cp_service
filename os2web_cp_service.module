@@ -151,6 +151,8 @@ function os2web_cp_service_alter_configuration($key, $value) {
  *   TRUE on successful content creation.
  */
 function os2web_cp_service_create_case(array $data) {
+
+  watchdog('os2web_cp_service', 'CP case start: %time', array('%time' => timer_read('cp')), WATCHDOG_NOTICE);
   // Prepare data.
   $data = array_replace_recursive(os2web_cp_service_default_case(), $data);
 
@@ -170,6 +172,7 @@ function os2web_cp_service_create_case(array $data) {
   else {
     $node = node_load(array_pop($nids));
   }
+  watchdog('os2web_cp_service', 'CP old deleted: %time', array('%time' => timer_read('cp')), WATCHDOG_NOTICE);
 
   // See if the triggered rules on the published node, is approved
   // in the vocabulary. Otherwise the node will be unpublished.
@@ -276,6 +279,7 @@ function os2web_cp_service_create_case(array $data) {
   try {
     node_submit($node);
     node_save($node);
+    watchdog('os2web_cp_service', 'CP case done: %time', array('%time' => timer_read('cp')), WATCHDOG_NOTICE);
     return TRUE;
   }
   catch (Exception $e) {
@@ -397,6 +401,8 @@ function os2web_cp_service_default_case() {
  *   TRUE on successful content creation.
  */
 function os2web_cp_service_create_document(array $data) {
+
+  watchdog('os2web_cp_service', 'CP document start: %time', array('%time' => timer_read('cp')), WATCHDOG_NOTICE);
   $data = array_replace_recursive(os2web_cp_service_default_document(), $data);
   // Prepare data.
   $query = new EntityFieldQuery();
@@ -415,6 +421,7 @@ function os2web_cp_service_create_document(array $data) {
   else {
     $node = node_load(array_pop($nids));
   }
+  watchdog('os2web_cp_service', 'CP old deleted: %time', array('%time' => timer_read('cp')), WATCHDOG_NOTICE);
 
   // See if the triggered rules on the published node, is approved
   // in the vocabulary. Otherwise the node will be unpublished.
@@ -513,6 +520,7 @@ function os2web_cp_service_create_document(array $data) {
       }
     }
   }
+  watchdog('os2web_cp_service', 'CP document done: %time', array('%time' => timer_read('cp')), WATCHDOG_NOTICE);
   return TRUE;
 }
 
