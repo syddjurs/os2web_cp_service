@@ -220,7 +220,12 @@ function os2web_cp_service_create_case(array $data) {
 
       switch ($field_info['type']) {
         case 'text':
-          $node->{$field_name}[LANGUAGE_NONE][0]['value'] = (string) $data['fields'][$field['label']];
+          if ($field['label'] === 'Sagstitel') {
+            $node->{$field_name}[LANGUAGE_NONE][0]['value'] = (string) preg_replace('/\s\(\d{4}\)/', '', $data['fields']['Sagstitel']);
+          }
+          else {
+            $node->{$field_name}[LANGUAGE_NONE][0]['value'] = (string) $data['fields'][$field['label']];
+          }
           break;
 
         case 'taxonomy_term_reference':
