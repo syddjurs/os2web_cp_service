@@ -148,7 +148,7 @@ function os2web_cp_service_views_default_views() {
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
-  $handler->display->display_options['fields']['title']['label'] = 'Sags titel';
+  $handler->display->display_options['fields']['title']['label'] = 'Sagstitel';
   $handler->display->display_options['fields']['title']['alter']['alter_text'] = TRUE;
   $handler->display->display_options['fields']['title']['alter']['text'] = '[title]';
   $handler->display->display_options['fields']['title']['alter']['make_link'] = TRUE;
@@ -215,6 +215,10 @@ function os2web_cp_service_views_default_views() {
   $handler->display->display_options['sorts']['created']['field'] = 'created';
   $handler->display->display_options['sorts']['created']['order'] = 'DESC';
   $handler->display->display_options['filter_groups']['operator'] = 'OR';
+  $handler->display->display_options['filter_groups']['groups'] = array(
+    1 => 'AND',
+    2 => 'AND',
+  );
   /* Filterkriterie: Indhold: Udgivet */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
@@ -368,7 +372,7 @@ return TRUE; // If no exposed inputs, remove all results
     t('Næste ›'),
     t('Sidste »'),
     t('Indhold entity refereret fra field_os2web_cp_service_doc_ref'),
-    t('Sags titel'),
+    t('Sagstitel'),
     t('[title]'),
     t('[field_os2web_cp_service_content]'),
     t('Dato'),
@@ -671,6 +675,13 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['header']['area_text_custom']['content'] = '<h2>Sags Nr.: [field_os2web_cp_service_case_id]</h2>';
   $handler->display->display_options['header']['area_text_custom']['tokenize'] = TRUE;
   $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Felt: Indhold: Sagstype - Sagstype */
+  $handler->display->display_options['fields']['field_os2web_cp_service_casetype']['id'] = 'field_os2web_cp_service_casetype';
+  $handler->display->display_options['fields']['field_os2web_cp_service_casetype']['table'] = 'field_data_field_os2web_cp_service_casetype';
+  $handler->display->display_options['fields']['field_os2web_cp_service_casetype']['field'] = 'field_os2web_cp_service_casetype';
+  $handler->display->display_options['fields']['field_os2web_cp_service_casetype']['label'] = '';
+  $handler->display->display_options['fields']['field_os2web_cp_service_casetype']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_os2web_cp_service_casetype']['element_label_colon'] = FALSE;
   /* Felt: Ren Addresse */
   $handler->display->display_options['fields']['field_os2web_cp_service_address']['id'] = 'field_os2web_cp_service_address';
   $handler->display->display_options['fields']['field_os2web_cp_service_address']['table'] = 'field_data_field_os2web_cp_service_address';
@@ -681,17 +692,24 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['fields']['field_os2web_cp_service_address']['alter']['trim_whitespace'] = TRUE;
   $handler->display->display_options['fields']['field_os2web_cp_service_address']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_os2web_cp_service_address']['type'] = 'text_plain';
-  /* Felt: Link til se alle sager */
-  $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
-  $handler->display->display_options['fields']['nothing']['table'] = 'views';
-  $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
-  $handler->display->display_options['fields']['nothing']['ui_name'] = 'Link til se alle sager';
-  $handler->display->display_options['fields']['nothing']['label'] = '';
-  $handler->display->display_options['fields']['nothing']['exclude'] = TRUE;
-  $handler->display->display_options['fields']['nothing']['alter']['text'] = 'Se alle sager på denne addresse';
-  $handler->display->display_options['fields']['nothing']['alter']['make_link'] = TRUE;
-  $handler->display->display_options['fields']['nothing']['alter']['path'] = 'aaben-indsigt?search-text=[field_os2web_cp_service_address]&field_os2web_cp_service_date_from[value][date]=01-01-2007';
-  $handler->display->display_options['fields']['nothing']['element_label_colon'] = FALSE;
+  /* Felt: Link til se alle på addresse */
+  $handler->display->display_options['fields']['php']['id'] = 'php';
+  $handler->display->display_options['fields']['php']['table'] = 'views';
+  $handler->display->display_options['fields']['php']['field'] = 'php';
+  $handler->display->display_options['fields']['php']['ui_name'] = 'Link til se alle på addresse';
+  $handler->display->display_options['fields']['php']['label'] = '';
+  $handler->display->display_options['fields']['php']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['php']['alter']['make_link'] = TRUE;
+  $handler->display->display_options['fields']['php']['alter']['path'] = 'aaben-indsigt?search-text=[field_os2web_cp_service_address]&field_os2web_cp_service_date_from[value][date]=01-01-2007';
+  $handler->display->display_options['fields']['php']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['php']['use_php_setup'] = 0;
+  $handler->display->display_options['fields']['php']['php_output'] = '<?php 
+$node = node_load($data->nid); 
+if($node->field_os2web_cp_service_casetype[und][0][\'value\'] === \'EJSAG\') : ?>
+Se alle sager på denne addresse
+<?php endif; ?>';
+  $handler->display->display_options['fields']['php']['use_php_click_sortable'] = '0';
+  $handler->display->display_options['fields']['php']['php_click_sortable'] = '';
   /* Felt: Indhold: Nid */
   $handler->display->display_options['fields']['nid']['id'] = 'nid';
   $handler->display->display_options['fields']['nid']['table'] = 'node';
@@ -716,7 +734,7 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['fields']['nothing_1']['table'] = 'views';
   $handler->display->display_options['fields']['nothing_1']['field'] = 'nothing';
   $handler->display->display_options['fields']['nothing_1']['label'] = 'Titel';
-  $handler->display->display_options['fields']['nothing_1']['alter']['text'] = '[title] <br> [nothing]';
+  $handler->display->display_options['fields']['nothing_1']['alter']['text'] = '[title] <br> [php]';
   $handler->display->display_options['fields']['nothing_1']['element_label_colon'] = FALSE;
   /* Felt: Indhold: SagsID */
   $handler->display->display_options['fields']['field_os2web_cp_service_case_id']['id'] = 'field_os2web_cp_service_case_id';
@@ -805,9 +823,8 @@ return TRUE; // If no exposed inputs, remove all results
     t('Dato'),
     t('Page'),
     t('<h2>Sags Nr.: [field_os2web_cp_service_case_id]</h2>'),
-    t('Se alle sager på denne addresse'),
     t('[title] <br>[nothing]'),
-    t('[title] <br> [nothing]'),
+    t('[title] <br> [php]'),
   );
   $export['os2web_cp_service_cp_case_view'] = $view;
 
