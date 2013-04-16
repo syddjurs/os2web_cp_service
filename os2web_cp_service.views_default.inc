@@ -24,9 +24,11 @@ function os2web_cp_service_views_default_views() {
   $handler = $view->new_display('default', 'Master', 'default');
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mere';
+  $handler->display->display_options['group_by'] = TRUE;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['query']['options']['distinct'] = TRUE;
   $handler->display->display_options['exposed_form']['type'] = 'basic';
   $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Filtrer';
   $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Gendan';
@@ -115,10 +117,16 @@ function os2web_cp_service_views_default_views() {
       'empty_column' => 0,
     ),
   );
-  /* Opførsel ved ingen resultater: Global: Unfiltered text */
-  $handler->display->display_options['empty']['area_text_custom']['id'] = 'area_text_custom';
-  $handler->display->display_options['empty']['area_text_custom']['table'] = 'views';
-  $handler->display->display_options['empty']['area_text_custom']['field'] = 'area_text_custom';
+  /* Opførsel ved ingen resultater: Global: PHP */
+  $handler->display->display_options['empty']['php']['id'] = 'php';
+  $handler->display->display_options['empty']['php']['table'] = 'views';
+  $handler->display->display_options['empty']['php']['field'] = 'php';
+  $handler->display->display_options['empty']['php']['label'] = 'Ingen Resultater';
+  $handler->display->display_options['empty']['php']['empty'] = TRUE;
+  $handler->display->display_options['empty']['php']['php_output'] = '<?php if (count($view->exposed_input)) : ?>
+<span class="no-results">Vi finder desværre ikke nogen sager ud fra de valgte søgekriterier. Prøv at justere på dit søgeord eller tidsintervallet.</span>
+<?php endif; ?>
+';
   /* Forbindelse: Entity Reference: Refereret entity */
   $handler->display->display_options['relationships']['field_os2web_cp_service_doc_ref_target_id']['id'] = 'field_os2web_cp_service_doc_ref_target_id';
   $handler->display->display_options['relationships']['field_os2web_cp_service_doc_ref_target_id']['table'] = 'field_data_field_os2web_cp_service_doc_ref';
@@ -130,7 +138,14 @@ function os2web_cp_service_views_default_views() {
   $handler->display->display_options['fields']['field_os2web_cp_service_case_id']['label'] = '';
   $handler->display->display_options['fields']['field_os2web_cp_service_case_id']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_os2web_cp_service_case_id']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_os2web_cp_service_case_id']['group_column'] = 'entity_id';
+  $handler->display->display_options['fields']['field_os2web_cp_service_case_id']['group_columns'] = array(
+    'bundle' => 'bundle',
+    'language' => 'language',
+    'entity_type' => 'entity_type',
+    'entity_id' => 'entity_id',
+    'value' => 'value',
+    'format' => 'format',
+  );
   /* Felt: Indhold: Indholdsbeskrivelse */
   $handler->display->display_options['fields']['field_os2web_cp_service_content']['id'] = 'field_os2web_cp_service_content';
   $handler->display->display_options['fields']['field_os2web_cp_service_content']['table'] = 'field_data_field_os2web_cp_service_content';
@@ -371,6 +386,7 @@ return TRUE; // If no exposed inputs, remove all results
     t('‹ Forrige'),
     t('Næste ›'),
     t('Sidste »'),
+    t('Ingen Resultater'),
     t('Indhold entity refereret fra field_os2web_cp_service_doc_ref'),
     t('Sagstitel'),
     t('[title]'),
