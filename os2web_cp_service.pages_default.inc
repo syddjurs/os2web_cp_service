@@ -54,11 +54,35 @@ function os2web_cp_service_default_page_manager_handlers() {
     ),
   );
   $display->cache = array();
-  $display->title = '%node:title';
+  $display->title = '';
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
     $pane->pid = 'new-1';
+    $pane->panel = 'center';
+    $pane->type = 'custom';
+    $pane->subtype = 'custom';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'admin_title' => 'Gå tilbage',
+      'title' => '',
+      'body' => '<a href="javascript:history.go(-1)">Gå tilbage til søgning</a>',
+      'format' => 'full_html',
+      'substitute' => 1,
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $display->content['new-1'] = $pane;
+    $display->panels['center'][0] = 'new-1';
+    $pane = new stdClass();
+    $pane->pid = 'new-2';
     $pane->panel = 'center';
     $pane->type = 'views';
     $pane->subtype = 'os2web_cp_service_cp_case_view';
@@ -89,10 +113,10 @@ function os2web_cp_service_default_page_manager_handlers() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 0;
+    $pane->position = 1;
     $pane->locks = array();
-    $display->content['new-1'] = $pane;
-    $display->panels['center'][0] = 'new-1';
+    $display->content['new-2'] = $pane;
+    $display->panels['center'][1] = 'new-2';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
@@ -146,7 +170,7 @@ function os2web_cp_service_default_page_manager_handlers() {
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-2';
+    $pane->pid = 'new-3';
     $pane->panel = 'center';
     $pane->type = 'views';
     $pane->subtype = 'os2web_cp_service_cp_document_view';
@@ -179,8 +203,8 @@ function os2web_cp_service_default_page_manager_handlers() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-2'] = $pane;
-    $display->panels['center'][0] = 'new-2';
+    $display->content['new-3'] = $pane;
+    $display->panels['center'][0] = 'new-3';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
