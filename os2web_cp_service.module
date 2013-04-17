@@ -781,7 +781,7 @@ function os2web_cp_service_preprocess_views_exposed_form(&$variables) {
  */
 function os2web_cp_service_theme_registry_alter(&$theme_registry) {
   // Add the tpl for exposed form to the theme registry
-  // Somehow this gets overridden by cmstheme.
+  // Somehow this gets overridden by os2web_core_theme.
   if (!empty($theme_registry['views_exposed_form__os2web_cp_service_cp_case_search']['path'])) {
     $theme_registry['views_exposed_form__os2web_cp_service_cp_case_search']['path'] = drupal_get_path('module', 'os2web_cp_service') . '/theme/';
   }
