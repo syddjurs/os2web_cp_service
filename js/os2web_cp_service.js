@@ -12,6 +12,12 @@
 			var value = $('#edit-case-id').val();
 			$('#edit-case-id').val(value.replace(/\W/g, '/'));
 		}
+
+		// Reset dates if case id is entered.
+		if($('#edit-case-id').val() || /^\d{2}\/\d/.test($('#edit-search-text').val())) {
+			$('#edit-field-os2web-cp-service-date-from-value-datepicker-popup-0').val('');
+			$('#edit-field-os2web-cp-service-date-to-value-datepicker-popup-0').val('');
+		}
 	});
 
 	$( "a.qtip-this[title]" ).qtip({

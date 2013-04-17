@@ -151,8 +151,6 @@ function os2web_cp_service_alter_configuration($key, $value) {
  *   TRUE on successful content creation.
  */
 function os2web_cp_service_create_case(array $data) {
-
-  watchdog('os2web_cp_service', 'CP case start: %time', array('%time' => timer_read('cp')), WATCHDOG_NOTICE);
   // Prepare data.
   $data = array_replace_recursive(os2web_cp_service_default_case(), $data);
 
@@ -172,7 +170,6 @@ function os2web_cp_service_create_case(array $data) {
   else {
     $node = node_load(array_pop($nids));
   }
-  watchdog('os2web_cp_service', 'CP old deleted: %time', array('%time' => timer_read('cp')), WATCHDOG_NOTICE);
 
   // See if the triggered rules on the published node, is approved
   // in the vocabulary. Otherwise the node will be unpublished.
@@ -220,7 +217,12 @@ function os2web_cp_service_create_case(array $data) {
 
       switch ($field_info['type']) {
         case 'text':
-          $node->{$field_name}[LANGUAGE_NONE][0]['value'] = (string) $data['fields'][$field['label']];
+          if ($field['label'] === 'Sagstitel') {
+            $node->{$field_name}[LANGUAGE_NONE][0]['value'] = (string) preg_replace('/\s\(\d{4}\)/', '', $data['fields']['Sagstitel']);
+          }
+          else {
+            $node->{$field_name}[LANGUAGE_NONE][0]['value'] = (string) $data['fields'][$field['label']];
+          }
           break;
 
         case 'taxonomy_term_reference':
@@ -279,7 +281,6 @@ function os2web_cp_service_create_case(array $data) {
   try {
     node_submit($node);
     node_save($node);
-    watchdog('os2web_cp_service', 'CP case done: %time', array('%time' => timer_read('cp')), WATCHDOG_NOTICE);
     return TRUE;
   }
   catch (Exception $e) {
@@ -401,8 +402,6 @@ function os2web_cp_service_default_case() {
  *   TRUE on successful content creation.
  */
 function os2web_cp_service_create_document(array $data) {
-
-  watchdog('os2web_cp_service', 'CP document start: %time', array('%time' => timer_read('cp')), WATCHDOG_NOTICE);
   $data = array_replace_recursive(os2web_cp_service_default_document(), $data);
   // Prepare data.
   $query = new EntityFieldQuery();
@@ -421,7 +420,6 @@ function os2web_cp_service_create_document(array $data) {
   else {
     $node = node_load(array_pop($nids));
   }
-  watchdog('os2web_cp_service', 'CP old deleted: %time', array('%time' => timer_read('cp')), WATCHDOG_NOTICE);
 
   // See if the triggered rules on the published node, is approved
   // in the vocabulary. Otherwise the node will be unpublished.
@@ -520,7 +518,6 @@ function os2web_cp_service_create_document(array $data) {
       }
     }
   }
-  watchdog('os2web_cp_service', 'CP document done: %time', array('%time' => timer_read('cp')), WATCHDOG_NOTICE);
   return TRUE;
 }
 
@@ -702,22 +699,29 @@ function os2web_cp_service_field_formatter_view($entity_type, $entity, $field, $
   }
   return $element;
 }
+
 /**
  * Implements hook_foorm_alter().
  */
 function os2web_cp_service_form_alter(&$form, &$form_state, $form_id) {
-  if ($form['#id'] == 'views-exposed-form-os2web-cp-service-cp-case-search-page' ||
-      $form['#id'] == 'views-exposed-form-os2web-cp-service-cp-case-search-panel-pane-1' ||
-      $form['#id'] == 'views-exposed-form-os2web-cp-service-cp-case-search-default') {
-    foreach ($form['#info'] as &$widget) {
-      // Adds placeholder to all textfields with a description - ab@bellcom.dk.
-      if (!empty($widget['description']) && isset($form[$widget['value']]['#type']) && $form[$widget['value']]['#type'] === 'textfield') {
-        $form[$widget['value']]['#attributes']['placeholder'] = $widget['description'];
+  switch ($form['#id']) {
+    case 'views-exposed-form-os2web-cp-service-cp-case-search-page':
+    case 'views-exposed-form-os2web-cp-service-cp-case-search-panel-pane-1':
+    case 'views-exposed-form-os2web-cp-service-cp-case-search-default':
+      foreach ($form['#info'] as &$widget) {
+        // Adds placeholder to all textfields with a description ab@bellcom.dk.
+        if (!empty($widget['description']) && isset($form[$widget['value']]['#type']) && $form[$widget['value']]['#type'] === 'textfield') {
+          $form[$widget['value']]['#attributes']['placeholder'] = $widget['description'];
+        }
+        if (isset($form[$widget['value']]['value']) && $form[$widget['value']]['value']['#type'] === 'date_popup') {
+          $form[$widget['value']]['value']['#date_format'] = 'd-m-Y';
+        }
       }
-      if ($form[$widget['value']]['value']['#type'] === 'date_popup') {
-        $form[$widget['value']]['value']['#date_format'] = 'd-m-Y';
-      }
-    }
+      break;
+
+    case 'search-form':
+      $form['#suffix'] .= '<div class="link-aaben-indsigt">Søger du efter sager i vores sagssytem, kan du bruge vores <a href="/aaben-indsigt">Åben Indsigt</a>.</div>';
+      break;
   }
 }
 
