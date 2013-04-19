@@ -256,8 +256,8 @@ function os2web_cp_service_views_default_views() {
   $handler->display->display_options['filters']['php']['group'] = 1;
   $handler->display->display_options['filters']['php']['use_php_setup'] = 0;
   $handler->display->display_options['filters']['php']['php_filter'] = 'if (count($view->exposed_input)) {
-return FALSE; 
-} else { 
+return FALSE;
+} else {
 return TRUE; // If no exposed inputs, remove all results
 }';
   /* Filterkriterie: Global: Combine fields filter */
@@ -363,7 +363,7 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['empty']['area_text_custom']['table'] = 'views';
   $handler->display->display_options['empty']['area_text_custom']['field'] = 'area_text_custom';
   $handler->display->display_options['empty']['area_text_custom']['empty'] = TRUE;
-  $handler->display->display_options['empty']['area_text_custom']['content'] = 'Der kunne ikke findes nogle sager ud fra dine søgekriterier. ';
+  $handler->display->display_options['empty']['area_text_custom']['content'] = 'Der kunne ikke findes nogle sager ud fra dine søgekriterier.';
   $handler->display->display_options['empty']['area_text_custom']['tokenize'] = TRUE;
   $handler->display->display_options['path'] = 'aaben-indsigt';
 
@@ -399,7 +399,7 @@ return TRUE; // If no exposed inputs, remove all results
     t('Sagsnummer'),
     t('fx. 12/99999999'),
     t('Page'),
-    t('Der kunne ikke findes nogle sager ud fra dine søgekriterier. '),
+    t('Der kunne ikke findes nogle sager ud fra dine søgekriterier.'),
     t('Content pane'),
     t('View panes'),
   );
@@ -719,8 +719,8 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['fields']['php']['alter']['path'] = 'aaben-indsigt?search-text=[field_os2web_cp_service_address]&field_os2web_cp_service_date_from[value][date]=01-01-2007';
   $handler->display->display_options['fields']['php']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['php']['use_php_setup'] = 0;
-  $handler->display->display_options['fields']['php']['php_output'] = '<?php 
-$node = node_load($data->nid); 
+  $handler->display->display_options['fields']['php']['php_output'] = '<?php
+$node = node_load($data->nid);
 if($node->field_os2web_cp_service_casetype[und][0][\'value\'] === \'EJSAG\') : ?>
 Se alle sager på denne addresse
 <?php endif; ?>';
