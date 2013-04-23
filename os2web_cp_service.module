@@ -224,7 +224,7 @@ function os2web_cp_service_create_case(array $data) {
 
       switch ($field_info['type']) {
         case 'text':
-          if ($field['label'] === 'Sagstitel') {
+          if ($field['label'] === 'Sagstitel' && $data['fields']['Sagstype - Sagstype'] === 'EJSAG') {
             $node->{$field_name}[LANGUAGE_NONE][0]['value'] = (string) preg_replace('/\s\(\d{4}\)/', '', $data['fields']['Sagstitel']);
           }
           else {
