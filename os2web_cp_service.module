@@ -50,6 +50,13 @@ function os2web_cp_service_handler() {
   if (!os2web_esdh_provider_has_api('cp')) {
     drupal_access_denied();
   }
+
+  $ip_string = variable_get('os2web_cp_service_cp_access_ip', '');
+  $valid_ips = array_map('trim', explode(',', $ip_string));
+  if (!in_array(ip_address(), $valid_ips)) {
+    drupal_access_denied();
+  }
+
   $data = os2web_esdh_provider_invoke('cp', 'handle_request');
   return $data;
 }
@@ -814,6 +821,12 @@ function os2web_cp_service_form_os2web_settings_settings_form_alter(&$form, &$fo
     '#default_value' => variable_get('os2web_cp_service_endpoint_password'),
     '#title' => t('CP File endpoint password'),
     '#description' => t('CP File endpoint HTTP authentification password.'),
+  );
+  $form['os2web_cp_service_config_group']['os2web_cp_service_cp_access_ip'] = array(
+    '#type' => 'textfield',
+    '#title' => 'IP addresser der kan tilgå publiserings webservicen',
+    '#description' => 'Komma separeret liste af ip-addresser der kan tilgå <em>webservicen</em>.',
+    '#default_value' => variable_get('os2web_cp_service_cp_access_ip', ip_address()),
   );
 }
 
