@@ -142,14 +142,14 @@ function os2web_gf_service_handler($file_id) {
 function os2web_cp_service_alter_configuration($key, $value) {
   switch ($key) {
     case 'FileServiceURL':
-      return variable_set('os2web_cp_service_cp_document_fileurl', $value);
-
+      variable_set('os2web_cp_service_cp_document_fileurl', $value);
     break;
   }
+  return TRUE;
 }
 
 /**
- * Service function for creating a case.
+ * Service function for creating a case.x
  *
  * @param array $data
  *   Structured array with data for the Case.
@@ -880,4 +880,36 @@ function os2web_cp_service_get_extension_from_mime($mime) {
   }
   $pieces = explode('/', $mime);
   return array_pop($pieces);
+}
+
+/**
+ * Implements hook_os2web_help().
+ */
+function os2web_cp_service_os2web_help($sections) {
+
+  // List of content.
+  $sections['list_of_content'] = t('<a href="#os2web_cp_service">Case Publishing Service</a><br />');
+
+  // Content types.
+  $sections['contenttype'] = t('<p><b>CP Case:</b> A CP case is a contenttype which mostly are used by the automatic publishing system.<br /><i><a href="@url" target="_blank">See the advanced documentation of OS2web Case Publishing Service</a></i></p>', array('@url' => url('admin/help/os2web_borger_dk')));
+  $sections['contenttype'] .= t('<p><b>CP Document:</b> A CP document is a contenttype which mostly are used by the automatic publishing system.<br /><i><a href="@url" target="_blank">See the advanced documentation of OS2web Case Publishing Service</a></i></p>', array('@url' => url('admin/help/os2web_borger_dk')));
+
+  // General about OS2web CP Service.
+  $sections['os2web_cp_service'] = t('<h2 id="os2web_cp_service">Case Publishing System</h2>');
+  $sections['os2web_cp_service'] .= t('<p><b>Description</b><br />The Case Publishing service handles incomming requests from an acadre esdh system. By now it is made to publish cases and documents.</p>');
+  $sections['os2web_cp_service'] .= t('<p><i>If enabled, an search page is located at <a href="@url" target="_blank">/aaben-indsigt</a></i></p>', array('@url' => '/aaben-indsigt'));
+  $sections['os2web_cp_service'] .= t('<p><b>CP Approved Rules:</b>(<i>taxonomy</i>)<a href="@url" target="_blank">Edit the approved rules from acadre</a> to allow them to be published. If they arent approved, they will be saved as an unpublished page.</p>', array('@url' => url('admin/help/os2web_borger_dk')));
+  return $sections;
+
+}
+
+/**
+ * Implements hook_help().
+ */
+function os2web_cp_service_help($path, $arg) {
+  switch ($path) {
+    case 'admin/help#os2web_cp_service':
+      // TODO.
+      return t('Missing documentation.');
+  }
 }
