@@ -897,19 +897,9 @@ function os2web_cp_service_os2web_help($sections) {
   // General about OS2web CP Service.
   $sections['os2web_cp_service'] = t('<h2 id="os2web_cp_service">Case Publishing System</h2>');
   $sections['os2web_cp_service'] .= t('<p><b>Description</b><br />The Case Publishing service handles incomming requests from an acadre esdh system. By now it is made to publish cases and documents.</p>');
-  $sections['os2web_cp_service'] .= t('<p><i>If enabled, an search page is located at <a href="@url" target="_blank">/aaben-indsigt</a></i></p>', array('@url' => '/aaben-indsigt'));
-  $sections['os2web_cp_service'] .= t('<p><b>CP Approved Rules:</b>(<i>taxonomy</i>)<a href="@url" target="_blank">Edit the approved rules from acadre</a> to allow them to be published. If they arent approved, they will be saved as an unpublished page.</p>', array('@url' => url('admin/help/os2web_borger_dk')));
+  $sections['os2web_cp_service'] .= t('<p><i>If enabled, a search page is located at <a href="@url" target="_blank">/aaben-indsigt</a></i></p>', array('@url' => '/aaben-indsigt'));
+  $sections['os2web_cp_service'] .= t('<p><b>CP Approved Rules:</b>(<i>taxonomy</i>) <a href="@url" target="_blank">Edit the approved rules from acadre</a> to allow them to be published. If they arent approved, they will be saved as an unpublished page. The approved rules are the triggered rule.</p>', array('@url' => url('admin/help/os2web_borger_dk')));
+  $sections['os2web_cp_service'] .= t('<p><b>Imported fields:</b> Edit the fields of a <a href="@case" target="_blank">CP Case</a> or a <a href="@doc" target="_blank">CP Document</a> to allow other fields from the webservice to be importet. Name the field the same as the title of the field from the webservice, and it will be linked up. Currently it will handle taxonomy_term_references. All other types are handled as a text field.</p>', array('@case' => url('admin/structure/types/manage/os2web-cp-service-cp-case/fields'), '@doc' => url('admin/structure/types/manage/os2web-cp-service-cp-doc/fields')));
   return $sections;
 
-}
-
-/**
- * Implements hook_help().
- */
-function os2web_cp_service_help($path, $arg) {
-  switch ($path) {
-    case 'admin/help#os2web_cp_service':
-      // TODO.
-      return t('Missing documentation.');
-  }
 }
