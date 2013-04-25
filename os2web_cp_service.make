@@ -8,7 +8,7 @@ core = 7.x
 # projects[os2web_acadre_esdh][download][type] = "git"
 # ;projects[os2web_acadre_esdh][download][tag] = "1.10"
 # projects[os2web_acadre_esdh][download][branch] = "master"
-# projects[os2web_acadre_esdh][download][url] = "git@github.com:OS2web/os2web_acadre_esdh.git"
+# projects[os2web_acadre_esdh][download][url] = "https://github.com/OS2web/os2web_acadre_esdh.git"
 
 ;; Contrib modules below:
 
