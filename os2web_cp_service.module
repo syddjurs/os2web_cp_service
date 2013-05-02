@@ -11,11 +11,19 @@ include_once 'os2web_cp_service.features.inc';
  * Implements hook_init().
  */
 function os2web_cp_service_init() {
-  // ab@bellcom.dk
-  // Menu Minipanels us using qTip. Only add qTip js if module doesnt exits.
-  if (!module_exists('menu_minipanels')) {
-    drupal_add_js(drupal_get_path('module', 'os2web_cp_service') . '/js/jquery.qtip-1.0.0-rc3.min.js');
+
+  // Proper Libraries API support.
+  $qtip_path = NULL;
+  if (function_exists('libraries_get_path')) {
+    $qtip_path = libraries_get_path('qtip');
+    if (!empty($qtip_path)) {
+      $qtip_path .= '/jquery.qtip-1.0.0-rc3.min.js';
+    }
   }
+  if (!$qtip_path) {
+    $qtip_path = drupal_get_path('module', 'os2web_cp_service') . '/js/jquery.qtip-1.0.0-rc3.min.js';
+  }
+  drupal_add_js($qtip_path);
 
   drupal_add_js(drupal_get_path('module', 'os2web_cp_service') . '/js/os2web_cp_service.js');
   drupal_add_css(drupal_get_path('module', 'os2web_cp_service') . '/css/os2web_cp_service.css');
