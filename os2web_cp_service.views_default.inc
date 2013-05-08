@@ -569,7 +569,8 @@ return TRUE; // If no exposed inputs, remove all results
   $handler = $view->new_display('attachment', 'Documents', 'attachment_1');
   $handler->display->display_options['display_description'] = 'Attachent to display all documents for a case';
   $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
-  $handler->display->display_options['pager']['type'] = 'some';
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['defaults']['header'] = FALSE;
   /* Overskrift: Global: Tekstområde */
   $handler->display->display_options['header']['area']['id'] = 'area';
