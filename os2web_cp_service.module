@@ -40,12 +40,6 @@ function os2web_cp_service_menu() {
     'page arguments' => array(4),
     'access callback' => TRUE,
   );
-  //to delete
-  $items['os2web/cp_cron'] = array(
-    'type' => MENU_CALLBACK,
-    'page callback' => 'os2web_cp_service_cron',
-    'access callback' => TRUE,
-  );
 
   return $items;
 }
@@ -73,8 +67,6 @@ function os2web_cp_service_handler() {
  */
 function os2web_gf_service_handler($file_id) {
   if ($url = variable_get('os2web_cp_service_cp_document_fileurl')) {
-    variable_set('os2web_cp_service_cp_document_fileurl', 'http://10.1.1.118/Traen%20Publishing%20File%20Service%20-%20Sydjurs.dk/Download.aspx');
-    
     $username = variable_get('os2web_cp_service_endpoint_user');
     $password = variable_get('os2web_cp_service_endpoint_password');
     if (!empty($username) && !empty($password)) {
