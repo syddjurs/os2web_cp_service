@@ -18,14 +18,14 @@ core = 7.x
 
 ; Features + related
 # projects[features][subdir] = "contrib"
-# projects[features][version] = "2.0-beta1"
+# projects[features][version] = "2.0-beta2"
 
 # projects[strongarm][subdir] = "contrib"
 # projects[strongarm][version] = "2.0"
 
 ;Views
 # projects[views][subdir] = "contrib"
-# projects[views][version] = "3.5"
+# projects[views][version] = "3.7"
 # projects[views][patch][] = "http://drupal.org/files/combine_and_contains_word-1782678-9.patch"
 
 # projects[views_php][subdir] = "contrib"
@@ -40,7 +40,7 @@ core = 7.x
 
 ; Basic
 # projects[ctools][subdir] = "contrib"
-# projects[ctools][version] = "1.2"
+# projects[ctools][version] = "1.3"
 
 # projects[date][subdir] = "contrib"
 # projects[date][version] = "2.6"
@@ -58,4 +58,4 @@ core = 7.x
 # projects[token][version] = "1.4"
 
 # projects[entity][subdir] = "contrib"
-# projects[entity][version] = "1.0-rc3"
+# projects[entity][version] = "1.1"
