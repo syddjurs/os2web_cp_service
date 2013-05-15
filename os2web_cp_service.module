@@ -12,19 +12,11 @@ define('DEFAULT_CASE_FILE_LIMIT', 50);//number of files to handle at once
  * Implements hook_init().
  */
 function os2web_cp_service_init() {
-
-  // Proper Libraries API support.
-  $qtip_path = NULL;
-  if (function_exists('libraries_get_path')) {
-    $qtip_path = libraries_get_path('qtip');
-    if (!empty($qtip_path)) {
-      $qtip_path .= '/jquery.qtip-1.0.0-rc3.min.js';
-    }
+  // ab@bellcom.dk
+  // Menu Minipanels us using qTip. Only add qTip js if module doesnt exits.
+  if (!module_exists('menu_minipanels')) {
+    drupal_add_js(drupal_get_path('module', 'os2web_cp_service') . '/js/jquery.qtip-1.0.0-rc3.min.js');
   }
-  if (!$qtip_path) {
-    $qtip_path = drupal_get_path('module', 'os2web_cp_service') . '/js/jquery.qtip-1.0.0-rc3.min.js';
-  }
-  drupal_add_js($qtip_path);
 
   drupal_add_js(drupal_get_path('module', 'os2web_cp_service') . '/js/os2web_cp_service.js');
   drupal_add_css(drupal_get_path('module', 'os2web_cp_service') . '/css/os2web_cp_service.css');
@@ -46,6 +38,12 @@ function os2web_cp_service_menu() {
     'type' => MENU_CALLBACK,
     'page callback' => 'os2web_gf_service_handler',
     'page arguments' => array(4),
+    'access callback' => TRUE,
+  );
+  //to delete
+  $items['os2web/cp_cron'] = array(
+    'type' => MENU_CALLBACK,
+    'page callback' => 'os2web_cp_service_cron',
     'access callback' => TRUE,
   );
 
@@ -75,6 +73,8 @@ function os2web_cp_service_handler() {
  */
 function os2web_gf_service_handler($file_id) {
   if ($url = variable_get('os2web_cp_service_cp_document_fileurl')) {
+    variable_set('os2web_cp_service_cp_document_fileurl', 'http://10.1.1.118/Traen%20Publishing%20File%20Service%20-%20Sydjurs.dk/Download.aspx');
+    
     $username = variable_get('os2web_cp_service_endpoint_user');
     $password = variable_get('os2web_cp_service_endpoint_password');
     if (!empty($username) && !empty($password)) {
@@ -148,14 +148,14 @@ function os2web_gf_service_handler($file_id) {
 function os2web_cp_service_alter_configuration($key, $value) {
   switch ($key) {
     case 'FileServiceURL':
-      variable_set('os2web_cp_service_cp_document_fileurl', $value);
+      return variable_set('os2web_cp_service_cp_document_fileurl', $value);
+
     break;
   }
-  return TRUE;
 }
 
 /**
- * Service function for creating a case.x
+ * Service function for creating a case.
  *
  * @param array $data
  *   Structured array with data for the Case.
@@ -891,28 +891,6 @@ function os2web_cp_service_get_extension_from_mime($mime) {
 }
 
 /**
- * Implements hook_os2web_help().
- */
-function os2web_cp_service_os2web_help($sections) {
-
-  // List of content.
-  $sections['list_of_content'] = t('<a href="#os2web_cp_service">Case Publishing Service</a><br />');
-
-  // Content types.
-  $sections['contenttype'] = t('<p><b>CP Case:</b> A CP case is a contenttype which mostly are used by the automatic publishing system.<br /><i><a href="@url" target="_blank">See the advanced documentation of OS2web Case Publishing Service</a></i></p>', array('@url' => url('admin/help/os2web_borger_dk')));
-  $sections['contenttype'] .= t('<p><b>CP Document:</b> A CP document is a contenttype which mostly are used by the automatic publishing system.<br /><i><a href="@url" target="_blank">See the advanced documentation of OS2web Case Publishing Service</a></i></p>', array('@url' => url('admin/help/os2web_borger_dk')));
-
-  // General about OS2web CP Service.
-  $sections['os2web_cp_service'] = t('<h2 id="os2web_cp_service">Case Publishing System</h2>');
-  $sections['os2web_cp_service'] .= t('<p><b>Description</b><br />The Case Publishing service handles incomming requests from an acadre esdh system. By now it is made to publish cases and documents.</p>');
-  $sections['os2web_cp_service'] .= t('<p><i>If enabled, a search page is located at <a href="@url" target="_blank">/aaben-indsigt</a></i></p>', array('@url' => '/aaben-indsigt'));
-  $sections['os2web_cp_service'] .= t('<p><b>CP Approved Rules:</b>(<i>taxonomy</i>) <a href="@url" target="_blank">Edit the approved rules from acadre</a> to allow them to be published. If they arent approved, they will be saved as an unpublished page. The approved rules are the triggered rule.</p>', array('@url' => url('admin/help/os2web_borger_dk')));
-  $sections['os2web_cp_service'] .= t('<p><b>Imported fields:</b> Edit the fields of a <a href="@case" target="_blank">CP Case</a> or a <a href="@doc" target="_blank">CP Document</a> to allow other fields from the webservice to be importet. Name the field the same as the title of the field from the webservice, and it will be linked up. Currently it will handle taxonomy_term_references. All other types are handled as a text field.</p>', array('@case' => url('admin/structure/types/manage/os2web-cp-service-cp-case/fields'), '@doc' => url('admin/structure/types/manage/os2web-cp-service-cp-doc/fields')));
-  $sections['os2web_cp_service'] .= t('<p><b>Configuration:</b> Setup the authentification user and password at the <a href="@url" target="_blank">OS2web Settings Page</a>. These credentials are used to authenticate to the file download service. This file download is recieved as a webservice call from your provider.<br />See the <a href="@wsdl" target="_blank">WSDL file</a> for further weservice documentation</p>', array('@url' => url('admin/help/os2web_borger_dk'), '@wsdl' => url('os2web/service/cp/v1/?wsdl')));
-  return $sections;
-
-}
-/**
  * Schedules a document for pdf to html conversion by adding the document's to database table.
  *
  * @param string $file_id  id of the file on remove server
@@ -1116,4 +1094,11 @@ function _os2web_cp_service_update_case_metadata($file_id, $case_nid, $path_to_p
 	unlink($path_to_pdf);
       }
     }
+}
+
+/**
+ * Update method installing the module's database without a need to uninstall/install it.
+ */
+function os2web_cp_service_update_7100(){
+  drupal_install_schema('os2web_cp_service');
 }
