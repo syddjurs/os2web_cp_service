@@ -1076,9 +1076,13 @@ function _os2web_cp_service_update_case_metadata($file_id, $case_nid, $path_to_p
 	$text = str_replace("\n\r", " ", $text);
 	$text = str_replace("\n", " ", $text);
 	$text = str_replace("\r", " ", $text);
-
-	$search_metadata = $case_node->field_os2web_cp_service_searchmt['und'][0]['value'] . $text;
-	$case_node->field_os2web_cp_service_searchmt['und'][0]['value'] = $search_metadata;
+  if (isset($case_node->field_os2web_cp_service_searchmt[LANGUAGE_NONE][0]['value'])) {
+    $search_metadata = $case_node->field_os2web_cp_service_searchmt[LANGUAGE_NONE][0]['value'] . $text;
+  }
+  else{
+    $search_metadata = $text;
+  }
+  $case_node->field_os2web_cp_service_searchmt[LANGUAGE_NONE][0]['value'] = $search_metadata;
 	node_save($case_node);
 
 	db_update('os2web_cp_service_documents_conversion')
