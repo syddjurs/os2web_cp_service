@@ -74,7 +74,7 @@ function os2web_cp_service_handler() {
 function os2web_gf_service_handler($file_id) {
   if ($url = variable_get('os2web_cp_service_cp_document_fileurl')) {
     variable_set('os2web_cp_service_cp_document_fileurl', 'http://10.1.1.118/Traen%20Publishing%20File%20Service%20-%20Sydjurs.dk/Download.aspx');
-    
+
     $username = variable_get('os2web_cp_service_endpoint_user');
     $password = variable_get('os2web_cp_service_endpoint_password');
     if (!empty($username) && !empty($password)) {
@@ -912,8 +912,8 @@ function os2web_cp_service_schedule_document_pdf2html_conversion($file_id, $case
 
 /**
  * Cron implementation.
- * Goes through the enrties in database table, 
- * downloads the documents as pdf, 
+ * Goes through the enrties in database table,
+ * downloads the documents as pdf,
  * and converts the documents from pdf to html and updates the case metadata field with the document contents.
  *
  * @return none
@@ -928,7 +928,7 @@ function os2web_cp_service_cron(){
     while($record = $result->fetchAssoc()) {
         _os2web_cp_service_document_download($record['file_id']);
     }
-    
+
     //convert
     $query = db_select('os2web_cp_service_documents_conversion', 'dc');
     $query->fields('dc',array('file_id', 'filepath_pdf'))
@@ -938,7 +938,7 @@ function os2web_cp_service_cron(){
     while($record = $result->fetchAssoc()) {
         _os2web_cp_service_document_convert($record['file_id'], $record['filepath_pdf']);
     }
-    
+
     //field updating
     $query = db_select('os2web_cp_service_documents_conversion', 'dc');
     $query->fields('dc',array('file_id', 'case_nid', 'filepath_pdf', 'filepath_html'))
@@ -964,18 +964,18 @@ function os2web_cp_service_cron(){
 function _os2web_cp_service_document_download($file_id){
   $url  = $GLOBALS['base_url'] . '/?q=os2web/service/gf/v1/' . $file_id;//address of remote file
   $tmpfname = tempnam(file_directory_temp(), "os2web_cp_document_");//path to where the file will be downloaded
-  
+
   $fp = fopen($tmpfname, 'w');
-  
+
   $ch = curl_init($url);
   curl_setopt($ch, CURLOPT_FILE, $fp);
   $data= curl_exec($ch);
-  
+
   //Check for 404 (file not found)
   $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
   curl_close($ch);
   fclose($fp);
-  
+
   if ($httpCode == 404) {
     print_r('404');
     db_update('os2web_cp_service_documents_conversion')
@@ -984,7 +984,7 @@ function _os2web_cp_service_document_download($file_id){
       ))
     ->condition('file_id', $file_id)
     ->execute();
-  } else if ($httpCode == 200) {    
+  } else if ($httpCode == 200) {
     db_update('os2web_cp_service_documents_conversion')
 	  ->fields(array(
 	    'filepath_pdf' => $tmpfname,
@@ -1068,7 +1068,7 @@ function _os2web_cp_service_update_case_metadata($file_id, $case_nid, $path_to_p
 	->execute();
       } else {
 	$text = file_get_contents($path_to_html);
-	
+
 	//html tags removing
 	$text = str_replace('<p>&nbsp;</p>', ' ', $text); //removing unneeded paragraphs
 	$text = preg_replace('#<style(.*?)>(.*?)</style>#is', ' ', $text);//removing style tags
@@ -1077,28 +1077,21 @@ function _os2web_cp_service_update_case_metadata($file_id, $case_nid, $path_to_p
 	$text = str_replace("\n\r", " ", $text);
 	$text = str_replace("\n", " ", $text);
 	$text = str_replace("\r", " ", $text);
-          
-	$search_metadata = $case_node->field_os2web_cp_service_searchmt['und'][0]['value'] . $text;  
+
+	$search_metadata = $case_node->field_os2web_cp_service_searchmt['und'][0]['value'] . $text;
 	$case_node->field_os2web_cp_service_searchmt['und'][0]['value'] = $search_metadata;
 	node_save($case_node);
-	
+
 	db_update('os2web_cp_service_documents_conversion')
 	->fields(array(
 	    'status' => 'done',
 	))
 	->condition('file_id', $file_id)
 	->execute();
-	
+
 	//tmp files cleanup
 	unlink($path_to_html);
 	unlink($path_to_pdf);
       }
     }
-}
-
-/**
- * Update method installing the module's database without a need to uninstall/install it.
- */
-function os2web_cp_service_update_7100(){
-  drupal_install_schema('os2web_cp_service');
 }
