@@ -73,7 +73,6 @@ function os2web_cp_service_handler() {
  */
 function os2web_gf_service_handler($file_id) {
   if ($url = variable_get('os2web_cp_service_cp_document_fileurl')) {
-    variable_set('os2web_cp_service_cp_document_fileurl', 'http://10.1.1.118/Traen%20Publishing%20File%20Service%20-%20Sydjurs.dk/Download.aspx');
 
     $username = variable_get('os2web_cp_service_endpoint_user');
     $password = variable_get('os2web_cp_service_endpoint_password');
@@ -527,7 +526,7 @@ function os2web_cp_service_create_document(array $data) {
         if ($is_missing) {
           $cnode->field_os2web_cp_service_doc_ref[LANGUAGE_NONE][]['target_id'] = $node->nid;
           //adding for pdf 2 html conversion, stan@bellcom.dk
-          os2web_cp_service_schedule_document_pdf2html_conversion($data['fields']['FilID'], $cnode->nid);
+          os2web_cp_service_schedule_document_pdf2html_conversion($data['fields']['Indhold - FileID'], $cnode->nid);
           node_save($cnode);
         }
       }
@@ -962,7 +961,7 @@ function os2web_cp_service_cron(){
  * @return none
  */
 function _os2web_cp_service_document_download($file_id){
-  $url  = $GLOBALS['base_url'] . '/?q=os2web/service/gf/v1/' . $file_id;//address of remote file
+  $url  = $GLOBALS['base_url'] . '/os2web/service/gf/v1/' . $file_id;//address of remote file
   $tmpfname = tempnam(file_directory_temp(), "os2web_cp_document_");//path to where the file will be downloaded
 
   $fp = fopen($tmpfname, 'w');
