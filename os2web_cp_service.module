@@ -72,6 +72,13 @@ function os2web_cp_service_handler() {
  * Callback for the file provider service.
  */
 function os2web_gf_service_handler($file_id) {
+  // Mime Types which are disallowed to be downloaded.
+  // People shouldn't be able to download special files.
+  $disallowed_mimes = array(
+    // Disallow .msg files.
+    'application/vnd.ms-outlook',
+  );
+
   if ($url = variable_get('os2web_cp_service_cp_document_fileurl')) {
 
     $username = variable_get('os2web_cp_service_endpoint_user');
@@ -86,38 +93,60 @@ function os2web_gf_service_handler($file_id) {
       $header = curl_getinfo($ch);
       curl_close($ch);
       if ($header['http_code'] === 200) {
-        drupal_add_http_header('Content-Type', $header['content_type']);
-        drupal_add_http_header('Content-Length', $header['download_content_length']);
-        drupal_add_http_header('Cache-Control', 'must-revalidate, post-check=0, pre-check=0');
-        drupal_add_http_header('Cache-Control', 'private', FALSE);
-        drupal_add_http_header('Connection', 'close');
-        drupal_add_http_header('Expires', '0');
+        if (!in_array($header['content_type'], $disallowed_mimes)) {
+          drupal_add_http_header('Content-Type', $header['content_type']);
+          drupal_add_http_header('Content-Length', $header['download_content_length']);
+          drupal_add_http_header('Cache-Control', 'must-revalidate, post-check=0, pre-check=0');
+          drupal_add_http_header('Cache-Control', 'private', FALSE);
+          drupal_add_http_header('Connection', 'close');
+          drupal_add_http_header('Expires', '0');
 
-        // Check for IE only headers.
-        if (isset($_SERVER['HTTP_USER_AGENT']) && (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== FALSE)) {
-          drupal_add_http_header('Pragma', 'public');
+          // Check for IE only headers.
+          if (isset($_SERVER['HTTP_USER_AGENT']) && (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== FALSE)) {
+            drupal_add_http_header('Pragma', 'public');
+          }
+          else {
+            drupal_add_http_header('Pragma', 'no-cache');
+          }
+
+          // Load the title to use it as the filename.
+          $query = new EntityFieldQuery();
+          $result = $query
+              ->entityCondition('entity_type', 'node')
+              ->propertyCondition('type', 'os2web_cp_service_cp_document')
+              ->propertyCondition('status', 1)
+              ->fieldCondition('field_os2web_cp_service_file_id', 'value', $file_id, '=')
+              ->execute();
+          $nids = (isset($result['node']))?array_keys($result['node']) : NULL;
+
+          $node = node_load(array_pop($nids));
+
+          if ($node) {
+            $filename = str_replace('/', '_', $node->field_os2web_cp_service_doc_id[LANGUAGE_NONE][0]['value'] . '.' . os2web_cp_service_get_extension_from_mime($header['content_type']));
+            drupal_add_http_header('Content-Disposition', 'attachment; filename=' . $filename);
+          }
+          echo $data;
+          drupal_exit();
         }
         else {
-          drupal_add_http_header('Pragma', 'no-cache');
-        }
 
-        // Load the title to use it as the filename.
-        $query = new EntityFieldQuery();
-        $result = $query
-            ->entityCondition('entity_type', 'node')
-            ->propertyCondition('type', 'os2web_cp_service_cp_document')
-            ->propertyCondition('status', 1)
-            ->fieldCondition('field_os2web_cp_service_file_id', 'value', $file_id, '=')
-            ->execute();
-        $nids = (isset($result['node']))?array_keys($result['node']) : NULL;
+          // Show a polite message if the file cant be downloaded.
+          // If the message isnt set in config, deliver a access denied page.
+          if ($error_message = variable_get('os2web_cp_service_access_denied_message')) {
+            $markup = '<div class="messages error"><ul><li>';
+            $markup .= $error_message;
+            $markup .= '</li></ul></div>';
 
-        $node = node_load(array_pop($nids));
-        if ($node) {
-          $filename = str_replace('/', '_', $node->field_os2web_cp_service_doc_id[LANGUAGE_NONE][0]['value'] . '.' . os2web_cp_service_get_extension_from_mime($header['content_type']));
-          drupal_add_http_header('Content-Disposition', 'attachment; filename=' . $filename);
+            $page['region'] = array(
+              '#type' => 'markup',
+              '#markup' => $markup,
+            );
+            return $page;
+          }
+          else {
+            drupal_access_denied();
+          }
         }
-        echo $data;
-        drupal_exit();
       }
       else {
         error_log(basename(__FILE__) . ':' . __LINE__ . ' HTTP header recieved = ' . print_r($header, 1));
@@ -835,6 +864,12 @@ function os2web_cp_service_form_os2web_settings_settings_form_alter(&$form, &$fo
     '#description' => 'Komma separeret liste af ip-addresser der kan tilgå <em>webservicen</em>.',
     '#default_value' => variable_get('os2web_cp_service_cp_access_ip', ip_address()),
   );
+  $form['os2web_cp_service_config_group']['os2web_cp_service_access_denied_message'] = array(
+    '#type' => 'textfield',
+    '#title' => 'Besked til brugeren, hvis fil ikke er tilgængelig.',
+    '#description' => 'Vises når den modtagede filtype ikke er godkendt til Download.',
+    '#default_value' => variable_get('os2web_cp_service_access_denied_message'),
+  );
 }
 
 /**
@@ -870,6 +905,8 @@ function os2web_cp_service_date_format_types() {
  *   The file ext without the dot.
  */
 function os2web_cp_service_get_extension_from_mime($mime) {
+
+  // Todo: use file_mimetype_mapping().
   $map = array(
     'application/pdf'   => 'pdf',
     'application/zip'   => 'zip',
