@@ -962,7 +962,7 @@ function os2web_cp_service_cron() {
     ->range(0, DEFAULT_CASE_FILE_LIMIT);
   $result = $query->execute();
   while ($record = $result->fetchAssoc()) {
-    os2web_cp_service_document_download($record['file_id']);
+    _os2web_cp_service_document_download($record['file_id']);
   }
 
   // Convert.
