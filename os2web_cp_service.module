@@ -6,7 +6,7 @@
  */
 
 include_once 'os2web_cp_service.features.inc';
-define('DEFAULT_CASE_FILE_LIMIT', 50);//number of files to handle at once
+define('DEFAULT_CASE_FILE_LIMIT', 50); // Number of files to handle at once.
 
 /**
  * Implements hook_init().
@@ -40,7 +40,7 @@ function os2web_cp_service_menu() {
     'page arguments' => array(4),
     'access callback' => TRUE,
   );
-  //to delete
+  // To manually run the cron job.
   $items['os2web/cp_cron'] = array(
     'type' => MENU_CALLBACK,
     'page callback' => 'os2web_cp_service_cron',
@@ -554,7 +554,7 @@ function os2web_cp_service_create_document(array $data) {
         }
         if ($is_missing) {
           $cnode->field_os2web_cp_service_doc_ref[LANGUAGE_NONE][]['target_id'] = $node->nid;
-          //adding for pdf 2 html conversion, stan@bellcom.dk
+          // Adding file for pdf 2 html conversion, stan@bellcom.dk.
           os2web_cp_service_schedule_document_pdf2html_conversion($data['fields']['Indhold - FileID'], $cnode->nid);
           node_save($cnode);
         }
@@ -929,12 +929,12 @@ function os2web_cp_service_get_extension_from_mime($mime) {
 /**
  * Schedules a document for pdf to html conversion by adding the document's to database table.
  *
- * @param string $file_id  id of the file on remove server
- * @param int    $case_nid nid of the destination case, which metadata field should be updated
- *
- * @return none
+ * @param string $file_id
+ *   Id of the file on remove server
+ * @param int    $case_nid
+ *   nid of the destination case, which metadata field should be updated
  */
-function os2web_cp_service_schedule_document_pdf2html_conversion($file_id, $case_nid){
+function os2web_cp_service_schedule_document_pdf2html_conversion($file_id, $case_nid) {
   db_insert('os2web_cp_service_documents_conversion')
   ->fields(array(
     'file_id' => $file_id,
@@ -948,58 +948,67 @@ function os2web_cp_service_schedule_document_pdf2html_conversion($file_id, $case
 
 /**
  * Cron implementation.
+ *
  * Goes through the enrties in database table,
  * downloads the documents as pdf,
- * and converts the documents from pdf to html and updates the case metadata field with the document contents.
- *
- * @return none
+ * and converts the documents from pdf to html and updates the
+ * case metadata field with the document contents.
  */
-function os2web_cp_service_cron(){
-    //download
-    $query = db_select('os2web_cp_service_documents_conversion', 'dc');
-    $query->fields('dc',array('file_id'))
+function os2web_cp_service_cron() {
+  // Download.
+  $query = db_select('os2web_cp_service_documents_conversion', 'dc');
+  $query->fields('dc', array('file_id'))
     ->isNull('dc.status')
-    ->range(0,DEFAULT_CASE_FILE_LIMIT);
-    $result = $query->execute();
-    while($record = $result->fetchAssoc()) {
-        _os2web_cp_service_document_download($record['file_id']);
-    }
+    ->range(0, DEFAULT_CASE_FILE_LIMIT);
+  $result = $query->execute();
+  while ($record = $result->fetchAssoc()) {
+    os2web_cp_service_document_download($record['file_id']);
+  }
 
-    //convert
-    $query = db_select('os2web_cp_service_documents_conversion', 'dc');
-    $query->fields('dc',array('file_id', 'filepath_pdf'))
+  // Convert.
+  $query = db_select('os2web_cp_service_documents_conversion', 'dc');
+  $query->fields('dc', array('file_id', 'filepath_pdf'))
     ->condition('dc.status', 'downloaded')
-    ->range(0,DEFAULT_CASE_FILE_LIMIT);
-    $result = $query->execute();
-    while($record = $result->fetchAssoc()) {
-        _os2web_cp_service_document_convert($record['file_id'], $record['filepath_pdf']);
-    }
+    ->range(0, DEFAULT_CASE_FILE_LIMIT);
+  $result = $query->execute();
+  while ($record = $result->fetchAssoc()) {
+    _os2web_cp_service_document_convert($record['file_id'], $record['filepath_pdf']);
+  }
 
-    //field updating
-    $query = db_select('os2web_cp_service_documents_conversion', 'dc');
-    $query->fields('dc',array('file_id', 'case_nid', 'filepath_pdf', 'filepath_html'))
+  // Field updating.
+  $query = db_select('os2web_cp_service_documents_conversion', 'dc');
+  $query->fields('dc', array(
+      'file_id',
+      'case_nid',
+      'filepath_pdf',
+      'filepath_html')
+    )
     ->condition('dc.status', 'converted')
-    ->range(0,DEFAULT_CASE_FILE_LIMIT);
-    $result = $query->execute();
-    while($record = $result->fetchAssoc()) {
-        _os2web_cp_service_update_case_metadata($record['file_id'], $record['case_nid'], $record['filepath_pdf'], $record['filepath_html']);
-    }
+    ->range(0, DEFAULT_CASE_FILE_LIMIT);
+  $result = $query->execute();
+  while ($record = $result->fetchAssoc()) {
+    _os2web_cp_service_update_case_metadata($record['file_id'], $record['case_nid'], $record['filepath_pdf'], $record['filepath_html']);
+  }
 }
 
 /**
- * Download the document file and places it into the temporary location
- * also updates the database entry with the created filepath
+ * Download the document file and places it into the temporary location.
  *
- * If file is not found on the remote server, the status is changed to "ERROR: 404 not found"
- * If ULR returns anything else than 200 http code, the status is chaned to "ERROR: {httpCode}"
+ * Also updates the database entry with the created filepath.
+ * If file is not found on the remote server,
+ * the status is changed to "ERROR: 404 not found"
  *
- * @param $file_id string id of the document file
+ * If ULR returns anything else than 200 http code,
+ * the status is chaned to "ERROR: {http_code}"
  *
- * @return none
+ * @param string  $file_id
+ *   id of the document file
  */
-function _os2web_cp_service_document_download($file_id){
-  $url  = $GLOBALS['base_url'] . '/os2web/service/gf/v1/' . $file_id;//address of remote file
-  $tmpfname = tempnam(file_directory_temp(), "os2web_cp_document_");//path to where the file will be downloaded
+function _os2web_cp_service_document_download($file_id) {
+  // Address of remote file.
+  $url  = $GLOBALS['base_url'] . '/os2web/service/gf/v1/' . $file_id;
+  // Path to where the file will be downloaded.
+  $tmpfname = tempnam(file_directory_temp(), "os2web_cp_document_");
 
   $fp = fopen($tmpfname, 'w');
 
@@ -1007,131 +1016,152 @@ function _os2web_cp_service_document_download($file_id){
   curl_setopt($ch, CURLOPT_FILE, $fp);
   $data= curl_exec($ch);
 
-  //Check for 404 (file not found)
-  $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+  // Check for 404 (file not found).
+  $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
   curl_close($ch);
   fclose($fp);
 
-  if ($httpCode == 404) {
+  if ($http_code == 404) {
     print_r('404');
     db_update('os2web_cp_service_documents_conversion')
       ->fields(array(
-	'status' => 'ERROR: 404 not found',
+        'status' => 'ERROR: 404 not found',
       ))
     ->condition('file_id', $file_id)
     ->execute();
-  } else if ($httpCode == 200) {
+  }
+  elseif ($http_code == 200) {
     db_update('os2web_cp_service_documents_conversion')
-	  ->fields(array(
-	    'filepath_pdf' => $tmpfname,
-	    'status' => 'downloaded',
-	  ))
+    ->fields(array(
+      'filepath_pdf' => $tmpfname,
+      'status' => 'downloaded',
+    ))
     ->condition('file_id', $file_id)
     ->execute();
-  } else {//unknown error
+  }
+  // Unknown error.
+  else {
     db_update('os2web_cp_service_documents_conversion')
-	  ->fields(array(
-	    'status' => 'ERROR: ' . $httpCode,
-	  ))
+    ->fields(array(
+      'status' => 'ERROR: ' . $http_code,
+    ))
     ->condition('file_id', $file_id)
     ->execute();
   }
 }
 
 /**
- * Converts the downloaded pdf into HTML
- * also updates the database entry with the created filepath
+ * Converts the downloaded pdf into HTML.
  *
- * If PDF file is not found, the status is changes to NULL, so that the next cron job will download the file again.
+ * Also updates the database entry with the created filepath.
+ * If PDF file is not found, the status is changes to NULL,
+ * so that the next cron job will download the file again.
  *
- * @param $file_id     string id of the document file
- * @param $path_to_pdf string path to the pdf version of the file
+ * @param string $file_id
+ *   id of the document file
  *
- * @return none
+ * @param string $path_to_pdf
+ *   path to the pdf version of the file
  */
-function _os2web_cp_service_document_convert($file_id, $path_to_pdf){
-    if (!file_exists($path_to_pdf)){//if does not exist, send for redownloading
-      db_update('os2web_cp_service_documents_conversion')
-	->fields(array(
-	  'filepath_pdf' => null,
-	  'status' => null,
-	))
+function _os2web_cp_service_document_convert($file_id, $path_to_pdf) {
+  // If does not exist, send for redownloading.
+  if (!file_exists($path_to_pdf)) {
+    db_update('os2web_cp_service_documents_conversion')
+      ->fields(array(
+        'filepath_pdf' => NULL,
+        'status' => NULL,
+      ))
       ->condition('file_id', $file_id)
       ->execute();
-    } else {
-      shell_exec('pdf2htmlEX ' . $path_to_pdf . '  --dest-dir ' . file_directory_temp());
-      db_update('os2web_cp_service_documents_conversion')
-	->fields(array(
-	  'filepath_html' => $path_to_pdf . '.html',
-	  'status' => 'converted',
-	))
-      ->condition('file_id', $file_id)
-      ->execute();
-    }
+  }
+  else {
+    shell_exec('pdf2htmlEX ' . $path_to_pdf . '  --dest-dir ' . file_directory_temp());
+    db_update('os2web_cp_service_documents_conversion')
+    ->fields(array(
+      'filepath_html' => $path_to_pdf . '.html',
+      'status' => 'converted',
+    ))
+    ->condition('file_id', $file_id)
+    ->execute();
+  }
 }
 
 /**
- * Takes the convent of the html, removed everything except the pure text and then appends this text to case node search metadata field.
+ * Update field in case node.
+ *
+ * Takes the convent of the html, removed everything except the pure text
+ * and then appends this text to case node search metadata field.
  * In the end the temp files (pdf and html) are deleted.
  *
- * If HTML file is not found, the status will be changed to "downloaded" so that the text cron job will convert the file again.
- * If case node is not found, the status will be chaned to "ERROR: node not found".
+ * If HTML file is not found, the status will be changed to "downloaded"
+ * so that the text cron job will convert the file again.
+ * If case node is not found, the status will be chaned to
+ * "ERROR: node not found".
  *
- * @param $file_id      string id of the document file
- * @param $case_nid     the node id the case node, which metadata should be updated
- * @param $path_to_pdf  string path to the pdf version of the file
- * @param $path_to_html string path to the html version of the file
- *
- * @return none
+ * @param string $file_id
+ *   Id of the document file
+ * @param int $case_nid
+ *   The node id the case node, which metadata should be updated
+ * @param string $path_to_pdf
+ *   Path to the pdf version of the file
+ * @param string $path_to_html
+ *   Path to the html version of the file
  */
-function _os2web_cp_service_update_case_metadata($file_id, $case_nid, $path_to_pdf, $path_to_html){
-    if (!file_exists($path_to_html)){//if does not exist, send for reconverting. PDF existence will be checked on that step as well.
+function _os2web_cp_service_update_case_metadata($file_id, $case_nid, $path_to_pdf, $path_to_html) {
+  // If does not exist, send for reconverting.
+  // PDF existence will be checked on that step as well.
+  if (!file_exists($path_to_html)) {
+    db_update('os2web_cp_service_documents_conversion')
+    ->fields(array(
+      'filepath_html' => NULL,
+      'status' => 'downloaded',
+    ))
+    ->condition('file_id', $file_id)
+    ->execute();
+  }
+  else {
+    $case_node = node_load($case_nid);
+    if (!$case_node) {
       db_update('os2web_cp_service_documents_conversion')
       ->fields(array(
-	  'filepath_html' => null,
-	  'status' => 'downloaded',
+          'status' => 'ERROR: node not found',
       ))
       ->condition('file_id', $file_id)
       ->execute();
-    } else {
-      $case_node = node_load($case_nid);
-      if (!$case_node){
-	db_update('os2web_cp_service_documents_conversion')
-	->fields(array(
-	    'status' => 'ERROR: node not found',
-	))
-	->condition('file_id', $file_id)
-	->execute();
-      } else {
-	$text = file_get_contents($path_to_html);
-
-	//html tags removing
-	$text = str_replace('<p>&nbsp;</p>', ' ', $text); //removing unneeded paragraphs
-	$text = preg_replace('#<style(.*?)>(.*?)</style>#is', ' ', $text);//removing style tags
-	$text = preg_replace('#<script(.*?)>(.*?)</script>#is', ' ', $text);//removing scripts tags
-        $text = str_replace("\r\n", " ", strip_tags($text));
-	$text = str_replace("\n\r", " ", $text);
-	$text = str_replace("\n", " ", $text);
-	$text = str_replace("\r", " ", $text);
-  if (isset($case_node->field_os2web_cp_service_searchmt[LANGUAGE_NONE][0]['value'])) {
-    $search_metadata = $case_node->field_os2web_cp_service_searchmt[LANGUAGE_NONE][0]['value'] . $text;
-  }
-  else{
-    $search_metadata = $text;
-  }
-  $case_node->field_os2web_cp_service_searchmt[LANGUAGE_NONE][0]['value'] = $search_metadata;
-	node_save($case_node);
-
-	db_update('os2web_cp_service_documents_conversion')
-	->fields(array(
-	    'status' => 'done',
-	))
-	->condition('file_id', $file_id)
-	->execute();
-
-	//tmp files cleanup
-	unlink($path_to_html);
-	unlink($path_to_pdf);
-      }
     }
+    else {
+      $text = file_get_contents($path_to_html);
+
+      // Html tags removing.
+      // Removing unneeded paragraphs.
+      $text = str_replace('<p>&nbsp;</p>', ' ', $text);
+      // Removing style tags.
+      $text = preg_replace('#<style(.*?)>(.*?)</style>#is', ' ', $text);
+      // Removing scripts tags.
+      $text = preg_replace('#<script(.*?)>(.*?)</script>#is', ' ', $text);
+      $text = str_replace("\r\n", " ", strip_tags($text));
+      $text = str_replace("\n\r", " ", $text);
+      $text = str_replace("\n", " ", $text);
+      $text = str_replace("\r", " ", $text);
+      if (isset($case_node->field_os2web_cp_service_searchmt[LANGUAGE_NONE][0]['value'])) {
+        $search_metadata = $case_node->field_os2web_cp_service_searchmt[LANGUAGE_NONE][0]['value'] . $text;
+      }
+      else {
+        $search_metadata = $text;
+      }
+      $case_node->field_os2web_cp_service_searchmt[LANGUAGE_NONE][0]['value'] = $search_metadata;
+      node_save($case_node);
+
+      db_update('os2web_cp_service_documents_conversion')
+      ->fields(array(
+          'status' => 'done',
+      ))
+      ->condition('file_id', $file_id)
+      ->execute();
+
+      // Tmp files cleanup.
+      unlink($path_to_html);
+      unlink($path_to_pdf);
+    }
+  }
 }
