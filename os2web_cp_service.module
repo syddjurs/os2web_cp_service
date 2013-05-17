@@ -1132,7 +1132,7 @@ function _os2web_cp_service_update_case_metadata($file_id, $case_nid, $path_to_p
       // Removing unneeded paragraphs.
       $text = str_replace('<p>&nbsp;</p>', ' ', $text);
       // Removing script tags.
-      $text = preg_replace('#<script(.*?)>(.*?)</style>#is', ' ', $text);
+      $text = preg_replace('#<script(.*?)>(.*?)</script>#is', ' ', $text);
       $text = str_replace("\r\n", " ", strip_tags($text));
       $text = str_replace("\n\r", " ", $text);
       $text = str_replace("\n", " ", $text);
