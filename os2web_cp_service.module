@@ -1023,10 +1023,12 @@ function _os2web_cp_service_document_convert($file_id, $path_to_pdf){
       ->condition('file_id', $file_id)
       ->execute();
     } else {
-      shell_exec('pdf2htmlEX ' . $path_to_pdf . '  --dest-dir ' . file_directory_temp());
+      $file_name = explode('/', $path_to_pdf);
+      
+      shell_exec('pdf2htmlEX ' . $path_to_pdf . ' --single-html 0 --dest-dir ' . file_directory_temp() . '/' . $file_id);//saving in separate directory
       db_update('os2web_cp_service_documents_conversion')
 	->fields(array(
-	  'filepath_html' => $path_to_pdf . '.html',
+	  'filepath_html' => file_directory_temp() . '/' . $file_id . '/' . end($file_name) . '.html',
 	  'status' => 'converted',
 	))
       ->condition('file_id', $file_id)
@@ -1071,7 +1073,7 @@ function _os2web_cp_service_update_case_metadata($file_id, $case_nid, $path_to_p
 	
 	//html tags removing
 	$text = str_replace('<p>&nbsp;</p>', ' ', $text); //removing unneeded paragraphs
-	$text = preg_replace('#<style(.*?)>(.*?)</style>#is', ' ', $text);//removing style tags
+	//$text = preg_replace('#<style(.*?)>(.*?)</style>#is', ' ', $text);//removing style tags
 	$text = preg_replace('#<script(.*?)>(.*?)</script>#is', ' ', $text);//removing scripts tags
         $text = str_replace("\r\n", " ", strip_tags($text));
 	$text = str_replace("\n\r", " ", $text);
@@ -1090,7 +1092,7 @@ function _os2web_cp_service_update_case_metadata($file_id, $case_nid, $path_to_p
 	->execute();
 	
 	//tmp files cleanup
-	unlink($path_to_html);
+	file_unmanaged_delete_recursive(file_directory_temp() . '/' . $file_id);
 	unlink($path_to_pdf);
       }
     }
