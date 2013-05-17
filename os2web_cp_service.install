@@ -58,3 +58,10 @@ function os2web_cp_service_schema() {
     );
     return $schema;
 }
+
+/**
+ * Update method installing the module's database without a need to uninstall/install it.
+ */
+function os2web_cp_service_update_7100(){
+  drupal_install_schema('os2web_cp_service');
+}
