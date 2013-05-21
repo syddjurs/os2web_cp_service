@@ -263,7 +263,7 @@ function os2web_cp_service_default_page_manager_pages() {
     ),
   );
   $display->cache = array();
-  $display->title = '';
+  $display->title = 'Åben Indsigt';
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();

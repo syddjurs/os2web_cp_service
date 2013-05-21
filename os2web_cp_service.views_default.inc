@@ -569,7 +569,8 @@ return TRUE; // If no exposed inputs, remove all results
   $handler = $view->new_display('attachment', 'Documents', 'attachment_1');
   $handler->display->display_options['display_description'] = 'Attachent to display all documents for a case';
   $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
-  $handler->display->display_options['pager']['type'] = 'some';
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['defaults']['header'] = FALSE;
   /* Overskrift: Global: Tekstområde */
   $handler->display->display_options['header']['area']['id'] = 'area';
@@ -657,6 +658,12 @@ return TRUE; // If no exposed inputs, remove all results
     'multiple_from' => '',
     'multiple_to' => '',
   );
+  $handler->display->display_options['defaults']['sorts'] = FALSE;
+  /* Sorteringskriterie: Indhold: Dokumentdato (field_os2web_cp_service_date) */
+  $handler->display->display_options['sorts']['field_os2web_cp_service_date_value']['id'] = 'field_os2web_cp_service_date_value';
+  $handler->display->display_options['sorts']['field_os2web_cp_service_date_value']['table'] = 'field_data_field_os2web_cp_service_date';
+  $handler->display->display_options['sorts']['field_os2web_cp_service_date_value']['field'] = 'field_os2web_cp_service_date_value';
+  $handler->display->display_options['sorts']['field_os2web_cp_service_date_value']['relationship'] = 'field_os2web_cp_service_doc_ref_target_id';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Kontekstuelt filter: Indhold: Nid */
   $handler->display->display_options['arguments']['nid']['id'] = 'nid';
