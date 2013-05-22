@@ -322,6 +322,14 @@ function os2web_cp_service_create_case(array $data) {
   try {
     node_submit($node);
     node_save($node);
+
+    // Trigger a cache reload by calling the URL for the node.
+    $cache_trigger = curl_init(url('sag/' . $node->field_os2web_cp_service_case_id[LANGUAGE_NONE][0]['value'], array('absolute' => TRUE)));
+    // Stop the call after 1 sec. Dont care about the response.
+    curl_setopt($cache_trigger, CURLOPT_TIMEOUT, 1);
+    curl_exec($cache_trigger);
+    curl_close($cache_trigger);
+
     return TRUE;
   }
   catch (Exception $e) {
@@ -526,6 +534,13 @@ function os2web_cp_service_create_document(array $data) {
   try {
     node_submit($node);
     node_save($node);
+
+    // Trigger a cache reload by calling the URL for the node.
+    $cache_trigger = curl_init(url('dok/' . $node->field_os2web_cp_service_doc_id[LANGUAGE_NONE][0]['value'], array('absolute' => TRUE)));
+    // Stop the call after 1 sec. Dont care about the response.
+    curl_setopt($cache_trigger, CURLOPT_TIMEOUT, 1);
+    curl_exec($cache_trigger);
+    curl_close($cache_trigger);
   }
   catch (Exception $e) {
     error_log('Error on save: ' . print_r($e->getMessage(), 1));
@@ -783,7 +798,7 @@ function os2web_cp_service_preprocess_views_exposed_form(&$variables) {
           break;
 
         case 'filter-field_os2web_cp_service_date_value_2':
-          $widget->suffix = '<input type="submit" name="" value="Søg" class="form-submit"></div>';
+          $widget->suffix = '<input type="submit" name="" value="Søg" class="form-submit"><div class="os2web_cp_service-ajax-loader ajax-loader"></div></div>';
           break;
 
         case 'filter-field_os2web_cp_service_case_id_value':

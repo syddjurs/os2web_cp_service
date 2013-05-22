@@ -87,6 +87,7 @@ features[views_view][] = os2web_cp_service_cp_case_view
 features[views_view][] = os2web_cp_service_cp_document_view
 features_exclude[field][node-os2web_cp_service_cp_case-field_os2web_cp_service_case_num] = node-os2web_cp_service_cp_case-field_os2web_cp_service_case_num
 features_exclude[field][node-os2web_cp_service_cp_document-field_os2web_cp_service_doc_num] = node-os2web_cp_service_cp_document-field_os2web_cp_service_doc_num
+features_exclude[field][node-os2web_cp_service_cp_case-field_os2web_cp_service_searchmt] = node-os2web_cp_service_cp_case-field_os2web_cp_service_searchmt
 features_exclude[dependencies][os2web_cp_service] = os2web_cp_service
 features_exclude[dependencies][taxonomies_and_taxonomy_importers] = taxonomies_and_taxonomy_importers
 timestamp = 1364292909
