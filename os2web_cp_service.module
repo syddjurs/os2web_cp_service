@@ -1078,27 +1078,27 @@ function _os2web_cp_service_document_download($file_id) {
  * @param string $path_to_pdf
  *   path to the pdf version of the file
  */
-function _os2web_cp_service_document_convert($file_id, $path_to_pdf) {
-  // If does not exist, send for redownloading.
-  if (!file_exists($path_to_pdf)) {
-    db_update('os2web_cp_service_documents_conversion')
-      ->fields(array(
-        'filepath_pdf' => NULL,
-        'status' => NULL,
-      ))
+function _os2web_cp_service_document_convert($file_id, $path_to_pdf){
+    if (!file_exists($path_to_pdf)){//if does not exist, send for redownloading
+      db_update('os2web_cp_service_documents_conversion')
+	->fields(array(
+	  'filepath_pdf' => null,
+	  'status' => null,
+	))
       ->condition('file_id', $file_id)
       ->execute();
-  }
-  else {
-    shell_exec('pdf2htmlEX ' . $path_to_pdf . '  --dest-dir ' . file_directory_temp());
-    db_update('os2web_cp_service_documents_conversion')
-    ->fields(array(
-      'filepath_html' => $path_to_pdf . '.html',
-      'status' => 'converted',
-    ))
-    ->condition('file_id', $file_id)
-    ->execute();
-  }
+    } else {
+      $file_name = explode('/', $path_to_pdf);
+      
+      shell_exec('pdf2htmlEX ' . $path_to_pdf . ' --single-html 0 --dest-dir ' . file_directory_temp() . '/' . $file_id);//saving in separate directory
+      db_update('os2web_cp_service_documents_conversion')
+	->fields(array(
+	  'filepath_html' => file_directory_temp() . '/' . $file_id . '/' . end($file_name) . '.html',
+	  'status' => 'converted',
+	))
+      ->condition('file_id', $file_id)
+      ->execute();
+    }
 }
 
 /**
@@ -1123,60 +1123,54 @@ function _os2web_cp_service_document_convert($file_id, $path_to_pdf) {
  *   Path to the html version of the file
  */
 function _os2web_cp_service_update_case_metadata($file_id, $case_nid, $path_to_pdf, $path_to_html) {
-  // If does not exist, send for reconverting.
-  // PDF existence will be checked on that step as well.
-  if (!file_exists($path_to_html)) {
-    db_update('os2web_cp_service_documents_conversion')
-    ->fields(array(
-      'filepath_html' => NULL,
-      'status' => 'downloaded',
-    ))
-    ->condition('file_id', $file_id)
-    ->execute();
-  }
-  else {
-    $case_node = node_load($case_nid);
-    if (!$case_node) {
+  if (!file_exists($path_to_html)){//if does not exist, send for reconverting. PDF existence will be checked on that step as well.
       db_update('os2web_cp_service_documents_conversion')
       ->fields(array(
-          'status' => 'ERROR: node not found',
+	  'filepath_html' => null,
+	  'status' => 'downloaded',
       ))
       ->condition('file_id', $file_id)
       ->execute();
-    }
-    else {
+  } else {
+    $case_node = node_load($case_nid);
+    if (!$case_node){
+      db_update('os2web_cp_service_documents_conversion')
+      ->fields(array(
+	  'status' => 'ERROR: node not found',
+      ))
+      ->condition('file_id', $file_id)
+      ->execute();
+    } else {
       $text = file_get_contents($path_to_html);
 
       // Html tags removing.
       // Removing unneeded paragraphs.
       $text = str_replace('<p>&nbsp;</p>', ' ', $text);
-      // Removing style tags.
-      $text = preg_replace('#<style(.*?)>(.*?)</style>#is', ' ', $text);
-      // Removing scripts tags.
+      // Removing script tags.
       $text = preg_replace('#<script(.*?)>(.*?)</script>#is', ' ', $text);
       $text = str_replace("\r\n", " ", strip_tags($text));
       $text = str_replace("\n\r", " ", $text);
       $text = str_replace("\n", " ", $text);
       $text = str_replace("\r", " ", $text);
       if (isset($case_node->field_os2web_cp_service_searchmt[LANGUAGE_NONE][0]['value'])) {
-        $search_metadata = $case_node->field_os2web_cp_service_searchmt[LANGUAGE_NONE][0]['value'] . $text;
+	$search_metadata = $case_node->field_os2web_cp_service_searchmt[LANGUAGE_NONE][0]['value'] . $text;
       }
       else {
-        $search_metadata = $text;
+	$search_metadata = $text;
       }
       $case_node->field_os2web_cp_service_searchmt[LANGUAGE_NONE][0]['value'] = $search_metadata;
       node_save($case_node);
-
+      
       db_update('os2web_cp_service_documents_conversion')
       ->fields(array(
-          'status' => 'done',
+	  'status' => 'done',
       ))
       ->condition('file_id', $file_id)
       ->execute();
-
-      // Tmp files cleanup.
-      unlink($path_to_html);
+      
+      //tmp files cleanup
+      file_unmanaged_delete_recursive(file_directory_temp() . '/' . $file_id);
       unlink($path_to_pdf);
     }
-  }
+  }  
 }
