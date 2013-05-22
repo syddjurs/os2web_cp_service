@@ -790,7 +790,7 @@ function os2web_cp_service_preprocess_views_exposed_form(&$variables) {
           break;
 
         case 'filter-field_os2web_cp_service_date_value_2':
-          $widget->suffix = '<input type="submit" name="" value="Søg" class="form-submit"></div>';
+          $widget->suffix = '<input type="submit" name="" value="Søg" class="form-submit"><div class="os2web_cp_service-ajax-loader ajax-loader"></div></div>';
           break;
 
         case 'filter-field_os2web_cp_service_case_id_value':

@@ -4,44 +4,67 @@
  */
 
 (function ($) {
-  $(document).ready(function() {
-	// Convert all nonalphanumeric chars to /.
-	$('#views-exposed-form-os2web-cp-service-cp-case-search-panel-pane-1').submit(function() {
-		// IE fix. Value and placeolder is the same on IE.
-		if($('#edit-case-id').attr('placeholder') !== $('#edit-case-id').val()) {
-			var value = $('#edit-case-id').val();
-			$('#edit-case-id').val(value.replace(/\W/g, '/'));
-		}
+	$(document).ready(function() {
+		// Convert all nonalphanumeric chars to /.
+		$('#views-exposed-form-os2web-cp-service-cp-case-search-panel-pane-1').live('submit',function(e) {
+			// Prevent double submissions.
+			var $form = $(this);
 
-		// Reset dates if case id is entered.
-		if($('#edit-case-id').val() || /^\d{2}\/\d/.test($('#edit-search-text').val())) {
-			$('#edit-field-os2web-cp-service-date-from-value-datepicker-popup-0').val('');
-			$('#edit-field-os2web-cp-service-date-to-value-datepicker-popup-0').val('');
-		}
-	});
-
-	$( "a.qtip-this[title]" ).qtip({
-		style: {
-			padding: 1,
-			background: "#FFF",
-			color: "black",
-			textAlign: "center",
-			border: {
-				width: 1,
-				radius: 2,
-				color: "#DDD"
-			},
-			tip: "leftMiddle"
-		},
-		position: {
-			corner: {
-				target: "rightMiddle",
-				tooltip: "leftMiddle"
-			},
-			adjust: {
-				x : 10
+			if ($form.data('submitted') === true) {
+				// Previously submitted - don't submit again
+				e.preventDefault();
+			} else {
+				// Mark it so that the next submit can be ignored
+				$form.data('submitted', true);
+				$form.find('button[type=submit], input[type=submit]').attr('disabled',true);
 			}
+
+			// IE fix. Value and placeolder is the same on IE.
+			if($('#edit-case-id').attr('placeholder') !== $('#edit-case-id').val()) {
+				var value = $('#edit-case-id').val();
+				$('#edit-case-id').val(value.replace(/\W/g, '/'));
+			}
+
+			// Reset dates if case id is entered.
+			if($('#edit-case-id').val() || /^\d{2}\/\d/.test($('#edit-search-text').val())) {
+				$('#edit-field-os2web-cp-service-date-from-value-datepicker-popup-0').val('');
+				$('#edit-field-os2web-cp-service-date-to-value-datepicker-popup-0').val('');
+			}
+		});
+
+		$('#views-exposed-form-os2web-cp-service-cp-case-search-panel-pane-1 .form-submit').click(function(e){
+			$('.os2web_cp_service-ajax-loader').css('display', 'inline-block');
+		});
+
+		$('.views-field-field-os2web-cp-service-file-id a').click(function(e){
+			// Find the ajax loader in next td in table.
+			$(this).parent().parent().find('.os2web_cp_service-ajax-loader').css('display', 'inline-block');
+		});
+
+		if(typeof $( "a.qtip-this[title]" ).qtip === 'function') {
+			$("a.qtip-this[title]").qtip({
+				style: {
+					padding: 1,
+					background: "#FFF",
+					color: "black",
+					textAlign: "center",
+					border: {
+						width: 1,
+						radius: 2,
+						color: "#DDD"
+					},
+					tip: "leftMiddle"
+				},
+				position: {
+					corner: {
+						target: "rightMiddle",
+						tooltip: "leftMiddle"
+					},
+					adjust: {
+						x : 10
+					}
+				}
+			});
 		}
 	});
-  });
 })(jQuery);

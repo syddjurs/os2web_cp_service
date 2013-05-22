@@ -46,3 +46,11 @@
 th.views-field-field-os2web-cp-service-date {
     white-space: nowrap;
 }
+.os2web_cp_service-ajax-loader {
+    background: url(../images/loading.gif) no-repeat;
+    width: 20px;
+    height: 20px;
+    display: none;
+    vertical-align: bottom;
+    margin: 5px;
+}
