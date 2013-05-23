@@ -130,7 +130,7 @@ function os2web_gf_service_handler($file_id) {
         }
         else {
 
-          // Show a polite message if the file cant be downloaded.
+          // Show a polite message if the file isnt allowed for download.
           // If the message isnt set in config, deliver a access denied page.
           if ($error_message = variable_get('os2web_cp_service_access_denied_message')) {
             $markup = '<div class="messages error"><ul><li>';
@@ -143,26 +143,28 @@ function os2web_gf_service_handler($file_id) {
             );
             return $page;
           }
-          else {
-            drupal_access_denied();
-          }
         }
-      }
-      else {
-        error_log(basename(__FILE__) . ':' . __LINE__ . ' HTTP header recieved = ' . print_r($header, 1));
-        drupal_not_found();
       }
     }
     else {
       error_log(basename(__FILE__) . ':' . __LINE__ . ' Settings are wrong.');
-      drupal_not_found();
     }
 
   }
   else {
     error_log(basename(__FILE__) . ':' . __LINE__ . ' No URL found in variable DB');
-    drupal_not_found();
   }
+
+  // If we come to this line, show an error.
+  $markup = '<div class="messages error"><ul><li>';
+  $markup .= t('Det ønskede dokument kunne ikke hentes, hvilket kan skyldes opdatering af løsningen. Prøv venligst igen senere.');
+  $markup .= '</li></ul></div>';
+
+  $page['region'] = array(
+    '#type' => 'markup',
+    '#markup' => $markup,
+  );
+  return $page;
 }
 
 /**
