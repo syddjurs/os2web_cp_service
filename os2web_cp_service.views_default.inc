@@ -31,7 +31,7 @@ function os2web_cp_service_views_default_views() {
   $handler->display->display_options['query']['options']['distinct'] = TRUE;
   $handler->display->display_options['exposed_form']['type'] = 'basic';
   $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Filtrer';
-  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Gendan';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Nulstil';
   $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortér efter';
   $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Stigende';
   $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Faldende';
@@ -117,6 +117,22 @@ function os2web_cp_service_views_default_views() {
       'empty_column' => 0,
     ),
   );
+  /* Sidefod: Global: PHP */
+  $handler->display->display_options['footer']['php']['id'] = 'php';
+  $handler->display->display_options['footer']['php']['table'] = 'views';
+  $handler->display->display_options['footer']['php']['field'] = 'php';
+  $handler->display->display_options['footer']['php']['label'] = 'Total number of results.';
+  $handler->display->display_options['footer']['php']['php_output'] = '<?php
+    $view = views_get_current_view();
+    print \'<div class="view-counter">I alt blev der fundet <span>\' . $view->total_rows . \'</span> sager.</div>\';
+?>
+';
+  /* Sidefod: Global: PHP */
+  $handler->display->display_options['footer']['php_1']['id'] = 'php_1';
+  $handler->display->display_options['footer']['php_1']['table'] = 'views';
+  $handler->display->display_options['footer']['php_1']['field'] = 'php';
+  $handler->display->display_options['footer']['php_1']['label'] = 'Reset button';
+  $handler->display->display_options['footer']['php_1']['php_output'] = '<div><a href="<?php echo url(\'aaben-indsigt\'); ?>" class="button"><?php echo t(\'Nulstil søgning\'); ?></a></div>';
   /* Opførsel ved ingen resultater: Global: PHP */
   $handler->display->display_options['empty']['php']['id'] = 'php';
   $handler->display->display_options['empty']['php']['table'] = 'views';
@@ -375,7 +391,7 @@ return TRUE; // If no exposed inputs, remove all results
     t('Master'),
     t('mere'),
     t('Filtrer'),
-    t('Gendan'),
+    t('Nulstil'),
     t('Sortér efter'),
     t('Stigende'),
     t('Faldende'),
@@ -386,6 +402,8 @@ return TRUE; // If no exposed inputs, remove all results
     t('‹ Forrige'),
     t('Næste ›'),
     t('Sidste »'),
+    t('Total number of results.'),
+    t('Reset button'),
     t('Ingen Resultater'),
     t('Indhold entity refereret fra field_os2web_cp_service_doc_ref'),
     t('Sagstitel'),
