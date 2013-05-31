@@ -33,12 +33,18 @@
 		});
 
 		$('#views-exposed-form-os2web-cp-service-cp-case-search-panel-pane-1 .form-submit').click(function(e){
-			$('.os2web_cp_service-ajax-loader').css('display', 'inline-block');
+			var $ajaxLoader = $('.os2web_cp_service-ajax-loader').css('display', 'inline-block');
+			setTimeout(function() {
+				$ajaxLoader.hide();
+			}, 5000);
 		});
 
 		$('.views-field-field-os2web-cp-service-file-id a').click(function(e){
 			// Find the ajax loader in next td in table.
-			$(this).parent().parent().find('.os2web_cp_service-ajax-loader').css('display', 'inline-block');
+			var $ajaxLoader = $(this).parent().parent().find('.os2web_cp_service-ajax-loader').css('display', 'inline-block');
+			setTimeout(function() {
+				$ajaxLoader.hide();
+			}, 5000);
 		});
 
 		if(typeof $( "a.qtip-this[title]" ).qtip === 'function') {
