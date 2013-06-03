@@ -31,7 +31,7 @@ function os2web_cp_service_views_default_views() {
   $handler->display->display_options['query']['options']['distinct'] = TRUE;
   $handler->display->display_options['exposed_form']['type'] = 'basic';
   $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Filtrer';
-  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Gendan';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Nulstil';
   $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortér efter';
   $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Stigende';
   $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Faldende';
@@ -117,6 +117,22 @@ function os2web_cp_service_views_default_views() {
       'empty_column' => 0,
     ),
   );
+  /* Sidefod: Global: PHP */
+  $handler->display->display_options['footer']['php']['id'] = 'php';
+  $handler->display->display_options['footer']['php']['table'] = 'views';
+  $handler->display->display_options['footer']['php']['field'] = 'php';
+  $handler->display->display_options['footer']['php']['label'] = 'Total number of results.';
+  $handler->display->display_options['footer']['php']['php_output'] = '<?php
+    $view = views_get_current_view();
+    print \'<div class="view-counter">I alt blev der fundet <span>\' . $view->total_rows . \'</span> sager.</div>\';
+?>
+';
+  /* Sidefod: Global: PHP */
+  $handler->display->display_options['footer']['php_1']['id'] = 'php_1';
+  $handler->display->display_options['footer']['php_1']['table'] = 'views';
+  $handler->display->display_options['footer']['php_1']['field'] = 'php';
+  $handler->display->display_options['footer']['php_1']['label'] = 'Reset button';
+  $handler->display->display_options['footer']['php_1']['php_output'] = '<div><a href="<?php echo url(\'aaben-indsigt\'); ?>" class="button"><?php echo t(\'Nulstil søgning\'); ?></a></div>';
   /* Opførsel ved ingen resultater: Global: PHP */
   $handler->display->display_options['empty']['php']['id'] = 'php';
   $handler->display->display_options['empty']['php']['table'] = 'views';
@@ -375,7 +391,7 @@ return TRUE; // If no exposed inputs, remove all results
     t('Master'),
     t('mere'),
     t('Filtrer'),
-    t('Gendan'),
+    t('Nulstil'),
     t('Sortér efter'),
     t('Stigende'),
     t('Faldende'),
@@ -386,6 +402,8 @@ return TRUE; // If no exposed inputs, remove all results
     t('‹ Forrige'),
     t('Næste ›'),
     t('Sidste »'),
+    t('Total number of results.'),
+    t('Reset button'),
     t('Ingen Resultater'),
     t('Indhold entity refereret fra field_os2web_cp_service_doc_ref'),
     t('Sagstitel'),
@@ -569,7 +587,8 @@ return TRUE; // If no exposed inputs, remove all results
   $handler = $view->new_display('attachment', 'Documents', 'attachment_1');
   $handler->display->display_options['display_description'] = 'Attachent to display all documents for a case';
   $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
-  $handler->display->display_options['pager']['type'] = 'some';
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['defaults']['header'] = FALSE;
   /* Overskrift: Global: Tekstområde */
   $handler->display->display_options['header']['area']['id'] = 'area';
@@ -657,6 +676,21 @@ return TRUE; // If no exposed inputs, remove all results
     'multiple_from' => '',
     'multiple_to' => '',
   );
+  /* Felt: Ajax Loader */
+  $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['ui_name'] = 'Ajax Loader';
+  $handler->display->display_options['fields']['nothing']['label'] = '';
+  $handler->display->display_options['fields']['nothing']['alter']['text'] = '<div class="os2web_cp_service-ajax-loader ajax-loader" style="display:none;"></div>';
+  $handler->display->display_options['fields']['nothing']['element_label_colon'] = FALSE;
+  $handler->display->display_options['defaults']['sorts'] = FALSE;
+  /* Sorteringskriterie: Indhold: Dokumentdato (field_os2web_cp_service_date) */
+  $handler->display->display_options['sorts']['field_os2web_cp_service_date_value']['id'] = 'field_os2web_cp_service_date_value';
+  $handler->display->display_options['sorts']['field_os2web_cp_service_date_value']['table'] = 'field_data_field_os2web_cp_service_date';
+  $handler->display->display_options['sorts']['field_os2web_cp_service_date_value']['field'] = 'field_os2web_cp_service_date_value';
+  $handler->display->display_options['sorts']['field_os2web_cp_service_date_value']['relationship'] = 'field_os2web_cp_service_doc_ref_target_id';
+  $handler->display->display_options['sorts']['field_os2web_cp_service_date_value']['order'] = 'DESC';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Kontekstuelt filter: Indhold: Nid */
   $handler->display->display_options['arguments']['nid']['id'] = 'nid';
@@ -837,6 +871,7 @@ Se alle sager på denne addresse
     t('[title]'),
     t('Dokumentnummer'),
     t('Dato'),
+    t('<div class="os2web_cp_service-ajax-loader ajax-loader" style="display:none;"></div>'),
     t('Page'),
     t('<h2>Sags Nr.: [field_os2web_cp_service_case_id]</h2>'),
     t('[title] <br>[nothing]'),
