@@ -772,7 +772,7 @@ function os2web_cp_service_form_alter(&$form, &$form_state, $form_id) {
       break;
 
     case 'search-form':
-      $form['#suffix'] .= '<div class="link-aaben-indsigt">Søger du efter sager i vores sagssytem, kan du bruge vores <a href="/aaben-indsigt">Åben Indsigt</a>.</div>';
+      $form['#suffix'] .= '<div class="link-aaben-indsigt">Søger du efter sager i vores sagssystem, kan du bruge vores <a href="/aaben-indsigt">Åben Indsigt</a>.</div>';
       break;
   }
 }
