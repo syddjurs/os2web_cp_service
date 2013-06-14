@@ -246,10 +246,6 @@ function os2web_cp_service_views_default_views() {
   $handler->display->display_options['sorts']['created']['field'] = 'created';
   $handler->display->display_options['sorts']['created']['order'] = 'DESC';
   $handler->display->display_options['filter_groups']['operator'] = 'OR';
-  $handler->display->display_options['filter_groups']['groups'] = array(
-    1 => 'AND',
-    2 => 'AND',
-  );
   /* Filterkriterie: Indhold: Udgivet */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
@@ -284,8 +280,8 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['filters']['combine']['group'] = 1;
   $handler->display->display_options['filters']['combine']['exposed'] = TRUE;
   $handler->display->display_options['filters']['combine']['expose']['operator_id'] = 'combine_op';
-  $handler->display->display_options['filters']['combine']['expose']['label'] = 'Søgetekst';
-  $handler->display->display_options['filters']['combine']['expose']['description'] = 'fx. Birkevej affald';
+  $handler->display->display_options['filters']['combine']['expose']['label'] = 'Søgetekst eller sagsnummer';
+  $handler->display->display_options['filters']['combine']['expose']['description'] = 'fx Birkevej. Affald. 12/99999';
   $handler->display->display_options['filters']['combine']['expose']['operator'] = 'combine_op';
   $handler->display->display_options['filters']['combine']['expose']['identifier'] = 'search-text';
   $handler->display->display_options['filters']['combine']['expose']['remember_roles'] = array(
@@ -328,7 +324,7 @@ return TRUE; // If no exposed inputs, remove all results
     5 => 0,
   );
   $handler->display->display_options['filters']['field_os2web_cp_service_date_value_1']['form_type'] = 'date_popup';
-  $handler->display->display_options['filters']['field_os2web_cp_service_date_value_1']['default_date'] = '-3 month';
+  $handler->display->display_options['filters']['field_os2web_cp_service_date_value_1']['default_date'] = '-1 year';
   /* Filterkriterie: os2web_cp_service_date_to */
   $handler->display->display_options['filters']['field_os2web_cp_service_date_value_2']['id'] = 'field_os2web_cp_service_date_value_2';
   $handler->display->display_options['filters']['field_os2web_cp_service_date_value_2']['table'] = 'field_data_field_os2web_cp_service_date';
@@ -352,22 +348,6 @@ return TRUE; // If no exposed inputs, remove all results
   );
   $handler->display->display_options['filters']['field_os2web_cp_service_date_value_2']['form_type'] = 'date_popup';
   $handler->display->display_options['filters']['field_os2web_cp_service_date_value_2']['default_date'] = 'now';
-  /* Filterkriterie: Indhold: SagsID (field_os2web_cp_service_case_id) */
-  $handler->display->display_options['filters']['field_os2web_cp_service_case_id_value']['id'] = 'field_os2web_cp_service_case_id_value';
-  $handler->display->display_options['filters']['field_os2web_cp_service_case_id_value']['table'] = 'field_data_field_os2web_cp_service_case_id';
-  $handler->display->display_options['filters']['field_os2web_cp_service_case_id_value']['field'] = 'field_os2web_cp_service_case_id_value';
-  $handler->display->display_options['filters']['field_os2web_cp_service_case_id_value']['group'] = 1;
-  $handler->display->display_options['filters']['field_os2web_cp_service_case_id_value']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_os2web_cp_service_case_id_value']['expose']['operator_id'] = 'field_os2web_cp_service_case_id_value_op';
-  $handler->display->display_options['filters']['field_os2web_cp_service_case_id_value']['expose']['label'] = 'Sagsnummer';
-  $handler->display->display_options['filters']['field_os2web_cp_service_case_id_value']['expose']['description'] = 'fx. 12/99999999';
-  $handler->display->display_options['filters']['field_os2web_cp_service_case_id_value']['expose']['operator'] = 'field_os2web_cp_service_case_id_value_op';
-  $handler->display->display_options['filters']['field_os2web_cp_service_case_id_value']['expose']['identifier'] = 'case_id';
-  $handler->display->display_options['filters']['field_os2web_cp_service_case_id_value']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    3 => 0,
-  );
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
@@ -410,12 +390,10 @@ return TRUE; // If no exposed inputs, remove all results
     t('[title]'),
     t('[field_os2web_cp_service_content]'),
     t('Dato'),
-    t('Søgetekst'),
-    t('fx. Birkevej affald'),
+    t('Søgetekst eller sagsnummer'),
+    t('fx Birkevej. Affald. 12/99999'),
     t('Fra'),
     t('Til'),
-    t('Sagsnummer'),
-    t('fx. 12/99999999'),
     t('Page'),
     t('Der kunne ikke findes nogle sager ud fra dine søgekriterier.'),
     t('Content pane'),
@@ -685,12 +663,12 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['fields']['nothing']['alter']['text'] = '<div class="os2web_cp_service-ajax-loader ajax-loader" style="display:none;"></div>';
   $handler->display->display_options['fields']['nothing']['element_label_colon'] = FALSE;
   $handler->display->display_options['defaults']['sorts'] = FALSE;
-  /* Sorteringskriterie: Indhold: Dokumentdato (field_os2web_cp_service_date) */
-  $handler->display->display_options['sorts']['field_os2web_cp_service_date_value']['id'] = 'field_os2web_cp_service_date_value';
-  $handler->display->display_options['sorts']['field_os2web_cp_service_date_value']['table'] = 'field_data_field_os2web_cp_service_date';
-  $handler->display->display_options['sorts']['field_os2web_cp_service_date_value']['field'] = 'field_os2web_cp_service_date_value';
-  $handler->display->display_options['sorts']['field_os2web_cp_service_date_value']['relationship'] = 'field_os2web_cp_service_doc_ref_target_id';
-  $handler->display->display_options['sorts']['field_os2web_cp_service_date_value']['order'] = 'DESC';
+  /* Sorteringskriterie: Indhold: Journalnummer (field_os2web_cp_service_doc_id) */
+  $handler->display->display_options['sorts']['field_os2web_cp_service_doc_id_value']['id'] = 'field_os2web_cp_service_doc_id_value';
+  $handler->display->display_options['sorts']['field_os2web_cp_service_doc_id_value']['table'] = 'field_data_field_os2web_cp_service_doc_id';
+  $handler->display->display_options['sorts']['field_os2web_cp_service_doc_id_value']['field'] = 'field_os2web_cp_service_doc_id_value';
+  $handler->display->display_options['sorts']['field_os2web_cp_service_doc_id_value']['relationship'] = 'field_os2web_cp_service_doc_ref_target_id';
+  $handler->display->display_options['sorts']['field_os2web_cp_service_doc_id_value']['order'] = 'DESC';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Kontekstuelt filter: Indhold: Nid */
   $handler->display->display_options['arguments']['nid']['id'] = 'nid';
