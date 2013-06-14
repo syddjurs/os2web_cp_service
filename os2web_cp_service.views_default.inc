@@ -663,6 +663,12 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['fields']['nothing']['alter']['text'] = '<div class="os2web_cp_service-ajax-loader ajax-loader" style="display:none;"></div>';
   $handler->display->display_options['fields']['nothing']['element_label_colon'] = FALSE;
   $handler->display->display_options['defaults']['sorts'] = FALSE;
+  /* Sorteringskriterie: Indhold: Dokumentdato (field_os2web_cp_service_date) */
+  $handler->display->display_options['sorts']['field_os2web_cp_service_date_value']['id'] = 'field_os2web_cp_service_date_value';
+  $handler->display->display_options['sorts']['field_os2web_cp_service_date_value']['table'] = 'field_data_field_os2web_cp_service_date';
+  $handler->display->display_options['sorts']['field_os2web_cp_service_date_value']['field'] = 'field_os2web_cp_service_date_value';
+  $handler->display->display_options['sorts']['field_os2web_cp_service_date_value']['relationship'] = 'field_os2web_cp_service_doc_ref_target_id';
+  $handler->display->display_options['sorts']['field_os2web_cp_service_date_value']['order'] = 'DESC';
   /* Sorteringskriterie: Indhold: Journalnummer (field_os2web_cp_service_doc_id) */
   $handler->display->display_options['sorts']['field_os2web_cp_service_doc_id_value']['id'] = 'field_os2web_cp_service_doc_id_value';
   $handler->display->display_options['sorts']['field_os2web_cp_service_doc_id_value']['table'] = 'field_data_field_os2web_cp_service_doc_id';
