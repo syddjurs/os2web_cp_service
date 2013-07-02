@@ -13,6 +13,12 @@
 .view-os2web-cp-service-cp-case-search .views-table caption{
     text-align: left;
 }
+.view-os2web-cp-service-cp-case-search .view-counter {
+
+}
+.view-os2web-cp-service-cp-case-search .view-counter span {
+    font-weight: bold;
+}
 #edit-search-text,
 #edit-field-os2web-cp-service-date-from-value-datepicker-popup-0,
 #edit-field-os2web-cp-service-date-to-value-datepicker-popup-0,
@@ -45,4 +51,12 @@
 }
 th.views-field-field-os2web-cp-service-date {
     white-space: nowrap;
+}
+.os2web_cp_service-ajax-loader {
+    background: url(../images/loading.gif) no-repeat;
+    width: 20px;
+    height: 20px;
+    display: none;
+    vertical-align: bottom;
+    margin: 5px;
 }
