@@ -225,7 +225,10 @@ function os2web_cp_service_default_page_manager_pages() {
   $page->admin_title = 'CP Case Search Panel';
   $page->admin_description = 'Panel to show Search view. This is used to adjust the view into a theme layout.';
   $page->path = 'aaben-indsigt';
-  $page->access = array();
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array();
   $page->arguments = array();
   $page->conf = array(
