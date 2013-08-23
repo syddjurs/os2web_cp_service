@@ -74,7 +74,7 @@ function drush_os2web_cp_service_cp_cleanup() {
             )");
 
   foreach ($nodes as $node) {
-    node_delete(nid);
+    node_delete($node->nid);
     drush_log(t('Deleted stub: :node', array(':node' => $node->nid)), 'success');
   }
 }
