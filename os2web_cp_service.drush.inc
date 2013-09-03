@@ -15,6 +15,11 @@ function os2web_cp_service_drush_command() {
     'arguments' => array(),
     'aliases' => array('cp-up'),
   );
+  $items['cp-cleanup'] = array(
+    'description' => 'Delete all documents with a broken reference.',
+    'arguments' => array(),
+    'aliases' => array('cp-cl'),
+  );
   return $items;
 }
 
@@ -51,5 +56,25 @@ function drush_os2web_cp_service_cp_update_ref() {
       drush_log(t('Saved new reference to: :ref in :node', array(':ref' => $ref_node->nid, ':node' => $node->nid)), 'success');
 
    }
+  }
+}
+
+/**
+ * Implements drush_COMMAND().
+ */
+function drush_os2web_cp_service_cp_cleanup() {
+
+  // Find all documents which has no references from a case.
+  $nodes = db_query("SELECT *
+            FROM node n
+            WHERE n.type =  'os2web_cp_service_cp_document'
+            AND n.nid NOT IN (
+              SELECT field_os2web_cp_service_doc_ref_target_id
+              FROM field_data_field_os2web_cp_service_doc_ref
+            )");
+
+  foreach ($nodes as $node) {
+    node_delete($node->nid);
+    drush_log(t('Deleted document: :node', array(':node' => $node->nid)), 'success');
   }
 }
