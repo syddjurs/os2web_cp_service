@@ -677,17 +677,19 @@ function os2web_cp_service_node_delete($node) {
         ->propertyCondition('status', 1)
         ->fieldCondition('field_os2web_cp_service_doc_ref', 'target_id', $node->nid, '=')
         ->execute();
-    $nids = array_keys($result['node']);
-    $new_nids = array();
-    foreach ($nids as $nid) {
-      $cnode = node_load($nid);
-      foreach ($cnode->field_os2web_cp_service_doc_ref[LANGUAGE_NONE] as $value) {
-        if ($value['target_id'] != $node->nid) {
-          $new_nids[] = $value;
+    if (!empty($result['node'])) {
+      $nids = array_keys($result['node']);
+      $new_nids = array();
+      foreach ($nids as $nid) {
+        $cnode = node_load($nid);
+        foreach ($cnode->field_os2web_cp_service_doc_ref[LANGUAGE_NONE] as $value) {
+          if ($value['target_id'] != $node->nid) {
+            $new_nids[] = $value;
+          }
         }
+        $cnode->field_os2web_cp_service_doc_ref[LANGUAGE_NONE] = $new_nids;
+        node_save($cnode);
       }
-      $cnode->field_os2web_cp_service_doc_ref[LANGUAGE_NONE] = $new_nids;
-      node_save($cnode);
     }
   }
 }
