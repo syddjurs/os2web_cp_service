@@ -73,6 +73,9 @@ function os2web_gf_service_handler($file_id) {
     'application/vnd.ms-outlook',
   );
 
+  $disallowed_mimes = array_merge($disallowed_mimes, explode(',', variable_get('os2web_cp_service_disallow_mimes', '')));
+  $case_exceptions = explode(',', variable_get('os2web_cp_service_disallow_mimes_exceptions', ''));
+
   if ($url = variable_get('os2web_cp_service_cp_document_fileurl')) {
 
     $username = variable_get('os2web_cp_service_endpoint_user');
@@ -87,7 +90,22 @@ function os2web_gf_service_handler($file_id) {
       $header = curl_getinfo($ch);
       curl_close($ch);
       if ($header['http_code'] === 200) {
-        if (!in_array($header['content_type'], $disallowed_mimes)) {
+        // Load the title to use it as the filename, and for conditions.
+        $query = new EntityFieldQuery();
+        $result = $query
+            ->entityCondition('entity_type', 'node')
+            ->propertyCondition('type', 'os2web_cp_service_cp_document')
+            ->propertyCondition('status', 1)
+            ->fieldCondition('field_os2web_cp_service_file_id', 'value', $file_id, '=')
+            ->execute();
+        $nids = (isset($result['node']))?array_keys($result['node']) : NULL;
+
+        $node = node_load(array_pop($nids));
+        $case_id = NULL;
+        if ($node) {
+          $case_id = $node->field_os2web_cp_service_doc_id[LANGUAGE_NONE][0]['value'];
+        }
+        if (!in_array($header['content_type'], $disallowed_mimes) || ($case_id && in_array($case_id, $case_exceptions))) {
           drupal_add_http_header('Content-Type', $header['content_type']);
           drupal_add_http_header('Content-Length', $header['download_content_length']);
           drupal_add_http_header('Cache-Control', 'must-revalidate, post-check=0, pre-check=0');
@@ -880,6 +898,18 @@ function os2web_cp_service_form_os2web_settings_settings_form_alter(&$form, &$fo
     '#title' => 'Besked til brugeren, hvis fil ikke er tilgængelig.',
     '#description' => 'Vises når den modtagede filtype ikke er godkendt til Download.',
     '#default_value' => variable_get('os2web_cp_service_access_denied_message'),
+  );
+  $form['os2web_cp_service_config_group']['os2web_cp_service_disallow_mimes'] = array(
+    '#type' => 'textfield',
+    '#title' => 'Filers MIME type som ikke må hentes af brugere.',
+    '#description' => 'Tillad kun filer som ikke har disse mimes. Seperer mimes med komma.',
+    '#default_value' => variable_get('os2web_cp_service_disallow_mimes'),
+  );
+  $form['os2web_cp_service_config_group']['os2web_cp_service_disallow_mimes_exceptions'] = array(
+    '#type' => 'textfield',
+    '#title' => 'Sager der er alle MIMES er tilladt.',
+    '#description' => 'Tillad brugere at hente ALLE mime typer på angivende sager. Seperer sager med komma.',
+    '#default_value' => variable_get('os2web_cp_service_disallow_mimes_exceptions'),
   );
 }
 
