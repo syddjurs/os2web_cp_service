@@ -103,7 +103,7 @@ function os2web_gf_service_handler($file_id) {
         $node = node_load(array_pop($nids));
         $case_id = NULL;
         if ($node) {
-          $case_id = $node->field_os2web_cp_service_doc_id[LANGUAGE_NONE][0]['value'];
+          $case_id = $node->field_os2web_cp_service_case_id[LANGUAGE_NONE][0]['value'];
         }
         if (!in_array($header['content_type'], $disallowed_mimes) || ($case_id && in_array($case_id, $case_exceptions))) {
           drupal_add_http_header('Content-Type', $header['content_type']);
@@ -901,13 +901,13 @@ function os2web_cp_service_form_os2web_settings_settings_form_alter(&$form, &$fo
   );
   $form['os2web_cp_service_config_group']['os2web_cp_service_disallow_mimes'] = array(
     '#type' => 'textfield',
-    '#title' => 'Filers MIME type som ikke må hentes af brugere.',
-    '#description' => 'Tillad kun filer som ikke har disse mimes. Seperer mimes med komma.',
+    '#title' => 'Filers MIME type, som ikke må downloades af brugere.',
+    '#description' => 'Tillad kun filer som ikke har disse mimes. Seperer mimes med komma. Standard:.msg',
     '#default_value' => variable_get('os2web_cp_service_disallow_mimes'),
   );
   $form['os2web_cp_service_config_group']['os2web_cp_service_disallow_mimes_exceptions'] = array(
     '#type' => 'textfield',
-    '#title' => 'Sager der er alle MIMES er tilladt.',
+    '#title' => 'Sager hvor ALLE mimes er tilladt.',
     '#description' => 'Tillad brugere at hente ALLE mime typer på angivende sager. Seperer sager med komma.',
     '#default_value' => variable_get('os2web_cp_service_disallow_mimes_exceptions'),
   );
