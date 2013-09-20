@@ -127,22 +127,12 @@ function os2web_gf_service_handler($file_id) {
             drupal_add_http_header('Pragma', 'no-cache');
           }
 
-          // Load the title to use it as the filename.
-          $query = new EntityFieldQuery();
-          $result = $query
-              ->entityCondition('entity_type', 'node')
-              ->propertyCondition('type', 'os2web_cp_service_cp_document')
-              ->propertyCondition('status', 1)
-              ->fieldCondition('field_os2web_cp_service_file_id', 'value', $file_id, '=')
-              ->execute();
-          $nids = (isset($result['node']))?array_keys($result['node']) : NULL;
-
-          $node = node_load(array_pop($nids));
-
+          $filename = str_replace('/', '_', $file_id . '.' . os2web_cp_service_get_extension_from_mime($header['content_type']));
           if ($node) {
+            // If we can find the doc in DB, give it a real name.
             $filename = str_replace('/', '_', $node->field_os2web_cp_service_doc_id[LANGUAGE_NONE][0]['value'] . '.' . os2web_cp_service_get_extension_from_mime($header['content_type']));
-            drupal_add_http_header('Content-Disposition', 'attachment; filename=' . $filename);
           }
+          drupal_add_http_header('Content-Disposition', 'attachment; filename=' . $filename);
           echo $data;
           drupal_exit();
         }
