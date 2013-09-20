@@ -659,7 +659,6 @@ function os2web_cp_service_delete($guid) {
   $query = new EntityFieldQuery();
   $result = $query
       ->entityCondition('entity_type', 'node')
-      ->propertyCondition('status', 1)
       ->fieldCondition('field_os2web_cp_service_key', 'value', $guid, '=')
       ->execute();
   $nids = (isset($result['node']))?array_keys($result['node']) : array();
@@ -690,7 +689,6 @@ function os2web_cp_service_node_delete($node) {
     $result = $query
         ->entityCondition('entity_type', 'node')
         ->propertyCondition('type', 'os2web_cp_service_cp_case')
-        ->propertyCondition('status', 1)
         ->fieldCondition('field_os2web_cp_service_doc_ref', 'target_id', $node->nid, '=')
         ->execute();
     if (!empty($result['node'])) {
