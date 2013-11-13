@@ -333,13 +333,6 @@ function os2web_cp_service_create_case(array $data) {
     node_submit($node);
     node_save($node);
 
-    // Trigger a cache reload by calling the URL for the node.
-    $cache_trigger = curl_init(url('sag/' . $node->field_os2web_cp_service_case_id[LANGUAGE_NONE][0]['value'], array('absolute' => TRUE)));
-    // Stop the call after 1 sec. Dont care about the response.
-    curl_setopt($cache_trigger, CURLOPT_TIMEOUT, 1);
-    curl_exec($cache_trigger);
-    curl_close($cache_trigger);
-
     return TRUE;
   }
   catch (Exception $e) {
