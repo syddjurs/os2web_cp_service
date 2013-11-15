@@ -182,13 +182,11 @@ function os2web_cp_service_views_default_views() {
   $handler->display->display_options['fields']['title']['label'] = 'Sagstitel';
   $handler->display->display_options['fields']['title']['alter']['alter_text'] = TRUE;
   $handler->display->display_options['fields']['title']['alter']['text'] = '[title]';
-  $handler->display->display_options['fields']['title']['alter']['make_link'] = TRUE;
   $handler->display->display_options['fields']['title']['alter']['path'] = 'sag/[field_os2web_cp_service_case_id]';
   $handler->display->display_options['fields']['title']['alter']['alt'] = '[field_os2web_cp_service_content]';
   $handler->display->display_options['fields']['title']['alter']['link_class'] = 'qtip-this';
   $handler->display->display_options['fields']['title']['alter']['max_length'] = '100';
   $handler->display->display_options['fields']['title']['alter']['trim'] = TRUE;
-  $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
   /* Felt: Indhold: Sagstype - Sagstype */
   $handler->display->display_options['fields']['field_os2web_cp_service_casetype']['id'] = 'field_os2web_cp_service_casetype';
   $handler->display->display_options['fields']['field_os2web_cp_service_casetype']['table'] = 'field_data_field_os2web_cp_service_casetype';
@@ -416,7 +414,11 @@ return TRUE; // If no exposed inputs, remove all results
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mere';
   $handler->display->display_options['access']['type'] = 'perm';
-  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['cache']['type'] = 'time';
+  $handler->display->display_options['cache']['results_lifespan'] = '3600';
+  $handler->display->display_options['cache']['results_lifespan_custom'] = '0';
+  $handler->display->display_options['cache']['output_lifespan'] = '3600';
+  $handler->display->display_options['cache']['output_lifespan_custom'] = '0';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['exposed_form']['type'] = 'basic';
   $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Udfør';
@@ -878,7 +880,11 @@ Se alle sager på denne addresse
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mere';
   $handler->display->display_options['access']['type'] = 'perm';
-  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['cache']['type'] = 'time';
+  $handler->display->display_options['cache']['results_lifespan'] = '3600';
+  $handler->display->display_options['cache']['results_lifespan_custom'] = '0';
+  $handler->display->display_options['cache']['output_lifespan'] = '3600';
+  $handler->display->display_options['cache']['output_lifespan_custom'] = '0';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['exposed_form']['type'] = 'basic';
   $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Udfør';
