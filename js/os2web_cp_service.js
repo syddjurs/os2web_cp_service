@@ -10,15 +10,6 @@
 			// Prevent double submissions.
 			var $form = $(this);
 
-			if ($form.data('submitted') === true) {
-				// Previously submitted - don't submit again
-				e.preventDefault();
-			} else {
-				// Mark it so that the next submit can be ignored
-				$form.data('submitted', true);
-				$form.find('button[type=submit], input[type=submit]').attr('disabled',true);
-			}
-
 			// IE fix. Value and placeolder is the same on IE.
 			if($('#edit-case-id').attr('placeholder') !== $('#edit-case-id').val()) {
 				var value = $('#edit-case-id').val();
