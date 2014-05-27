@@ -323,6 +323,25 @@ function os2web_cp_service_create_case(array $data) {
     $node->field_os2web_cp_service_rules[LANGUAGE_NONE][]['tid'] = $term->tid;
   }
 
+  // Update all existing documents with same SagsID.
+  $query = new EntityFieldQuery();
+  $result = $query
+    ->entityCondition('entity_type', 'node')
+    ->propertyCondition('type', 'os2web_cp_service_cp_document')
+    ->fieldCondition('field_os2web_cp_service_case_id', 'value', $data['fields']['Sagsnummer'], '=')
+    ->execute();
+  $doc_nids = (isset($result['node'])) ? array_keys($result['node']) : array();
+
+  $doc_nodes = node_load_multiple($doc_nids);
+  foreach ($doc_nodes as $doc_nid => $doc_node) {
+    // Set reference on case.
+    $node->field_os2web_cp_service_doc_ref[LANGUAGE_NONE][]['target_id'] = $doc_nid;
+
+    // Set sagsid on doc.
+    $doc_node->field_os2web_cp_service_case_sid[LANGUAGE_NONE][0]['value'] = $data['fields']['SystemID'];
+    node_save($doc_node);
+  }
+
   try {
     node_submit($node);
     node_save($node);
