@@ -27,6 +27,8 @@ function os2web_cp_service_drush_command() {
  * Implements drush_COMMAND().
  */
 function drush_os2web_cp_service_cp_update_ref() {
+
+  // Update all doc and cases where there are no reference from case -> document.
   $nodes = db_query("SELECT *
                     FROM {node} n
                     WHERE n.type = 'os2web_cp_service_cp_document'
@@ -39,23 +41,29 @@ function drush_os2web_cp_service_cp_update_ref() {
 
   foreach ($nodes as $node) {
 
-   if (!empty($node->field_os2web_cp_service_case_id['und'][0]['value'])) {
+    if (!empty($node->field_os2web_cp_service_case_id['und'][0]['value'])) {
       $nid = db_query(
-        "SELECT entity_id FROM field_data_field_os2web_cp_service_case_id WHERE bundle = 'os2web_cp_service_cp_case' AND field_os2web_cp_service_case_id_value = :id", 
+        "SELECT entity_id FROM field_data_field_os2web_cp_service_case_id WHERE bundle = 'os2web_cp_service_cp_case' AND field_os2web_cp_service_case_id_value = :id",
         array(':id' => $node->field_os2web_cp_service_case_id['und'][0]['value'])
       )->fetchColumn();
 
       if (!$nid) {
-        drush_log(t('Cannot find case with id: :id', array(':id' => $node->field_os2web_cp_service_case_id['und'][0]['value'])), 'warning');
+        drush_log(t('Cannot find case with id: !id', array('!id' => $node->field_os2web_cp_service_case_id['und'][0]['value'])), 'warning');
         continue;
       }
 
       $ref_node = node_load($nid);
-      $ref_node->field_os2web_cp_service_doc_ref['und'][]['target_id'] = $node->nid;
+      $ref_node->field_os2web_cp_service_doc_ref[LANGUAGE_NONE][]['target_id'] = $node->nid;
       node_save($ref_node);
-      drush_log(t('Saved new reference to: :ref in :node', array(':ref' => $ref_node->nid, ':node' => $node->nid)), 'success');
 
-   }
+      // Update doc ref.
+      if (isset($ref_node->field_os2web_cp_service_sysid[LANGUAGE_NONE][0]['value'])) {
+        $node->field_os2web_cp_service_case_sid[LANGUAGE_NONE][0]['value'] = $ref_node->field_os2web_cp_service_sysid[LANGUAGE_NONE][0]['value'];
+        node_save($node);
+      }
+
+      drush_log(t('Saved new reference to: !ref in !node', array('!ref' => $ref_node->nid, '!node' => $node->nid)), 'success');
+    }
   }
 }
 
