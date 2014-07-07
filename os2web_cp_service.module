@@ -340,8 +340,17 @@ function os2web_cp_service_create_case(array $data) {
 
   $doc_nodes = node_load_multiple($doc_nids);
   foreach ($doc_nodes as $doc_nid => $doc_node) {
-    // Set reference on case.
-    $node->field_os2web_cp_service_doc_ref[LANGUAGE_NONE][]['target_id'] = $doc_nid;
+    // Set reference on case if not exists.
+    $doc_ref_found = FALSE;
+    foreach ($node->field_os2web_cp_service_doc_ref[LANGUAGE_NONE] as $doc_ref) {
+      if ($doc_ref['target_id'] == $doc_nid) {
+        $doc_ref_found = TRUE;
+        break;
+      }
+    }
+    if (!$doc_ref_found) {
+      $node->field_os2web_cp_service_doc_ref[LANGUAGE_NONE][]['target_id'] = $doc_nid;
+    }
 
     // Set sagsid on doc.
     $doc_node->field_os2web_cp_service_case_sid[LANGUAGE_NONE][0]['value'] = $data['fields']['SystemID'];
